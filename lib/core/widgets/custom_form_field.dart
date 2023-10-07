@@ -21,10 +21,12 @@ class CustomFormField extends StatelessWidget {
     this.suffixicon,
     this.ontap,
     this.onsubmit,
+    required this.hintsize,
   });
 
   final TextEditingController? controller;
   final TextInputType? inputType;
+  final double hintsize;
   final bool obscuretext;
   final bool readonly;
   final bool autofocus;
@@ -57,23 +59,26 @@ class CustomFormField extends StatelessWidget {
         prefixIcon: prefixicon,
         hintStyle: AppStyles.textStyle24w400.copyWith(
           fontSize: 16.sp,
+          color: AppColors.colorBlack.withOpacity(0.2),
         ),
         labelStyle: AppStyles.textStyle24w400.copyWith(
           fontSize: 14.sp,
         ),
         labelText: label,
         hintText: hinttext,
-        focusedBorder: const OutlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            width: 2,
             color: AppColors.primaryColor,
           ),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
-          borderSide: const BorderSide(
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
             color: AppColors.primaryColor,
-            width: 1,
+          ),
+        ),
+        border: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.primaryColor,
           ),
         ),
       ),
