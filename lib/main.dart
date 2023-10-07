@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
-import 'package:masaref/core/widgets/custom_button.dart';
-import 'package:masaref/core/widgets/custom_form_field.dart';
+import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/features/mo3amalat/presentation/view/mo3amalat_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,42 +22,18 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MyHomePage(),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              CustomFormField(
-                hinttext: 'Hint',
-                hintsize: 14.sp,
-              ),
-              CustomButton(
-                title: 'اضافة معاملة',
-              ),
-            ],
+      builder: (context, child) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            appBarTheme: const AppBarTheme(
+              color: AppColors.primaryColor,
+            ),
           ),
+          home: Mo3amalatPage(),
         ),
       ),
     );
   }
 }
-
-
