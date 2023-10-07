@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
+import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
+import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_states.dart';
+import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 import 'package:masaref/features/main/presentation/main_screen.dart';
 
@@ -24,10 +28,12 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.cairo().fontFamily,
+        ),
         home: BlocProvider<BottomNavigationBarCubit>(
             create: (context) => BottomNavigationBarCubit(),
-            child: const Directionality(
-                textDirection: TextDirection.rtl, child: MainScreen())),
+            child: BlocProvider<CheckBoxCubit>(create: (context) => CheckBoxCubit(),child: const AddNewWalletScreen())),
       ),
     );
   }
