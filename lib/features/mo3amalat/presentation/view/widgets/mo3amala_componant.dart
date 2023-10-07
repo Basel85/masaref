@@ -12,8 +12,7 @@ class Mo3amalaComponant extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        padding:
-            EdgeInsets.only(right: 10.w, top: 10.h, left: 10.w, bottom: 15.h),
+        padding: EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
@@ -24,7 +23,7 @@ class Mo3amalaComponant extends StatelessWidget {
               '07/10/2023 03:54 PM',
               textDirection: TextDirection.ltr,
               style: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 10.sp,
                 color: Colors.grey,
               ),
             ),
@@ -40,7 +39,7 @@ class Mo3amalaComponant extends StatelessWidget {
                 Text(
                   'المواصلات',
                   style: TextStyle(
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                     color: Colors.grey,
                   ),
                 ),
@@ -52,20 +51,19 @@ class Mo3amalaComponant extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      radius: 18.r,
+                      radius: 16.r,
                       backgroundColor: AppColors.primaryColor,
                     ),
                     SizedBox(width: 5.w),
                     Text(
                       'الأجرة',
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                         color: AppColors.colorBlack,
                         fontWeight: FontWeight.bold,
                       ),

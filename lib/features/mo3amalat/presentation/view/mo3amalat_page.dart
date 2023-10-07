@@ -9,7 +9,7 @@ class Mo3amalatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
+      
       appBar: AppBar(
         actions: [
           IconButton(
@@ -45,7 +45,7 @@ class Mo3amalatPage extends StatelessWidget {
             const SearchField(),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+                padding: EdgeInsets.all(10.r),
                 child: ListView.separated(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),

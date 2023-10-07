@@ -22,9 +22,11 @@ class CustomFormField extends StatelessWidget {
     this.ontap,
     this.onsubmit,
     required this.hintsize,
+    this.inputStyle,
   });
 
   final TextEditingController? controller;
+  final TextStyle? inputStyle;
   final TextInputType? inputType;
   final double hintsize;
   final bool obscuretext;
@@ -44,6 +46,7 @@ class CustomFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: inputStyle,
       controller: controller,
       initialValue: initvalue,
       autofocus: autofocus,
@@ -58,8 +61,8 @@ class CustomFormField extends StatelessWidget {
         suffixIcon: suffixicon,
         prefixIcon: prefixicon,
         hintStyle: AppStyles.textStyle24w400.copyWith(
-          fontSize: 16.sp,
-          color: AppColors.colorBlack.withOpacity(0.2),
+          fontSize: hintsize,
+          color: AppColors.colorBlack.withOpacity(0.4),
         ),
         labelStyle: AppStyles.textStyle24w400.copyWith(
           fontSize: 14.sp,
