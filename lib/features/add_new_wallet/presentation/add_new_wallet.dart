@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
+import 'package:masaref/core/widgets/price_text_form_field.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_states.dart';
 
@@ -34,32 +35,7 @@ class AddNewWalletScreen extends StatelessWidget {
             SizedBox(
               height: 16.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.w,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.primaryColor),
-                    ),
-                    child: const Text("ج.م"),
-                  ),
-                  SizedBox(
-                    width: 16.w,
-                  ),
-                  Expanded(
-                    child: CustomFormField(
-                      hinttext: "الرصيد الحالي",
-                      hintsize: 14.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const PriceTextFormField(),
             SizedBox(
               height: 16.h,
             ),
