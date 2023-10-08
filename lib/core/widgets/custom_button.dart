@@ -7,8 +7,10 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
+    this.onpress,
   });
   final String title;
+  final Function()? onpress;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomButton extends StatelessWidget {
         color: AppColors.primaryColor,
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onpress,
         child: Center(
           child: Text(
             title,
