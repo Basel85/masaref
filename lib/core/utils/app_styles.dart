@@ -9,5 +9,8 @@ class AppStyles {
     fontSize: 24.sp,
     fontWeight: FontWeight.w400,
   );
-  
+  static TextStyle textStyle14PrimaryColor = GoogleFonts.cairo(
+    color: AppColors.primaryColor,
+    fontSize: 14.sp,
+  );
 }

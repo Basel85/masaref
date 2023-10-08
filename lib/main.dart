@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
+import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
+import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
+import 'package:masaref/features/exchange_between_two_wallets/presentation/exchange_between_two_wallets_screen.dart';
+import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
+import 'package:masaref/features/main/presentation/main_screen.dart';
+
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 // import 'package:masaref/features/mo3amalat/presentation/view/mo3amalat_page.dart';
@@ -35,7 +42,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            fontFamily: GoogleFonts.cairo().fontFamily,
             appBarTheme: const AppBarTheme(
+           
               color: AppColors.primaryColor,
             ),
             scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
