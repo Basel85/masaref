@@ -8,16 +8,18 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.title,
     this.onpress,
+    this.color,
   });
   final String title;
+  final Color? color;
   final Function()? onpress;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 40.h,
-      decoration: const BoxDecoration(
-        color: AppColors.primaryColor,
+      decoration: BoxDecoration(
+        color: color ?? AppColors.primaryColor,
       ),
       child: TextButton(
         onPressed: onpress,

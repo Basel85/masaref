@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masaref/features/mo3amalat/presentation/view/widgets/mo3amala_componant.dart';
-import 'package:masaref/features/mo3amalat/presentation/view/widgets/search_field.dart';
+import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/mo3amala_componant.dart';
+import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/search_field.dart';
 
 class Mo3amalatPage extends StatelessWidget {
   const Mo3amalatPage({super.key});
