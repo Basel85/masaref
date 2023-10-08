@@ -12,7 +12,7 @@ class Mo3amalatByDayList extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
+      itemCount: 2,
       itemBuilder: (context, index) => const Mo3amalatByDayContainer(),
       separatorBuilder: (context, index) => SizedBox(height: 10.h),
     );

@@ -9,7 +9,6 @@ class Mo3amalatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         actions: [
           IconButton(
@@ -32,7 +31,9 @@ class Mo3amalatPage extends StatelessWidget {
           ),
         ],
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
           ),

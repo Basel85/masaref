@@ -10,7 +10,8 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/money_sectio
 import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_section.dart';
 
 class Mo3amalaPage extends StatelessWidget {
-  const Mo3amalaPage({super.key});
+  const Mo3amalaPage({super.key, required this.toAdd});
+  final bool toAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,16 @@ class Mo3amalaPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.settings,
+            icon: Icon(
+              toAdd ? Icons.settings : Icons.delete,
               color: AppColors.colorBlack,
             ),
           ),
         ],
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: AppColors.colorBlack,
@@ -40,28 +43,26 @@ class Mo3amalaPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 15.h),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Expanded(
-              child: Column(
-                children: [
-                  const MoneySection(),
-                  const CategorySection(),
-                  const Elma7fazaSection(),
-                  SizedBox(height: 10.h),
-                  const DateSection(),
-                  SizedBox(height: 10.h),
-                  const RepeatSection(),
-                  SizedBox(height: 10.h),
-                  const ImportanceSection(),
-                  SizedBox(height: 20.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: CustomButton(
-                      title: 'إضافة معاملة',
-                      onpress: () {},
-                    ),
+            child: Column(
+              children: [
+                const MoneySection(),
+                const CategorySection(),
+                const Elma7fazaSection(),
+                SizedBox(height: 10.h),
+                const DateSection(),
+                SizedBox(height: 10.h),
+                const RepeatSection(),
+                SizedBox(height: 10.h),
+                const ImportanceSection(),
+                SizedBox(height: 20.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: CustomButton(
+                    title: toAdd ? 'إضافة معاملة' : 'تعديل',
+                    onpress: () {},
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

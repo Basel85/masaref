@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 
 class Mo3amalaComponant extends StatelessWidget {
   const Mo3amalaComponant({
@@ -9,9 +12,19 @@ class Mo3amalaComponant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
+    return InkWell(
+      splashFactory: InkRipple.splashFactory,
+      splashColor: AppColors.primaryColor.withOpacity(0.2),
+      onTap: () async {
+        await Future.delayed(const Duration(milliseconds: 300));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Mo3amalaPage(toAdd: false),
+          ),
+        );
+      },
+      child: Ink(
         padding: EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),
         decoration: const BoxDecoration(
           color: Colors.white,
