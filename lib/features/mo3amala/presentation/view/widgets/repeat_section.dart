@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 
 class RepeatSection extends StatelessWidget {
   const RepeatSection({
     super.key,
+    required this.cubit,
   });
+
+  final Mo3amalaCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,9 @@ class RepeatSection extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              cubit.switCh();
+            },
             child: Row(
               children: [
                 Text(
@@ -45,9 +51,9 @@ class RepeatSection extends StatelessWidget {
                 const Spacer(),
                 Switch.adaptive(
                   activeColor: AppColors.primaryColor,
-                  value: true,
+                  value: cubit.repeatChange,
                   onChanged: (value) {
-                    value = !value;
+                    cubit.switCh();
                   },
                 ),
               ],
@@ -55,7 +61,9 @@ class RepeatSection extends StatelessWidget {
           ),
           SizedBox(height: 5.h),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              cubit.sWitCh();
+            },
             child: Row(
               children: [
                 Text(
@@ -67,9 +75,9 @@ class RepeatSection extends StatelessWidget {
                 const Spacer(),
                 Switch.adaptive(
                   activeColor: AppColors.primaryColor,
-                  value: false,
+                  value: cubit.change,
                   onChanged: (value) {
-                    value = !value;
+                    cubit.sWitCh();
                   },
                 ),
               ],
