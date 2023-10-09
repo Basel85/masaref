@@ -16,6 +16,7 @@ import 'package:masaref/features/main/presentation/main_screen.dart';
 
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
+import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/wallets/presentation/wallets_screen.dart';
 // import 'package:masaref/features/mo3amalat/presentation/view/mo3amalat_page.dart';
 
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
           ),
-          home: const CategoriesScreen(),
+          home: const SplashScreen(),
         ),
       ),
     );
