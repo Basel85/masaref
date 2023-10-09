@@ -9,6 +9,7 @@ import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transa
 import 'package:masaref/features/add_new_category/presentation/add_new_category_screen.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
+import 'package:masaref/features/categories/presentation/categories_screen.dart';
 import 'package:masaref/features/exchange_between_two_wallets/presentation/exchange_between_two_wallets_screen.dart';
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 import 'package:masaref/features/main/presentation/main_screen.dart';
@@ -51,9 +52,7 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
           ),
-          home: MultiBlocProvider(providers: [
-            BlocProvider<GetMainTypeOfTransactionCubit>(create: (context) => GetMainTypeOfTransactionCubit()),
-          ],child: const AddNewCategoryScreen()),
+          home: const CategoriesScreen(),
         ),
       ),
     );

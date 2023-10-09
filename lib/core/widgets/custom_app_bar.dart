@@ -6,23 +6,30 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Color backgroundColor;
   final Widget? leading;
+  final PreferredSizeWidget? bottom;
+  final double sizeFromHeight;
   const CustomAppBar(
       {super.key,
       required this.title,
       this.actions,
       this.backgroundColor = AppColors.primaryColor,
-      this.leading});
+      this.leading,
+      this.bottom,
+      this.sizeFromHeight = kToolbarHeight});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+
+      surfaceTintColor: backgroundColor,
       leading: leading,
       backgroundColor: backgroundColor,
       title: title,
       actions: actions,
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(sizeFromHeight);
 }
