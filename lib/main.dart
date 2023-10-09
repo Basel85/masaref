@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
+import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
+import 'package:masaref/features/add_new_category/presentation/add_new_category_screen.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
 import 'package:masaref/features/exchange_between_two_wallets/presentation/exchange_between_two_wallets_screen.dart';
@@ -49,8 +51,9 @@ class MyApp extends StatelessWidget {
             ),
             scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 245),
           ),
-          home: const Directionality(
-              textDirection: TextDirection.rtl, child: WalletsScreen()),
+          home: MultiBlocProvider(providers: [
+            BlocProvider<GetMainTypeOfTransactionCubit>(create: (context) => GetMainTypeOfTransactionCubit()),
+          ],child: const AddNewCategoryScreen()),
         ),
       ),
     );
