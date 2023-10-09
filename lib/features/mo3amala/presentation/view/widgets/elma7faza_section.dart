@@ -24,51 +24,63 @@ class Elma7fazaSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 16.r,
-                  backgroundColor: AppColors.primaryColor,
-                ),
-                SizedBox(width: 10.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Material(
+            child: InkWell(
+              splashFactory: InkRipple.splashFactory,
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container();
+                  },
+                );
+              },
+              child: Ink(
+                child: Row(
                   children: [
-                    Text(
-                      'مصروف الشهر',
-                      style: AppStyles.textStyle24w400.copyWith(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    CircleAvatar(
+                      radius: 16.r,
+                      backgroundColor: AppColors.primaryColor,
                     ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '840.00 ',
-                            style: AppStyles.textStyle24w400.copyWith(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.colorBlack.withOpacity(0.7),
-                            ),
+                    SizedBox(width: 10.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'مصروف الشهر',
+                          style: AppStyles.textStyle24w400.copyWith(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
+                        Text.rich(
                           TextSpan(
-                            text: 'ج.م',
-                            style: AppStyles.textStyle24w400.copyWith(
-                              fontSize: 8.sp,
-                              color: AppColors.colorBlack.withOpacity(0.7),
-                            ),
+                            children: [
+                              TextSpan(
+                                text: '840.00 ',
+                                style: AppStyles.textStyle24w400.copyWith(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.colorBlack.withOpacity(0.7),
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'ج.م',
+                                style: AppStyles.textStyle24w400.copyWith(
+                                  fontSize: 8.sp,
+                                  color: AppColors.colorBlack.withOpacity(0.7),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    const Spacer(),
+                    const Icon(Icons.arrow_drop_down),
                   ],
                 ),
-                const Spacer(),
-                const Icon(Icons.arrow_drop_down),
-              ],
+              ),
             ),
           ),
           SizedBox(height: 20.h),

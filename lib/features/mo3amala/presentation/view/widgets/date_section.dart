@@ -10,18 +10,25 @@ class DateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.all(15.r),
-        decoration: BoxDecoration(
-          color: AppColors.colorWhite,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColors.colorBlack.withOpacity(0.5),
-            ),
+    return Container(
+      padding: EdgeInsets.all(15.r),
+      decoration: BoxDecoration(
+        color: AppColors.colorWhite,
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.colorBlack.withOpacity(0.5),
           ),
         ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2050),
+          );
+        },
         child: Row(
           children: [
             const Icon(Icons.calendar_month_outlined),
@@ -42,21 +49,29 @@ class DateSection extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Container(
-              padding: EdgeInsets.only(right: 10.w),
-              decoration: BoxDecoration(
-                border: Border(
-                  right: BorderSide(
-                    color: AppColors.colorBlack.withOpacity(0.4),
+            GestureDetector(
+              onTap: () {
+                showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.only(right: 10.w),
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      color: AppColors.colorBlack.withOpacity(0.4),
+                    ),
                   ),
                 ),
-              ),
-              child: Text(
-                '04:03 PM',
-                textDirection: TextDirection.ltr,
-                style: AppStyles.textStyle24w400.copyWith(
-                  fontSize: 10.sp,
-                  color: AppColors.colorBlack.withOpacity(0.6),
+                child: Text(
+                  '04:03 PM',
+                  textDirection: TextDirection.ltr,
+                  style: AppStyles.textStyle24w400.copyWith(
+                    fontSize: 10.sp,
+                    color: AppColors.colorBlack.withOpacity(0.6),
+                  ),
                 ),
               ),
             ),

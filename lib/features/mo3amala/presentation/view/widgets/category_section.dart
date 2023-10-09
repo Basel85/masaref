@@ -10,9 +10,10 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      splashFactory: InkRipple.splashFactory,
       onTap: () {},
-      child: Container(
+      child: Ink(
         padding: EdgeInsets.all(15.r),
         decoration: BoxDecoration(
           color: AppColors.colorWhite,
