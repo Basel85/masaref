@@ -8,7 +8,7 @@ class GetCategoriesOfSectionCubit extends Cubit<GetCategoriesOfSectionStates> {
   void getCategoriesOfSection({required sectionId}) async {
     try {
       final categories = await CategoryRepository.getCategoriesOfSpecificSection(sectionId: sectionId);
-      emit(GetCategoriesOfSectionSuccessState(categories: categories));
+      emit(GetCategoriesOfSectionSuccessState(categories: categories,sectionId: sectionId));
     } catch (e) {
       emit(GetCategoriesOfSectionErrorState(errorMessage: e.toString()));
     }

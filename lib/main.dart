@@ -7,6 +7,7 @@ import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
 // import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/mo3amalat_tap.dart';
 
@@ -48,6 +49,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GetAllWalletsCubit>(create: (_) => GetAllWalletsCubit()),
+        BlocProvider<GetCategoriesOfSectionCubit>(
+                        create: (_) => GetCategoriesOfSectionCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

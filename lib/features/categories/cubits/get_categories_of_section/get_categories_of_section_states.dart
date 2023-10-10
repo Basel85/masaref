@@ -6,7 +6,8 @@ class GetCategoriesOfSectionInitialState extends GetCategoriesOfSectionStates {}
 
 class GetCategoriesOfSectionSuccessState extends GetCategoriesOfSectionStates {
   final List<CategoryModel> categories;
-  GetCategoriesOfSectionSuccessState({required this.categories});
+  final int sectionId;
+  GetCategoriesOfSectionSuccessState({required this.categories,required this.sectionId});
 }
 
 class GetCategoriesOfSectionErrorState extends GetCategoriesOfSectionStates {

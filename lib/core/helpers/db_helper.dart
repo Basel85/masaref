@@ -64,7 +64,7 @@ class DBHelper {
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref5.db');
+    String path = join(dbpath, 'masaref56.db');
     openDatabase(
       path,
       version: 2,
@@ -87,6 +87,9 @@ class DBHelper {
   }
   static Future<List<Map<String,dynamic>>> getCategoriesOfSpecificSection({required int sectionId}) async {
     return await database.rawQuery('SELECT * FROM Category WHERE sectionid = $sectionId');
+  }
+  static Future<List<Map<String,dynamic>>> getSubCategoriesOfSpecificCategory({required int categoryId}) async {
+    return await database.rawQuery('SELECT * FROM SubCategory WHERE categoryid = $categoryId');
   }
 
   static Future insertIntoSection({required String name}) async {
@@ -113,14 +116,14 @@ class DBHelper {
   }
 
   static Future insertIntoSubCategory(
-      {required int id,
+      {
       required int categoryid,
       required String name,
       required String image}) async {
     await database.transaction((txn) async {
       txn
           .rawInsert(
-              'INSERT INTO SubCategory(id,categoryid,name,image) VALUES("$id", "$categoryid", "$name", "$image")')
+              'INSERT INTO SubCategory(categoryid,name,image) VALUES("$categoryid", "$name", "$image")')
           .then((value) {
         getAll('SubCategory');
       });

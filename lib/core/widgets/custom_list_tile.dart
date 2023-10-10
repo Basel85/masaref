@@ -22,7 +22,7 @@ class CustomListTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: imageRadius??20.r,
         backgroundColor: backgroundColor,
-        backgroundImage: image!=null? NetworkImage(image!):null,
+        backgroundImage: image!=null && image!=""? NetworkImage(image!):null,
       ),
       title: Text(
         title,
