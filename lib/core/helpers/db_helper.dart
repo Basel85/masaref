@@ -4,13 +4,40 @@ import 'package:sqflite/sqflite.dart';
 class DBHelper {
   static late Database database;
 
-  _onConfigure(Database db) async {
+  static _onConfigure(Database db) async {
+    database = db;
     await db.execute("PRAGMA foreign_keys = ON");
   }
 
-  _onCreate(Database db, int version) async {
-    await db.execute('''CREATE TABLE Transaction (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+  static _onCreate(Database db, int version) async {
+    print("Hello");
+    await db.execute('''CREATE TABLE Wallet (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            balance REAL,
+            name TEXT,
+            image TEXT,
+            color INTEGER
+            )''');
+    await db.execute('''CREATE TABLE Section (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT
+            )''');
+    await db.execute('''CREATE TABLE Category (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sectionid INTEGER,
+            name TEXT,
+            image TEXT,
+            FOREIGN KEY (sectionid) REFERENCES Section (id)
+            )''');
+    await db.execute('''CREATE TABLE SubCategory (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            categoryid INTEGER,
+            name TEXT,
+            image TEXT,
+            FOREIGN KEY (categoryid) REFERENCES Category (id)
+            )''');
+    await db.execute('''CREATE TABLE Trans_action (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             price REAL,
             subcategoryid INTEGER,
             sectionid INTEGER,
@@ -26,77 +53,66 @@ class DBHelper {
             FOREIGN KEY (categoryid) REFERENCES Category (id),
             FOREIGN KEY (walletid) REFERENCES Wallet (id)
             )''');
-    await db.execute('''CREATE TABLE Wallet (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            balance REAL
-            name TEXT,
-            image TEXT
-            )''');
-    await db.execute('''CREATE TABLE Section (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            name TEXT
-            )''');
-    await db.execute('''CREATE TABLE Category (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            sectionid INTEGER
-            name TEXT,
-            image TEXT,
-            FOREIGN KEY (sectionid) REFERENCES Section (id)
-            )''');
-    await db.execute('''CREATE TABLE SubCategory (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            categoryid INTEGER
-            name TEXT,
-            image TEXT,
-            FOREIGN KEY (categoryid) REFERENCES Category (id)
-            )''');
+    print("HI");
+    await insertIntoSection(name: "expenses");
+    await insertIntoSection(name: "Income");
+    await insertIntoCategory(
+        sectionid: 1, name: "Food", image: "");
+    await insertIntoCategory(
+        sectionid: 2, name: "Rateb", image: "");
   }
 
-  void createDatabase() async {
+  static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref.db');
+    String path = join(dbpath, 'masaref5.db');
     openDatabase(
       path,
-      version: 1,
+      version: 2,
       onConfigure: _onConfigure,
+      // onUpgrade: (db, oldVersion, newVersion) async {
+
+      // },
       onCreate: _onCreate,
-      onOpen: (db) {
-        getAll(db, 'Transaction');
+      onOpen: (db) async {
+        await getAll('Trans_action');
+        print("Database is open");
       },
     ).then((value) {
       database = value;
     });
   }
 
-  Future<List<Map>> getAll(Database database, String tableName) async {
+  static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
   }
+  static Future<List<Map<String,dynamic>>> getCategoriesOfSpecificSection({required int sectionId}) async {
+    return await database.rawQuery('SELECT * FROM Category WHERE sectionid = $sectionId');
+  }
 
-  Future insertIntoSection({required int id, required String name}) async {
+  static Future insertIntoSection({required String name}) async {
     await database.transaction((txn) async {
-      txn
-          .rawInsert('INSERT INTO Section(id,name) VALUES("$id", "$name")')
-          .then((value) {
+      txn.rawInsert('INSERT INTO Section(name) VALUES("$name")').then((value) {
+        print(value);
       });
     });
   }
 
-  Future insertIntoCategory(
-      {required int id,
-      required int sectionid,
+
+  static Future insertIntoCategory(
+      {required int sectionid,
       required String name,
       required String image}) async {
     await database.transaction((txn) async {
       txn
           .rawInsert(
-              'INSERT INTO Category(id,sectionid,name,image) VALUES("$id", "$sectionid", "$name", "$image")')
+              'INSERT INTO Category(sectionid,name,image) VALUES("$sectionid", "$name", "$image")')
           .then((value) {
-        getAll(database,'Category');
+        getAll('Category');
       });
     });
   }
 
-  Future insertIntoSubCategory(
+  static Future insertIntoSubCategory(
       {required int id,
       required int categoryid,
       required String name,
@@ -106,28 +122,29 @@ class DBHelper {
           .rawInsert(
               'INSERT INTO SubCategory(id,categoryid,name,image) VALUES("$id", "$categoryid", "$name", "$image")')
           .then((value) {
-        getAll(database,'SubCategory');
+        getAll('SubCategory');
       });
     });
   }
 
-  Future insertIntoWallet(
-      {required int id,
-      required double balance,
+  static Future insertIntoWallet(
+      {required double balance,
       required String name,
-      required String image}) async {
+      required String image,
+      required int color}) async {
     await database.transaction((txn) async {
       txn
           .rawInsert(
-              'INSERT INTO Wallet(id,balance,name,image) VALUES("$id", "$balance", "$name", "$image")')
+              'INSERT INTO Wallet(balance,name,image,color) VALUES("$balance","$name","$image","$color")')
           .then((value) {
-              getAll(database,'Wallet');
-
+        getAll('Wallet');
+      }).catchError((error) {
+        throw (error.toString());
       });
     });
   }
 
-  Future insertIntoTransaction(
+  static Future insertIntoTransaction(
       {required int id,
       required double price,
       required int subcategoryid,
@@ -140,33 +157,33 @@ class DBHelper {
       required String repeat,
       required String priority}) async {
     await database.transaction((txn) async {
-      txn.rawInsert('''INSERT INTO Transaction
+      txn.rawInsert('''INSERT INTO Trans_action
           (id,price,subcategoryid,sectionid,categoryid,walletid,
           notes,date,time,repeat,priority) 
           VALUES("$id", "$price", "$subcategoryid", "$sectionid", "$categoryid", "$walletid",
            "$notes", "$date", "$time", "$repeat", "$priority")''').then((value) {
-        getAll(database,'Transaction');
+        getAll('Trans_action');
       });
     });
   }
 
-  void deleteFromAll(int id, String tableName) {
+  static void deleteFromAll(int id, String tableName) {
     database
         .rawDelete('DELETE FROM $tableName WHERE id = ?', [id]).then((value) {
-      getAll(database, tableName);
+      getAll(tableName);
     });
   }
 
-  void updateRecordonWallet(
+  static void updateRecordonWallet(
       {required int id, required double balance, required String name}) {
     database.rawUpdate(
         '''UPDATE Wallet SET balance = ? name = ? WHERE id = ?''',
         [balance, name, id]).then((value) {
-      getAll(database,'Wallet');
+      getAll('Wallet');
     });
   }
 
-  void updateRecordonTransaction(
+  static void updateRecordonTransaction(
       {required int id,
       required double price,
       required int subcategoryid,
@@ -196,7 +213,7 @@ class DBHelper {
       priority,
       id
     ]).then((value) {
-      getAll(database,'Transaction');
+      getAll('Transaction');
     });
   }
 }

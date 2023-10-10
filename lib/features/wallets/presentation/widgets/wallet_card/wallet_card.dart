@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,27 +6,17 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/wallets/presentation/widgets/wallet_card/avaliable_balance.dart';
 import 'package:masaref/features/wallets/presentation/widgets/wallet_card/wallet_list_tile.dart';
 
-class WalletCard extends StatefulWidget {
-  const WalletCard({super.key});
-
-  @override
-  State<WalletCard> createState() => _WalletCardState();
-}
-
-class _WalletCardState extends State<WalletCard> {
-  final Random _random = Random();
-  int _r = 0;
-  int _g = 0;
-  int _b = 0;
-
-  @override
-  void initState() {
-    _r = _random.nextInt(256);
-    _g = _random.nextInt(256);
-    _b = _random.nextInt(256);
-
-    super.initState();
-  }
+class WalletCard extends StatelessWidget {
+  final int color;
+  final String walletName;
+  final double balance;
+  final String? image;
+  const WalletCard(
+      {super.key,
+      required this.color,
+      required this.walletName,
+      required this.balance,
+      this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +24,7 @@ class _WalletCardState extends State<WalletCard> {
       children: [
         Container(
           decoration: ShapeDecoration(
-            color: Color.fromARGB(255, _r, _g, _b),
+            color: Color(color),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -42,9 +32,14 @@ class _WalletCardState extends State<WalletCard> {
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
           child: Column(
             children: [
-              const WalletListTile(),
+              WalletListTile(
+                image: "",
+                walletName: walletName,
+              ),
               SizedBox(height: 10.h),
-              const AvaliableBalance(),
+              AvaliableBalance(
+                balance: balance,
+              ),
               SizedBox(height: 10.h),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

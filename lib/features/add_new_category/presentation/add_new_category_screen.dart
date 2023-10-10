@@ -10,6 +10,7 @@ import 'package:masaref/features/add_new_category/presentation/widgets/add_new_c
 import 'package:masaref/features/add_new_category/presentation/widgets/app_bar_drop_down_button.dart';
 import 'package:masaref/features/add_new_category/presentation/widgets/main_category.dart';
 import 'package:masaref/features/add_new_category/presentation/widgets/name_of_category_or_subcategory.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/importance_section.dart';
 
 class AddNewCategoryScreen extends StatelessWidget {
@@ -45,7 +46,7 @@ class AddNewCategoryScreen extends StatelessWidget {
                 SizedBox(
                   height: 16.h,
                 ),
-                const ImportanceSection(),
+                // const ImportanceSection(cubit: BlocProvider.of(context),),
               },
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

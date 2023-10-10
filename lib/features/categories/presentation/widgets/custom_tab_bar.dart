@@ -7,7 +7,7 @@ class CustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: TabBar(
         labelColor: AppColors.primaryColor,
         unselectedLabelColor: AppColors.colorBlack.withOpacity(0.5),
@@ -18,9 +18,6 @@ class CustomTabBar extends StatelessWidget {
           ),
           Tab(
             text: 'المصروف',
-          ),
-          Tab(
-            text: 'الديون',
           ),
         ],
       ),
