@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 
 class AvaliableBalance extends StatelessWidget {
-  const AvaliableBalance({super.key});
+  final double balance;
+  const AvaliableBalance({super.key, required this.balance});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class AvaliableBalance extends StatelessWidget {
         children: [
           Text.rich(TextSpan(children: [
             TextSpan(
-              text: "53,539.00",
+              text: "$balance",
               style: TextStyle(
                 color: AppColors.colorWhite,
                 fontSize: 20.sp,

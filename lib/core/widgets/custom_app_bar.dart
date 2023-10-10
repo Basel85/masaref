@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget title;
+  final Widget? title;
   final List<Widget>? actions;
   final Color backgroundColor;
   final Widget? leading;
@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double sizeFromHeight;
   const CustomAppBar(
       {super.key,
-      required this.title,
+      this.title,
       this.actions,
       this.backgroundColor = AppColors.primaryColor,
       this.leading,

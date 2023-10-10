@@ -4,7 +4,8 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
 
 class NameOfCategoryOrSubCategory extends StatelessWidget {
-  const NameOfCategoryOrSubCategory({super.key});
+  final TextEditingController categoryOrSubCategoryController;
+  const NameOfCategoryOrSubCategory({super.key, required this.categoryOrSubCategoryController});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class NameOfCategoryOrSubCategory extends StatelessWidget {
           ),
           Expanded(
             child: CustomFormField(
+              controller: categoryOrSubCategoryController,
               hinttext: "اسم القسم ",
               hintsize: 14.sp,
             ),

@@ -3,14 +3,17 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_list_tile.dart';
 
 class WalletListTile extends StatelessWidget {
-  const WalletListTile({super.key});
+  final String walletName;
+  final String image;
+  const WalletListTile({super.key, required this.walletName, required this.image});
 
   @override
   Widget build(BuildContext context) {
-    return const CustomListTile(
-      title: "مصروف الشهر",
+    return CustomListTile(
+      title: walletName,
+      image: image,
       textColor: AppColors.colorWhite,
-      trailing: Icon(Icons.keyboard_arrow_down),
+      trailing: const Icon(Icons.keyboard_arrow_down),
     );
   }
 }

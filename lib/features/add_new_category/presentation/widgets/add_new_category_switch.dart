@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/features/add_new_category/cubits/switch_button/switch_button_cubit.dart';
+import 'package:masaref/features/add_new_category/cubits/switch_button/switch_button_states.dart';
 
 class AddNewCategorySwitch extends StatelessWidget {
   const AddNewCategorySwitch({super.key});
@@ -18,11 +21,15 @@ class AddNewCategorySwitch extends StatelessWidget {
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
           ),),
-          Switch.adaptive(
-            value: true,
-            onChanged: (value) {},
-            activeTrackColor: AppColors.primaryColor,
-            activeColor: AppColors.colorWhite,
+          BlocBuilder<SwitchButtonCubit,SwitchButtonStates>(
+            builder:(_,state)=> Switch.adaptive(
+              value: state is SwitchButtonChangedState? state.value: false,
+              onChanged: (value) {
+                SwitchButtonCubit.get(context).switchButton(value: value);
+              },
+              activeTrackColor: AppColors.primaryColor,
+              activeColor: AppColors.colorWhite,
+            ),
           ),
         ],
        ),
