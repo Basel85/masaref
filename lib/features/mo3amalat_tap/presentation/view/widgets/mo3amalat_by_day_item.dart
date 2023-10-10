@@ -24,13 +24,14 @@ class Mo3amalatByDayContainer extends StatelessWidget {
           splashFactory: InkRipple.splashFactory,
           splashColor: AppColors.primaryColor.withOpacity(0.2),
           onTap: () async {
-            await Future.delayed(const Duration(milliseconds: 300));
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Mo3amalatPage(),
-              ),
-            );
+            await Future.delayed(const Duration(milliseconds: 200), () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Mo3amalatPage(),
+                ),
+              );
+            });
           },
           child: Ink(
             padding: EdgeInsets.all(5.r),
