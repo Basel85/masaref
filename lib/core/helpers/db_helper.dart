@@ -10,7 +10,7 @@ class DBHelper {
 
   _onCreate(Database db, int version) async {
     await db.execute('''CREATE TABLE Transaction (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             price REAL,
             subcategoryid INTEGER,
             sectionid INTEGER,
@@ -27,24 +27,24 @@ class DBHelper {
             FOREIGN KEY (walletid) REFERENCES Wallet (id)
             )''');
     await db.execute('''CREATE TABLE Wallet (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             balance REAL
             name TEXT,
             image TEXT
             )''');
     await db.execute('''CREATE TABLE Section (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT
             )''');
     await db.execute('''CREATE TABLE Category (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             sectionid INTEGER
             name TEXT,
             image TEXT,
             FOREIGN KEY (sectionid) REFERENCES Section (id)
             )''');
     await db.execute('''CREATE TABLE SubCategory (
-            id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             categoryid INTEGER
             name TEXT,
             image TEXT,
@@ -52,7 +52,7 @@ class DBHelper {
             )''');
   }
 
-  void createDatabase() async {
+  createDatabase() async {
     String dbpath = await getDatabasesPath();
     String path = join(dbpath, 'masaref.db');
     openDatabase(
@@ -60,8 +60,7 @@ class DBHelper {
       version: 1,
       onConfigure: _onConfigure,
       onCreate: _onCreate,
-      onOpen: (db) {
-        getAll(db, 'Transaction');
+      onOpen: (db) async {
       },
     ).then((value) {
       database = value;
@@ -76,8 +75,7 @@ class DBHelper {
     await database.transaction((txn) async {
       txn
           .rawInsert('INSERT INTO Section(id,name) VALUES("$id", "$name")')
-          .then((value) {
-      });
+          .then((value) {});
     });
   }
 
@@ -91,7 +89,7 @@ class DBHelper {
           .rawInsert(
               'INSERT INTO Category(id,sectionid,name,image) VALUES("$id", "$sectionid", "$name", "$image")')
           .then((value) {
-        getAll(database,'Category');
+        getAll(database, 'Category');
       });
     });
   }
@@ -106,7 +104,7 @@ class DBHelper {
           .rawInsert(
               'INSERT INTO SubCategory(id,categoryid,name,image) VALUES("$id", "$categoryid", "$name", "$image")')
           .then((value) {
-        getAll(database,'SubCategory');
+        getAll(database, 'SubCategory');
       });
     });
   }
@@ -121,8 +119,7 @@ class DBHelper {
           .rawInsert(
               'INSERT INTO Wallet(id,balance,name,image) VALUES("$id", "$balance", "$name", "$image")')
           .then((value) {
-              getAll(database,'Wallet');
-
+        getAll(database, 'Wallet');
       });
     });
   }
@@ -140,12 +137,12 @@ class DBHelper {
       required String repeat,
       required String priority}) async {
     await database.transaction((txn) async {
-      txn.rawInsert('''INSERT INTO Transaction
+      txn.rawInsert('''INSERT INTO Trans_action
           (id,price,subcategoryid,sectionid,categoryid,walletid,
           notes,date,time,repeat,priority) 
           VALUES("$id", "$price", "$subcategoryid", "$sectionid", "$categoryid", "$walletid",
            "$notes", "$date", "$time", "$repeat", "$priority")''').then((value) {
-        getAll(database,'Transaction');
+        getAll(database, 'Transaction');
       });
     });
   }
@@ -162,7 +159,7 @@ class DBHelper {
     database.rawUpdate(
         '''UPDATE Wallet SET balance = ? name = ? WHERE id = ?''',
         [balance, name, id]).then((value) {
-      getAll(database,'Wallet');
+      getAll(database, 'Wallet');
     });
   }
 
@@ -178,7 +175,7 @@ class DBHelper {
       required String time,
       required String repeat,
       required String priority}) {
-    database.rawUpdate('''UPDATE Transaction SET price = ? 
+    database.rawUpdate('''UPDATE Trans_action SET price = ? 
         subcategoryid = ? sectionid = ? 
         categoryid = ? walletid = ? 
         notes = ? date = ? time = ? 
@@ -196,7 +193,7 @@ class DBHelper {
       priority,
       id
     ]).then((value) {
-      getAll(database,'Transaction');
+      getAll(database, 'Transaction');
     });
   }
 }

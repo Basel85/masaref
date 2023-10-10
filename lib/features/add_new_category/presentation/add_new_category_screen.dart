@@ -45,7 +45,7 @@ class AddNewCategoryScreen extends StatelessWidget {
                 SizedBox(
                   height: 16.h,
                 ),
-                const ImportanceSection(),
+                // const ImportanceSection(),
               },
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
