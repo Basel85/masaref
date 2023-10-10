@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_by_day_list.dart';
@@ -11,55 +14,67 @@ class Mo3amalatTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
-            child: ScrollConfiguration(
-              behavior: const ScrollBehavior(),
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color: AppColors.primaryColor,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    const SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          TopListView(),
-                          PalanceSection(),
-                          Mo3amalatByDayList(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 40.h,
-                      width: 150.w,
-                      decoration: BoxDecoration(
-                        color: Colors.pink,
-                        borderRadius: BorderRadius.circular(30.r),
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'الكل',
-                          style: AppStyles.textStyle24w400.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.colorWhite,
+    return BlocBuilder<WholeAppCubit, WholeAppStates>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                BlocProvider.of<WholeAppCubit>(context).changeAppTheme();
+              },
+              icon: const Icon(Icons.dark_mode),
+            ),
+          ),
+          body: SafeArea(
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+                child: ScrollConfiguration(
+                  behavior: const ScrollBehavior(),
+                  child: GlowingOverscrollIndicator(
+                    axisDirection: AxisDirection.down,
+                    color: AppColors.primaryColor,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        const SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              TopListView(),
+                              BalanceSection(),
+                              Mo3amalatByDayList(),
+                            ],
                           ),
                         ),
-                      ),
+                        Container(
+                          height: 40.h,
+                          width: 150.w,
+                          decoration: BoxDecoration(
+                            color: Colors.pink,
+                            borderRadius: BorderRadius.circular(30.r),
+                          ),
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'الكل',
+                              style: AppStyles.textStyle24w400.copyWith(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.colorWhite,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

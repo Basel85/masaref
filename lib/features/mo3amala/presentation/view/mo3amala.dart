@@ -57,7 +57,7 @@ class Mo3amalaPage extends StatelessWidget {
                       const CategorySection(),
                       const Elma7fazaSection(),
                       SizedBox(height: 10.h),
-                      const DateSection(),
+                       DateSection(cubit: BlocProvider.of<Mo3amalaCubit>(context)),
                       SizedBox(height: 10.h),
                       RepeatSection(
                           cubit: BlocProvider.of<Mo3amalaCubit>(context)),

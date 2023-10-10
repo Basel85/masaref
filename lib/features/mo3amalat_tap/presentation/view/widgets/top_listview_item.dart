@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 
@@ -10,19 +13,16 @@ class TopListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashFactory: InkRipple.splashFactory,
-      splashColor: AppColors.primaryColor.withOpacity(0.2),
-      onTap: () async {
-        // await Future.delayed(const Duration(milliseconds: 600));
-      },
-      child: Ink(
+    return BlocBuilder<WholeAppCubit, WholeAppStates>(
+      builder: (context, state) => Container(
         width: 110.w,
         decoration: BoxDecoration(
-          color: AppColors.colorWhite,
+          color: BlocProvider.of<WholeAppCubit>(context).isdark
+              ? AppColors.colorBlack
+              : AppColors.colorWhite,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
-            color: AppColors.colorBlack.withOpacity(0.2),
+            color: AppColors.colorWhite.withOpacity(0.2),
           ),
         ),
         child: Column(
@@ -32,14 +32,16 @@ class TopListViewItem extends StatelessWidget {
               'اليوم',
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 10.sp,
-                color: AppColors.colorBlack.withOpacity(0.5),
+                color: AppColors.colorGrey,
               ),
             ),
             Text(
               '0.00',
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 14.sp,
-                color: AppColors.colorBlack.withOpacity(0.5),
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
               ),
             ),
           ],

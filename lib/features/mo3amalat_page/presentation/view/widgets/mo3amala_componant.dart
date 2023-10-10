@@ -16,13 +16,14 @@ class Mo3amalaComponant extends StatelessWidget {
       splashFactory: InkRipple.splashFactory,
       splashColor: AppColors.primaryColor.withOpacity(0.2),
       onTap: () async {
-        await Future.delayed(const Duration(milliseconds: 300));
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Mo3amalaPage(toAdd: false),
-          ),
-        );
+        await Future.delayed(const Duration(milliseconds: 200), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Mo3amalaPage(toAdd: false),
+            ),
+          );
+        });
       },
       child: Ink(
         padding: EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),

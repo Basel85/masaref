@@ -8,6 +8,7 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  // ignore: unused_field
   final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {

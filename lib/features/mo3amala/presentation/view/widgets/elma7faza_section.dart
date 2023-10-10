@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
+import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
 
 class Elma7fazaSection extends StatelessWidget {
@@ -31,7 +32,27 @@ class Elma7fazaSection extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return Container();
+                    return Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: 3,
+                            itemBuilder: (context, index) =>
+                                const BottomSheetListItem(),
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
+                          ),
+                          CustomButton(
+                            title: 'إضافة محفظة',
+                            color: Colors.red,
+                            onpress: () {},
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 );
               },
@@ -106,6 +127,64 @@ class Elma7fazaSection extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BottomSheetListItem extends StatelessWidget {
+  const BottomSheetListItem({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.r),
+      // decoration: const BoxDecoration(
+      //   border: Border(
+      //     bottom: BorderSide(
+      //       color: AppColors.colorGrey,
+      //     ),
+      //   ),
+      // ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 16.r,
+            backgroundColor: AppColors.primaryColor,
+          ),
+          SizedBox(width: 10.w),
+          Text(
+            'مصروف الشهر',
+            style: AppStyles.textStyle24w400.copyWith(
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Spacer(),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: '840.00 ',
+                  style: AppStyles.textStyle24w400.copyWith(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+                TextSpan(
+                  text: 'ج.م',
+                  style: AppStyles.textStyle24w400.copyWith(
+                    fontSize: 8.sp,
+                    color: AppColors.colorGrey,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
