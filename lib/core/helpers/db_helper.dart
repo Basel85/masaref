@@ -56,16 +56,14 @@ class DBHelper {
     print("HI");
     await insertIntoSection(name: "expenses");
     await insertIntoSection(name: "Income");
-    await insertIntoCategory(
-        sectionid: 1, name: "Food", image: "");
-    await insertIntoCategory(
-        sectionid: 2, name: "Rateb", image: "");
+    await insertIntoCategory(sectionid: 1, name: "Food", image: "");
+    await insertIntoCategory(sectionid: 2, name: "Rateb", image: "");
   }
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref56.db');
-    openDatabase(
+    String path = join(dbpath, 'masaref48.db');
+    database = await openDatabase(
       path,
       version: 2,
       onConfigure: _onConfigure,
@@ -77,19 +75,23 @@ class DBHelper {
         await getAll('Trans_action');
         print("Database is open");
       },
-    ).then((value) {
-      database = value;
-    });
+    );
   }
 
   static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
   }
-  static Future<List<Map<String,dynamic>>> getCategoriesOfSpecificSection({required int sectionId}) async {
-    return await database.rawQuery('SELECT * FROM Category WHERE sectionid = $sectionId');
+
+  static Future<List<Map<String, dynamic>>> getCategoriesOfSpecificSection(
+      {required int sectionId}) async {
+    return await database
+        .rawQuery('SELECT * FROM Category WHERE sectionid = $sectionId');
   }
-  static Future<List<Map<String,dynamic>>> getSubCategoriesOfSpecificCategory({required int categoryId}) async {
-    return await database.rawQuery('SELECT * FROM SubCategory WHERE categoryid = $categoryId');
+
+  static Future<List<Map<String, dynamic>>> getSubCategoriesOfSpecificCategory(
+      {required int categoryId}) async {
+    return await database
+        .rawQuery('SELECT * FROM SubCategory WHERE categoryid = $categoryId');
   }
 
   static Future insertIntoSection({required String name}) async {
@@ -99,7 +101,6 @@ class DBHelper {
       });
     });
   }
-
 
   static Future insertIntoCategory(
       {required int sectionid,
@@ -116,8 +117,7 @@ class DBHelper {
   }
 
   static Future insertIntoSubCategory(
-      {
-      required int categoryid,
+      {required int categoryid,
       required String name,
       required String image}) async {
     await database.transaction((txn) async {

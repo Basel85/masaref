@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -22,7 +24,7 @@ class CustomListTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: imageRadius??20.r,
         backgroundColor: backgroundColor,
-        backgroundImage: image!=null && image!=""? NetworkImage(image!):null,
+        backgroundImage: image!=null && image!=""? FileImage(File(image!)):null,
       ),
       title: Text(
         title,

@@ -10,4 +10,5 @@ class AppColors {
   static const Color colorYellow = Color(0xFFF9E79F);
   static const Color darkMode = Color(0xff3F3F3F);
   static const Color lightMode = Color.fromARGB(255, 245, 245, 245);
+  static const Color redColor = Color(0xffFF0000);
 }

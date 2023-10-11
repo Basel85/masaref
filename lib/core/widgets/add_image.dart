@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +33,7 @@ class AddImage extends StatelessWidget with SnackBarViewer {
             backgroundColor: Colors.blue,
             radius: 20.r,
             backgroundImage: state is ImagePickerPickedState
-                ? FileImage(state.imagePath)
+                ? FileImage(File(state.imagePath))
                 : null,
           ),
         ),

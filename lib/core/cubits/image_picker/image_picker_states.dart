@@ -1,11 +1,10 @@
-import 'dart:io';
 
 abstract class ImagePickerStates {}
 
 class ImagePickerInitialState extends ImagePickerStates {}
 
 class ImagePickerPickedState extends ImagePickerStates {
-  final File imagePath;
+  final String imagePath;
   ImagePickerPickedState({required this.imagePath});
 }
 

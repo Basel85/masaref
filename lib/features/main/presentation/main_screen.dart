@@ -6,8 +6,7 @@ import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_states.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
-import 'package:masaref/features/mo3amalat_page/presentation/view/mo3amalat_page.dart';
-import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
+import 'package:masaref/features/mo3amalat_tap/presentation/view/mo3amalat_tap.dart';
 import 'package:masaref/features/wallets/presentation/wallets_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -33,7 +32,7 @@ class MainScreen extends StatelessWidget {
             index: state is BottomNavigationBarChangedState ? state.index : 0,
             children: [
               const Directionality(
-                  textDirection: TextDirection.rtl, child: Mo3amalatPage()),
+                  textDirection: TextDirection.rtl, child: Mo3amalatTap()),
               Container(),
               const Directionality(
                   textDirection: TextDirection.rtl, child: WalletsScreen()),
