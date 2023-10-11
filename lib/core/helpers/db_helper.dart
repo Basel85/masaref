@@ -170,20 +170,18 @@ class DBHelper {
     });
   }
 
-  static void deleteFromAll(int id, String tableName) {
-    database
-        .rawDelete('DELETE FROM $tableName WHERE id = ?', [id]).then((value) {
-      getAll(tableName);
-    });
+  static void deleteFromAll(int id, String tableName) async {
+    await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
 
   static void updateRecordonWallet(
-      {required int id, required double balance, required String name}) {
-    database.rawUpdate(
-        '''UPDATE Wallet SET balance = ? name = ? WHERE id = ?''',
-        [balance, name, id]).then((value) {
-      getAll('Wallet');
-    });
+      {required int id,
+      required double balance,
+      required String name,
+      required String image}) async {
+    await database.rawUpdate(
+        '''UPDATE Wallet SET balance = ?, name = ?, image = ? WHERE id = ?''',
+        [balance, name, image, id]);
   }
 
   static void updateRecordonTransaction(

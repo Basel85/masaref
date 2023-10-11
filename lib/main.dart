@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
                           ),
                           scaffoldBackgroundColor: AppColors.lightMode,
                         ),
-                  home: const CategoriesScreen(),
+                  home: const SplashScreen(),
                 );
               },
             ),
