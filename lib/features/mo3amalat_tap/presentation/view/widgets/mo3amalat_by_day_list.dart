@@ -17,35 +17,38 @@ class Mo3amalatByDayList extends StatelessWidget {
         if (BlocProvider.of<
                     WholeAppCubit>(context)
                 .transactionDate1list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<
                     WholeAppCubit>(context)
                 .transactionDate2list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<
                     WholeAppCubit>(context)
                 .transactionDate3list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<
                     WholeAppCubit>(context)
                 .transactionDate4list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<
                     WholeAppCubit>(context)
                 .transactionDate5list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<WholeAppCubit>(context)
                 .transactionDate6list
-                .isNotEmpty ||
+                .isEmpty &&
             BlocProvider.of<WholeAppCubit>(context)
                 .transactionDate7list
-                .isNotEmpty)
-          if (BlocProvider.of<WholeAppCubit>(context)
-              .transactionDate1list
-              .isNotEmpty)
-            Mo3amalatByDayContainer(
-                tList: BlocProvider.of<WholeAppCubit>(context)
-                    .transactionDate1list),
+                .isEmpty)
+          const Center(
+            child: Text('لا&&'),
+          ),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate1list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate1list),
         if (BlocProvider.of<WholeAppCubit>(context)
             .transactionDate2list
             .isNotEmpty)

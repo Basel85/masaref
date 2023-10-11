@@ -14,26 +14,7 @@ class Mo3amalatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.star_outline,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.filter,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.delete,
-            ),
-          ),
-        ],
+        
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);

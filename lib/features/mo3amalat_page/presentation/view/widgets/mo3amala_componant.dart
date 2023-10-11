@@ -16,7 +16,7 @@ class Mo3amalaComponant extends StatelessWidget {
     required this.cateName,
   });
   final TransactionModel transactionModel;
-  final String cateName;
+  final String? cateName;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,7 @@ class Mo3amalaComponant extends StatelessWidget {
                     toAdd: false,
                     walletList:
                         state is GetAllWalletsSuccessState ? state.wallets : [],
+                    transactionModel: transactionModel,
                   ),
                 ),
               );
@@ -73,7 +74,7 @@ class Mo3amalaComponant extends StatelessWidget {
                         ),
                         SizedBox(width: 5.w),
                         Text(
-                          cateName,
+                          cateName??"",
                           style: TextStyle(
                             fontSize: 10.sp,
                             color: AppColors.colorBlack,
@@ -82,53 +83,27 @@ class Mo3amalaComponant extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(height: 5.h),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 10.r,
-                              backgroundColor: AppColors.primaryColor,
-                            ),
-                            SizedBox(width: 5.w),
-                            SizedBox(
-                              width: 60.w,
-                              child: Text(
-                                'مصروف الشهر',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: AppColors.colorBlack,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text.rich(
+                    Text.rich(
+                      TextSpan(
+                        children: [
                           TextSpan(
-                            children: [
-                              TextSpan(
-                                text: transactionModel.price.toString(),
-                                style: transactionModel.sectionID == 1
-                                    ? const TextStyle(
-                                        color: Colors.red,
-                                      )
-                                    : const TextStyle(
-                                        color: Colors.green,
-                                      ),
-                              ),
-                              const TextSpan(
-                                text: 'ج.م',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
+                            text: transactionModel.price.toString(),
+                            style: transactionModel.sectionID == 1
+                                ? const TextStyle(
+                                    color: Colors.red,
+                                  )
+                                : const TextStyle(
+                                    color: Colors.green,
+                                  ),
                           ),
-                        ),
-                      ],
+                          const TextSpan(
+                            text: ' ج.م',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

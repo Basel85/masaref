@@ -34,11 +34,13 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     emit(WholeAppModeChange());
   }
 
-  getCategoryName(catyid) async {
-    await DBHelper.getspecificCategoryName(catyid: catyid).then((value) {
-      cateName = value[0]['name'];
-      cateNames.add(cateName!);
-    });
+  getCategoryName(catyids) async {
+    for (var element in catyids) {
+      await DBHelper.getspecificCategoryName(catyid: element).then((value) {
+        cateName = value[0]['name'];
+        cateNames.add(cateName!);
+      });
+    }
     emit(WholeAppGetCategoryName());
   }
 

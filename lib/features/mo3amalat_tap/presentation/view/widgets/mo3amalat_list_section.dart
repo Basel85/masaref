@@ -21,18 +21,22 @@ class _Mo3amalatListSectionState extends State<Mo3amalatListSection> {
   @override
   void initState() {
     super.initState();
+    List<int> categoryIDs = [];
     for (var i = 0; i < widget.tranList.length; i++) {
-      BlocProvider.of<WholeAppCubit>(context)
-          .getCategoryName(widget.tranList[i].categoryID);
+      categoryIDs.add(widget.tranList[i].categoryID!);
     }
+      BlocProvider.of<WholeAppCubit>(context)
+          .getCategoryName(categoryIDs);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return BlocProvider.of<WholeAppCubit>(context).cateNames.isEmpty
-            ?const CircularProgressIndicator.adaptive()
+        return BlocProvider.of<WholeAppCubit>(context).cateNames.isEmpty ||
+                BlocProvider.of<WholeAppCubit>(context).cateNames.length !=
+                    widget.tranList.length
+            ? const CircularProgressIndicator.adaptive()
             : ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

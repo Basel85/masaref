@@ -46,7 +46,6 @@ class DBHelper {
             time TEXT,
             repeat TEXT,
             priority TEXT,
-            FOREIGN KEY (subcategoryid) REFERENCES SubCategory (id),
             FOREIGN KEY (sectionid) REFERENCES Section (id),
             FOREIGN KEY (categoryid) REFERENCES Category (id),
             FOREIGN KEY (walletid) REFERENCES Wallet (id)
@@ -85,6 +84,7 @@ class DBHelper {
     return await database
         .rawQuery('''SELECT name FROM Category WHERE id = $catyid ''');
   }
+
   static Future<List<Map<String, dynamic>>> getTransactionOfSpecificDate(
       {required String date}) async {
     return await database
@@ -159,7 +159,7 @@ class DBHelper {
   static Future insertIntoTransaction(
       {required double price,
       required int sectionid,
-      required int? categoryid,
+      required int categoryid,
       required int walletid,
       required String notes,
       required String date,
@@ -177,11 +177,8 @@ class DBHelper {
     });
   }
 
-  static void deleteFromAll(int id, String tableName) {
-    database
-        .rawDelete('DELETE FROM $tableName WHERE id = ?', [id]).then((value) {
-      getAll(tableName);
-    });
+  static Future deleteFromAll(int id, String tableName) async {
+   await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
 
   static void updateRecordonWallet(
@@ -193,10 +190,9 @@ class DBHelper {
     });
   }
 
-  static void updateRecordonTransaction(
+  static Future updateRecordonTransaction(
       {required int id,
       required double price,
-      required int subcategoryid,
       required int sectionid,
       required int categoryid,
       required int walletid,
@@ -204,26 +200,24 @@ class DBHelper {
       required String date,
       required String time,
       required String repeat,
-      required String priority}) {
-    database.rawUpdate('''UPDATE Transaction SET price = ? 
-        subcategoryid = ? sectionid = ? 
-        categoryid = ? walletid = ? 
-        notes = ? date = ? time = ? 
-        repeat = ? priority = ? 
-        WHERE id = ?''', [
-      price,
-      subcategoryid,
-      sectionid,
-      categoryid,
-      walletid,
-      notes,
-      date,
-      time,
-      repeat,
-      priority,
-      id
-    ]).then((value) {
-      getAll('Transaction');
-    });
+      required String priority}) async {
+    await database.rawUpdate(
+        '''UPDATE Trans_action SET price = ?, sectionid = ?, 
+        categoryid = ?, walletid = ?,
+        notes = ?, date = ?, time = ?,
+        repeat = ?, priority = ?
+        WHERE id = ?''',
+        [
+          price,
+          sectionid,
+          categoryid,
+          walletid,
+          notes,
+          date,
+          time,
+          repeat,
+          priority,
+          id
+        ]);
   }
 }

@@ -51,15 +51,13 @@ class _Mo3amalatListItemState extends State<Mo3amalatListItem> {
             const Spacer(),
             Text(
               widget.transactionModel.price.toString(),
-              style: widget.transactionModel.sectionID == 1
-                  ? AppStyles.textStyle24w400.copyWith(
-                      color: Colors.red,
-                      fontSize: 12.sp,
-                    )
-                  : AppStyles.textStyle24w400.copyWith(
-                      color: Colors.green,
-                      fontSize: 12.sp,
-                    ),
+              style:widget.transactionModel.sectionID==1? AppStyles.textStyle24w400.copyWith(
+                color: Colors.red,
+                fontSize: 12.sp,
+              ):AppStyles.textStyle24w400.copyWith(
+                color: Colors.green,
+                fontSize: 12.sp,
+              ),
             ),
           ],
         );

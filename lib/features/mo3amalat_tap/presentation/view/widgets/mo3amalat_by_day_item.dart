@@ -23,41 +23,46 @@ class Mo3amalatByDayContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return InkWell(
-          splashFactory: InkRipple.splashFactory,
-          splashColor: AppColors.primaryColor.withOpacity(0.2),
-          onTap: () async {
-            await Future.delayed(const Duration(milliseconds: 200), () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Mo3amalatPage(transactionList:tList),
-                ),
-              );
-            });
-          },
-          child: Ink(
-            padding: EdgeInsets.all(5.r),
-            decoration: BoxDecoration(
-              color: BlocProvider.of<WholeAppCubit>(context).isdark
-                  ? AppColors.colorBlack
-                  : AppColors.colorWhite,
-            ),
-            child: Column(
-              children: [
-                DateAndTotalSection(tList: tList),
-                const Divider(color: AppColors.colorGrey),
-                Mo3amalatListSection(tranList: tList),
-                const Divider(color: AppColors.colorGrey),
-                Text(
-                  'المزيد من التفاصيل',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    fontSize: 10.sp,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
+        return Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
+          child: InkWell(
+            splashFactory: InkRipple.splashFactory,
+            splashColor: AppColors.primaryColor.withOpacity(0.2),
+            onTap: () async {
+              await Future.delayed(const Duration(milliseconds: 200), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Mo3amalatPage(transactionList: tList),
                   ),
-                ),
-              ],
+                );
+              });
+            },
+            child: Ink(
+              padding: EdgeInsets.all(5.r),
+              decoration: BoxDecoration(
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorBlack
+                    : AppColors.colorWhite,
+              ),
+              child: tList.isEmpty
+                  ? const Center(child: CircularProgressIndicator.adaptive())
+                  : Column(
+                      children: [
+                        DateAndTotalSection(tList: tList),
+                        const Divider(color: AppColors.colorGrey),
+                        Mo3amalatListSection(tranList: tList),
+                        const Divider(color: AppColors.colorGrey),
+                        Text(
+                          'المزيد من التفاصيل',
+                          style: AppStyles.textStyle24w400.copyWith(
+                            fontSize: 10.sp,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
             ),
           ),
         );

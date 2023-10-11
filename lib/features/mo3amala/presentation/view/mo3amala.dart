@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
+import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
@@ -21,8 +24,10 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
     super.key,
     required this.toAdd,
     required this.walletList,
+    this.transactionModel,
   });
   final bool toAdd;
+  final TransactionModel? transactionModel;
   final List<WalletModel> walletList;
 
   @override
@@ -36,7 +41,21 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
             actions: [
               if (!toAdd)
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    DBHelper.deleteFromAll(
+                            transactionModel!.id!, 'Trans_action')
+                        .then((value) async {
+                      await BlocProvider.of<WholeAppCubit>(context)
+                          .getAllTransaction();
+                      await BlocProvider.of<WholeAppCubit>(context)
+                          .getTransactionwithDate();
+                      showSnackBar(
+                        context: context,
+                        message: 'تم حذف المعاملة',
+                        backgroundColor: Colors.green,
+                      );
+                    });
+                  },
                   icon: const Icon(
                     Icons.delete,
                     color: AppColors.colorBlack,
@@ -127,31 +146,69 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                 priority:
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                         .importanceIndex,
-                              ).then((value) {
-                                BlocProvider.of<WholeAppCubit>(context)
+                              ).then((value) async {
+                                await BlocProvider.of<WholeAppCubit>(context)
+                                    .getAllTransaction();
+                                await BlocProvider.of<WholeAppCubit>(context)
                                     .getTransactionwithDate();
                                 showSnackBar(
                                   context: context,
                                   message: 'تم إضافة المعاملة',
                                   backgroundColor: Colors.green,
                                 );
-                                Navigator.pop(context);
                               });
                             }
                           } else {
-                            // DBHelper.updateRecordonTransaction(
-                            //   id: id,
-                            //   price: price,
-                            //   subcategoryid: subcategoryid,
-                            //   sectionid: sectionid,
-                            //   categoryid: categoryid,
-                            //   walletid: walletid,
-                            //   notes: notes,
-                            //   date: date,
-                            //   time: time,
-                            //   repeat: repeat,
-                            //   priority: priority,
-                            // );
+                            DBHelper.updateRecordonTransaction(
+                              id: transactionModel!.id!,
+                              price: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .price ??
+                                  transactionModel!.price!,
+                              sectionid: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .pickedCategory
+                                      ?.sectionId ??
+                                  transactionModel!.sectionID!,
+                              categoryid:
+                                  BlocProvider.of<Mo3amalaCubit>(context)
+                                          .pickedCategory
+                                          ?.id ??
+                                      transactionModel!.categoryID!,
+                              walletid: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .pickedWallet
+                                      ?.id ??
+                                  transactionModel!.walletID!,
+                              notes: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .notes ??
+                                  transactionModel!.notes!,
+                              date: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .transDate
+                                      .toString()
+                                      .substring(0, 10) ??
+                                  transactionModel!.date!,
+                              time: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .transTime
+                                      .toString()
+                                      .substring(10, 15) ??
+                                  transactionModel!.time!,
+                              repeat: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .repeatChange
+                                      .toString() ??
+                                  transactionModel!.repeat!,
+                              priority: BlocProvider.of<Mo3amalaCubit>(context)
+                                      .importanceIndex
+                                      .toString() ??
+                                  transactionModel!.priority!,
+                            ).then((value) async {
+                              await BlocProvider.of<WholeAppCubit>(context)
+                                  .getAllTransaction();
+                              await BlocProvider.of<WholeAppCubit>(context)
+                                  .getTransactionwithDate();
+                              showSnackBar(
+                                context: context,
+                                message: 'تم تعديل المعاملة',
+                                backgroundColor: Colors.green,
+                              );
+                            });
                           }
                         },
                       ),
