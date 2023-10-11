@@ -18,8 +18,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SnackBarViewer {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3))
-        .then((value) => GetAllWalletsCubit.get(context).getAllWallets());
+    GetAllWalletsCubit.get(context).getAllWallets();
     super.initState();
   }
 
@@ -30,12 +29,14 @@ class _SplashScreenState extends State<SplashScreen> with SnackBarViewer {
       body: BlocListener<GetAllWalletsCubit, GetAllWalletsStates>(
         listener: (context, state) {
           if (state is GetAllWalletsSuccessState) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => state.wallets.isEmpty
-                        ? const OnBoardingScreen()
-                        : const MainScreen()));
+            Future.delayed(const Duration(seconds: 3)).then((_) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => state.wallets.isEmpty
+                          ? const OnBoardingScreen()
+                          : const MainScreen()));
+            });
           } else if (state is GetAllWalletsErrorState) {
             showSnackBar(
                 context: context,

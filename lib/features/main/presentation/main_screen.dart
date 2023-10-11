@@ -22,8 +22,12 @@ class MainScreen extends StatelessWidget {
           elevation: 0,
           backgroundColor: AppColors.colorPurple,
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const Mo3amalaPage(toAdd: true,)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const Mo3amalaPage(
+                          toAdd: true,
+                        )));
           },
           child: const Icon(Icons.add),
         ),

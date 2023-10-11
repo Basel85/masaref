@@ -63,7 +63,9 @@ class _WalletsScreenState extends State<WalletsScreen> {
           return ListView(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             children: [
-              const TotalBalance(),
+              TotalBalance(
+                totalBalance: state.totalBalance,
+              ),
               SizedBox(height: 20.h),
               ...List.generate(
                   state.wallets.length,

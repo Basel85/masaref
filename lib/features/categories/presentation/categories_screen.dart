@@ -20,7 +20,6 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  // final TabController _tabController = TabController(length: 2, vsync: this);
   @override
   Widget build(BuildContext context) {
     return Directionality(

@@ -6,13 +6,12 @@ class AddCategoryCubit extends Cubit<AddCategoryStates> {
   AddCategoryCubit() : super(AddCategoryInitialState());
   static AddCategoryCubit get(context) => BlocProvider.of(context);
   void addCategory(
-      {required bool isCategory,
+      {
       required String name,
       required String imagePath,
-      required int id}) {
+      required int sectionid}) {
     try {
-      CategoryRepository.addCategoryOrSubCategory(
-          isCategory: isCategory, name: name, imagePath: imagePath, id: id);
+      CategoryRepository.addCategory(name: name, imagePath: imagePath, sectionid: sectionid);
       emit(AddCategorySuccessState());
     } catch (e) {
       emit(AddCategoryErrorState(errorMessage: e.toString()));
