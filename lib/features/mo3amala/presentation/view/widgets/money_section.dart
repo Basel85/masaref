@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 
 class MoneySection extends StatelessWidget {
   const MoneySection({
     super.key,
+    required this.cubit,
   });
+  final Mo3amalaCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,9 @@ class MoneySection extends StatelessWidget {
                 inputType: TextInputType.number,
                 hinttext: 'المبلغ',
                 hintsize: 16.sp,
+                onchange: (p0) {
+                  cubit.setPrice(double.parse(p0));
+                },
               ),
             ),
           ),

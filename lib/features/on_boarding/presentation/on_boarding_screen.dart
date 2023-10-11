@@ -16,7 +16,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       onPageChanged: (value) {
         
       },
-      children: [],
+      children:const [],
     );
   }
 }

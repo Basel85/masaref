@@ -3,13 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 
-class DateAndTotalSection extends StatelessWidget {
+class DateAndTotalSection extends StatefulWidget {
   const DateAndTotalSection({
     super.key,
+    required this.tList,
   });
+  final List<TransactionModel> tList;
+
+  @override
+  State<DateAndTotalSection> createState() => _DateAndTotalSectionState();
+}
+
+class _DateAndTotalSectionState extends State<DateAndTotalSection> {
+  @override
+  void initState() {
+    for (var element in widget.tList) {
+      BlocProvider.of<WholeAppCubit>(context).getByDayTotal(element);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +34,7 @@ class DateAndTotalSection extends StatelessWidget {
         return Row(
           children: [
             Text(
-              '07',
+              widget.tList[0].date!.substring(8, 10),
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 26.sp,
                 color: BlocProvider.of<WholeAppCubit>(context).isdark
@@ -31,7 +47,7 @@ class DateAndTotalSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'السبت',
+                  widget.tList[0].date!.substring(5, 7),
                   style: AppStyles.textStyle24w400.copyWith(
                     color: AppColors.colorGrey,
                     fontWeight: FontWeight.bold,
@@ -39,7 +55,7 @@ class DateAndTotalSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'أكتوبر, 2023',
+                  widget.tList[0].date!.substring(0, 4),
                   style: AppStyles.textStyle24w400.copyWith(
                     color: AppColors.colorGrey,
                     fontSize: 10.sp,
@@ -48,24 +64,21 @@ class DateAndTotalSection extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '0.00',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    color: Colors.green,
-                    fontSize: 14.sp,
-                  ),
-                ),
-                Text(
-                  '160.00',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    color: Colors.red,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ],
+            Text(
+              BlocProvider.of<WholeAppCubit>(context).byDayTotal < 0
+                  ? BlocProvider.of<WholeAppCubit>(context)
+                      .byDayTotal
+                      .toString()
+                      .split('-')[1]
+                  : BlocProvider.of<WholeAppCubit>(context)
+                      .byDayTotal
+                      .toString(),
+              style: AppStyles.textStyle24w400.copyWith(
+                color: BlocProvider.of<WholeAppCubit>(context).byDayTotal < 0
+                    ? Colors.red
+                    : Colors.green,
+                fontSize: 14.sp,
+              ),
             ),
           ],
         );

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,11 +6,18 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
+import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
+import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 
 class Elma7fazaSection extends StatelessWidget {
   const Elma7fazaSection({
     super.key,
+    required this.walletList,
+    required this.cubit,
   });
+  final Mo3amalaCubit cubit;
+  final List<WalletModel> walletList;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +47,32 @@ class Elma7fazaSection extends StatelessWidget {
                         children: [
                           ListView.separated(
                             shrinkWrap: true,
-                            itemCount: 3,
-                            itemBuilder: (context, index) =>
-                                const BottomSheetListItem(),
+                            itemCount:
+                                walletList.isEmpty ? 1 : walletList.length,
+                            itemBuilder: (context, index) => walletList.isEmpty
+                                ? const Center(
+                                    child: Text('No Wallets!'),
+                                  )
+                                : walletList.length == 1
+                                    ? BottomSheetListItem(
+                                        walletModel: walletList[0],
+                                        cubit: cubit)
+                                    : BottomSheetListItem(
+                                        walletModel: walletList[index],
+                                        cubit: cubit),
                             separatorBuilder: (context, index) =>
                                 const Divider(),
                           ),
                           CustomButton(
                             title: 'إضافة محفظة',
                             color: Colors.red,
-                            onpress: () {},
+                            onpress: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AddNewWalletScreen()));
+                            },
                           ),
                         ],
                       ),
@@ -62,13 +86,22 @@ class Elma7fazaSection extends StatelessWidget {
                     CircleAvatar(
                       radius: 16.r,
                       backgroundColor: AppColors.primaryColor,
+                      backgroundImage: cubit.pickedWallet == null
+                          ? walletList.isEmpty
+                              ? null
+                              : FileImage(File(walletList[0].image))
+                          : FileImage(File(cubit.pickedWallet!.image)),
                     ),
                     SizedBox(width: 10.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'مصروف الشهر',
+                          cubit.pickedWallet == null
+                              ? walletList.isEmpty
+                                  ? 'الاسم'
+                                  : walletList[0].name
+                              : cubit.pickedWallet!.name,
                           style: AppStyles.textStyle24w400.copyWith(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
@@ -78,7 +111,11 @@ class Elma7fazaSection extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: '840.00 ',
+                                text: cubit.pickedWallet == null
+                                    ? walletList.isEmpty
+                                        ? 'الرصيد'
+                                        : '${walletList[0].balance} '
+                                    : '${cubit.pickedWallet!.balance} ',
                                 style: AppStyles.textStyle24w400.copyWith(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.bold,
@@ -123,6 +160,9 @@ class Elma7fazaSection extends StatelessWidget {
                     ),
                     hinttext: 'الملاحظات',
                     hintsize: 12.sp,
+                    onchange: (p0) {
+                      cubit.setNotes(p0);
+                    },
                   ),
                 ),
               ),
@@ -137,56 +177,62 @@ class Elma7fazaSection extends StatelessWidget {
 class BottomSheetListItem extends StatelessWidget {
   const BottomSheetListItem({
     super.key,
+    required this.walletModel,
+    required this.cubit,
   });
+  final WalletModel walletModel;
+  final Mo3amalaCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.r),
-      // decoration: const BoxDecoration(
-      //   border: Border(
-      //     bottom: BorderSide(
-      //       color: AppColors.colorGrey,
-      //     ),
-      //   ),
-      // ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 16.r,
-            backgroundColor: AppColors.primaryColor,
-          ),
-          SizedBox(width: 10.w),
-          Text(
-            'مصروف الشهر',
-            style: AppStyles.textStyle24w400.copyWith(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.bold,
+    return InkWell(
+      splashColor: Colors.green[100],
+      splashFactory: InkRipple.splashFactory,
+      onTap: () {
+        cubit.changeWallet(walletModel);
+        Navigator.pop(context);
+      },
+      child: Ink(
+        padding: EdgeInsets.all(10.r),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 16.r,
+              backgroundColor: AppColors.primaryColor,
+              backgroundImage: FileImage(File(walletModel.image)),
             ),
-          ),
-          const Spacer(),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: '840.00 ',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
-                ),
-                TextSpan(
-                  text: 'ج.م',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    fontSize: 8.sp,
-                    color: AppColors.colorGrey,
-                  ),
-                ),
-              ],
+            SizedBox(width: 10.w),
+            Text(
+              walletModel.name,
+              style: AppStyles.textStyle24w400.copyWith(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+            const Spacer(),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${walletModel.balance} ',
+                    style: AppStyles.textStyle24w400.copyWith(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'ج.م',
+                    style: AppStyles.textStyle24w400.copyWith(
+                      fontSize: 8.sp,
+                      color: AppColors.colorGrey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

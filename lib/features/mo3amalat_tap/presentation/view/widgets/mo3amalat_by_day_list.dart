@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_by_day_item.dart';
 
 class Mo3amalatByDayList extends StatelessWidget {
@@ -9,12 +10,79 @@ class Mo3amalatByDayList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 2,
-      itemBuilder: (context, index) => const Mo3amalatByDayContainer(),
-      separatorBuilder: (context, index) => SizedBox(height: 10.h),
+      children: [
+        if (BlocProvider.of<
+                    WholeAppCubit>(context)
+                .transactionDate1list
+                .isNotEmpty ||
+            BlocProvider.of<
+                    WholeAppCubit>(context)
+                .transactionDate2list
+                .isNotEmpty ||
+            BlocProvider.of<
+                    WholeAppCubit>(context)
+                .transactionDate3list
+                .isNotEmpty ||
+            BlocProvider.of<
+                    WholeAppCubit>(context)
+                .transactionDate4list
+                .isNotEmpty ||
+            BlocProvider.of<
+                    WholeAppCubit>(context)
+                .transactionDate5list
+                .isNotEmpty ||
+            BlocProvider.of<WholeAppCubit>(context)
+                .transactionDate6list
+                .isNotEmpty ||
+            BlocProvider.of<WholeAppCubit>(context)
+                .transactionDate7list
+                .isNotEmpty)
+          if (BlocProvider.of<WholeAppCubit>(context)
+              .transactionDate1list
+              .isNotEmpty)
+            Mo3amalatByDayContainer(
+                tList: BlocProvider.of<WholeAppCubit>(context)
+                    .transactionDate1list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate2list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate2list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate3list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate3list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate4list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate4list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate5list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate5list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate6list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate6list),
+        if (BlocProvider.of<WholeAppCubit>(context)
+            .transactionDate7list
+            .isNotEmpty)
+          Mo3amalatByDayContainer(
+              tList:
+                  BlocProvider.of<WholeAppCubit>(context).transactionDate7list),
+      ],
     );
   }
 }

@@ -59,30 +59,30 @@ class RepeatSection extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 5.h),
-          GestureDetector(
-            onTap: () {
-              cubit.sWitCh();
-            },
-            child: Row(
-              children: [
-                Text(
-                  'التنبيه بالمعاملة',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    fontSize: 10.sp,
-                  ),
-                ),
-                const Spacer(),
-                Switch.adaptive(
-                  activeColor: AppColors.primaryColor,
-                  value: cubit.change,
-                  onChanged: (value) {
-                    cubit.sWitCh();
-                  },
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(height: 5.h),
+          // GestureDetector(
+          //   onTap: () {
+          //     cubit.sWitCh();
+          //   },
+          //   child: Row(
+          //     children: [
+          //       Text(
+          //         'التنبيه بالمعاملة',
+          //         style: AppStyles.textStyle24w400.copyWith(
+          //           fontSize: 10.sp,
+          //         ),
+          //       ),
+          //       const Spacer(),
+          //       Switch.adaptive(
+          //         activeColor: AppColors.primaryColor,
+          //         value: cubit.change,
+          //         onChanged: (value) {
+          //           cubit.sWitCh();
+          //         },
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

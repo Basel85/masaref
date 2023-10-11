@@ -137,12 +137,11 @@ class _AddNewWalletScreenState extends State<AddNewWalletScreen>
                               message: "من فضلك اختر صورة",
                               backgroundColor: Colors.red);
                         } else {
-                          print("dddd");
                           AddNewWalletCubit.get(context).addNewWallet(
                               name: _nameController.text,
                               balance: double.parse(_balanceController.text),
                               imagePath:
-                                  ImagePickerCubit.get(context).imagePath!,
+                                  ImagePickerCubit.get(context).imagePath!.path,
                               color: int.parse("0xFF$_hexColor"));
                         }
                       }

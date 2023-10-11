@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/get_error_message.dart';
-import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
@@ -51,8 +50,6 @@ class _WalletsScreenState extends State<WalletsScreen> {
                     BlocProvider<CheckBoxCubit>(
                       create: (_) => CheckBoxCubit(),
                     ),
-                    BlocProvider<AddNewWalletCubit>(
-                        create: (_) => AddNewWalletCubit()),
                     BlocProvider<ImagePickerCubit>(
                         create: (_) => ImagePickerCubit()),
                   ],
@@ -79,6 +76,7 @@ class _WalletsScreenState extends State<WalletsScreen> {
                           color: state.wallets[index].color,
                           walletName: state.wallets[index].name,
                           balance: state.wallets[index].balance,
+                          image: state.wallets[index].image,
                         ),
                       ))
             ],

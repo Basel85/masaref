@@ -45,7 +45,7 @@ class _CategoriesBodyState extends State<CategoriesBody>
                       categoryId: state.categories[index].id),
                 child: CategoryListTile(
                   title: state.categories[index].name,
-                  image: state.categories[index].image,
+                  image: state.categories[index].image, model: state.categories[index],
                 ),
               );
             },

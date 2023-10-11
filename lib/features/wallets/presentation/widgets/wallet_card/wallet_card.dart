@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -10,13 +8,13 @@ class WalletCard extends StatelessWidget {
   final int color;
   final String walletName;
   final double balance;
-  final String? image;
+  final String image;
   const WalletCard(
       {super.key,
       required this.color,
       required this.walletName,
       required this.balance,
-      this.image});
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class WalletCard extends StatelessWidget {
           child: Column(
             children: [
               WalletListTile(
-                image: "",
+                image:image,
                 walletName: walletName,
               ),
               SizedBox(height: 10.h),

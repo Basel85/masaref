@@ -97,7 +97,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                       if (addCategorystate is AddCategorySuccessState) {
                         showSnackBar(
                             context: context,
-                            message: "Done",
+                            message: "تم",
                             backgroundColor: Colors.green);
                         GetCategoriesOfSectionCubit.get(context)
                             .getCategoriesOfSection(
