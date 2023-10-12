@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
@@ -17,12 +19,9 @@ class ImportanceSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(15.r),
       decoration: BoxDecoration(
-        color: AppColors.colorWhite,
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.colorBlack.withOpacity(0.5),
-          ),
-        ),
+        color: BlocProvider.of<WholeAppCubit>(context).isdark
+            ? AppColors.colorBlack
+            : AppColors.colorWhite,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,9 +29,11 @@ class ImportanceSection extends StatelessWidget {
           Text(
             'الأولوية',
             style: AppStyles.textStyle24w400.copyWith(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 10.sp,
+                fontWeight: FontWeight.bold,
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack),
           ),
           SizedBox(width: 20.w),
           GestureDetector(

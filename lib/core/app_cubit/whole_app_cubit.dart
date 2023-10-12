@@ -44,11 +44,8 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
       cateName = value[0]['name'];
       values.add(cateName!);
     }
-    // emit(WholeAppGetCategoryName());
     return values;
   }
-
-  
 
   Future getTransactionwithDate() async {
     cateNames.clear();
@@ -148,7 +145,6 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
       categoryIDsday7.add(transactionDate7list[i].categoryID!);
     }
     cateNames.add(await getCategoryName(categoryIDsday7));
-    print(cateNames.toString());
     emit(WholeAppAllTransactions());
   }
 }

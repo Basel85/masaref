@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
@@ -24,12 +26,9 @@ class Elma7fazaSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(15.r),
       decoration: BoxDecoration(
-        color: AppColors.colorWhite,
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.colorBlack.withOpacity(0.5),
-          ),
-        ),
+        color: BlocProvider.of<WholeAppCubit>(context).isdark
+            ? AppColors.colorBlack
+            : AppColors.colorWhite,
       ),
       child: Column(
         children: [
@@ -40,47 +39,55 @@ class Elma7fazaSection extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListView.separated(
-                            shrinkWrap: true,
-                            itemCount:
-                                walletList.isEmpty ? 1 : walletList.length,
-                            itemBuilder: (context, index) => walletList.isEmpty
-                                ? const Center(
-                                    child: Text('No Wallets!'),
-                                  )
-                                : walletList.length == 1
-                                    ? BottomSheetListItem(
-                                        walletModel: walletList[0],
-                                        cubit: cubit)
-                                    : BottomSheetListItem(
-                                        walletModel: walletList[index],
-                                        cubit: cubit),
-                            separatorBuilder: (context, index) =>
-                                const Divider(),
-                          ),
-                          CustomButton(
-                            title: 'إضافة محفظة',
-                            color: Colors.red,
-                            onpress: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AddNewWalletScreen()));
-                            },
-                          ),
-                        ],
+                    return StatefulBuilder(
+                      builder: (context, setState) => Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  walletList.isEmpty ? 1 : walletList.length,
+                              itemBuilder: (context, index) =>
+                                  walletList.isEmpty
+                                      ? const Center(
+                                          child: Text('No Wallets!'),
+                                        )
+                                      : walletList.length == 1
+                                          ? BottomSheetListItem(
+                                              walletModel: walletList[0],
+                                              cubit: cubit)
+                                          : BottomSheetListItem(
+                                              walletModel: walletList[index],
+                                              cubit: cubit),
+                              // separatorBuilder: (context, index) =>
+                              //     const Divider(color: AppColors.colorGrey),
+                            ),
+                            CustomButton(
+                              title: 'إضافة محفظة',
+                              color: AppColors.primaryColor,
+                              onpress: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AddNewWalletScreen()));
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
                 );
               },
               child: Ink(
+                decoration: BoxDecoration(
+                  color: BlocProvider.of<WholeAppCubit>(context).isdark
+                      ? AppColors.colorBlack
+                      : AppColors.colorWhite,
+                ),
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -105,6 +112,10 @@ class Elma7fazaSection extends StatelessWidget {
                           style: AppStyles.textStyle24w400.copyWith(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
+                            color:
+                                BlocProvider.of<WholeAppCubit>(context).isdark
+                                    ? AppColors.colorWhite
+                                    : AppColors.colorBlack,
                           ),
                         ),
                         Text.rich(
@@ -119,14 +130,17 @@ class Elma7fazaSection extends StatelessWidget {
                                 style: AppStyles.textStyle24w400.copyWith(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.colorBlack.withOpacity(0.7),
+                                  color: BlocProvider.of<WholeAppCubit>(context)
+                                          .isdark
+                                      ? AppColors.colorWhite
+                                      : AppColors.colorBlack,
                                 ),
                               ),
                               TextSpan(
                                 text: 'ج.م',
                                 style: AppStyles.textStyle24w400.copyWith(
                                   fontSize: 8.sp,
-                                  color: AppColors.colorBlack.withOpacity(0.7),
+                                  color: AppColors.colorGrey,
                                 ),
                               ),
                             ],
@@ -135,7 +149,12 @@ class Elma7fazaSection extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    const Icon(Icons.arrow_drop_down),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: BlocProvider.of<WholeAppCubit>(context).isdark
+                          ? AppColors.colorWhite
+                          : AppColors.colorBlack,
+                    ),
                   ],
                 ),
               ),
@@ -145,9 +164,12 @@ class Elma7fazaSection extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Icon(
+              Icon(
                 FontAwesomeIcons.noteSticky,
                 size: 35,
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
               ),
               SizedBox(width: 20.w),
               Expanded(
@@ -193,7 +215,10 @@ class BottomSheetListItem extends StatelessWidget {
         Navigator.pop(context);
       },
       child: Ink(
-        padding: EdgeInsets.all(10.r),
+        color: BlocProvider.of<WholeAppCubit>(context).isdark
+            ? AppColors.colorBlack
+            : AppColors.colorWhite,
+        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
         child: Row(
           children: [
             CircleAvatar(
@@ -207,6 +232,9 @@ class BottomSheetListItem extends StatelessWidget {
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.bold,
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
               ),
             ),
             const Spacer(),

@@ -36,7 +36,7 @@ class _WalletsScreenState extends State<WalletsScreen> {
           style: TextStyle(
               color: Colors.white,
               fontSize: 20.sp,
-              fontWeight: FontWeight.bold),
+              fontWeight: FontWeight.bold,),
         ),
         actions: [
           IconButton(

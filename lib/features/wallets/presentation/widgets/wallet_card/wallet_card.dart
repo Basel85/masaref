@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masaref/core/utils/app_colors.dart';
+// import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/wallets/presentation/widgets/wallet_card/avaliable_balance.dart';
 import 'package:masaref/features/wallets/presentation/widgets/wallet_card/wallet_list_tile.dart';
 
@@ -32,7 +32,6 @@ class WalletCard extends StatelessWidget {
             children: [
               WalletListTile(
                 image: image,
-
                 walletName: walletName,
               ),
               SizedBox(height: 10.h),
@@ -40,31 +39,31 @@ class WalletCard extends StatelessWidget {
                 balance: balance,
               ),
               SizedBox(height: 10.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 60.w,
-                  ),
-                  Icon(
-                    Icons.visibility,
-                    size: 24.r,
-                    color: AppColors.colorGrey,
-                  )
-                ],
-              )
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     SizedBox(
+              //       width: 60.w,
+              //     ),
+              //     Icon(
+              //       Icons.visibility,
+              //       size: 24.r,
+              //       color: AppColors.colorGrey,
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),
-        Positioned(
-          right: 8.w,
-          bottom: 8.h,
-          child: Icon(
-            Icons.lock,
-            size: 24.r,
-            color: AppColors.colorGrey,
-          ),
-        ),
+        // Positioned(
+        //   right: 8.w,
+        //   bottom: 8.h,
+        //   child: Icon(
+        //     Icons.lock,
+        //     size: 24.r,
+        //     color: AppColors.colorGrey,
+        //   ),
+        // ),
       ],
     );
   }

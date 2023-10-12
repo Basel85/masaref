@@ -48,7 +48,7 @@ class DBHelper {
             priority TEXT,
             FOREIGN KEY (sectionid) REFERENCES Section (id),
             FOREIGN KEY (categoryid) REFERENCES Category (id),
-            FOREIGN KEY (walletid) REFERENCES Wallet (id)
+            FOREIGN KEY (walletid) REFERENCES Wallet (id) ON DELETE CASCADE
             )''');
     await insertIntoSection(name: "النفقات");
     await insertIntoSection(name: "الدخل");
@@ -76,7 +76,6 @@ class DBHelper {
   static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
   }
-
 
   static Future<List<Map<String, dynamic>>> getspecificCategoryName(
       {required int catyid}) async {
@@ -176,10 +175,8 @@ class DBHelper {
     });
   }
 
-
-
   static Future deleteFromAll(int id, String tableName) async {
-   await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
+    await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
 
   static void updateRecordonWallet(

@@ -62,7 +62,7 @@ class CustomFormField extends StatelessWidget {
         prefixIcon: prefixicon,
         hintStyle: AppStyles.textStyle24w400.copyWith(
           fontSize: hintsize,
-          color: AppColors.colorBlack.withOpacity(0.4),
+          color: AppColors.colorGrey,
         ),
         labelStyle: AppStyles.textStyle24w400.copyWith(
           fontSize: 14.sp,

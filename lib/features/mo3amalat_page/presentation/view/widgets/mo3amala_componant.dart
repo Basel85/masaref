@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
@@ -13,7 +14,8 @@ class Mo3amalaComponant extends StatelessWidget {
   const Mo3amalaComponant({
     super.key,
     required this.transactionModel,
-    required this.cateName, required this.transactionlist,
+    required this.cateName,
+    required this.transactionlist,
   });
   final TransactionModel transactionModel;
   final List<TransactionModel> transactionlist;
@@ -36,7 +38,8 @@ class Mo3amalaComponant extends StatelessWidget {
                     toAdd: false,
                     walletList:
                         state is GetAllWalletsSuccessState ? state.wallets : [],
-                    transactionModel: transactionModel, transactionList: transactionlist,
+                    transactionModel: transactionModel,
+                    transactionList: transactionlist,
                   ),
                 ),
               );
@@ -45,8 +48,10 @@ class Mo3amalaComponant extends StatelessWidget {
           child: Ink(
             padding:
                 EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: BlocProvider.of<WholeAppCubit>(context).isdark
+                  ? AppColors.colorBlack
+                  : AppColors.colorWhite,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,10 +80,13 @@ class Mo3amalaComponant extends StatelessWidget {
                         ),
                         SizedBox(width: 5.w),
                         Text(
-                          cateName??"",
+                          cateName ?? "",
                           style: TextStyle(
                             fontSize: 10.sp,
-                            color: AppColors.colorBlack,
+                            color:
+                                BlocProvider.of<WholeAppCubit>(context).isdark
+                                    ? AppColors.colorWhite
+                                    : AppColors.colorBlack,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
