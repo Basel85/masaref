@@ -18,9 +18,9 @@ class _Mo3amalatTapState extends State<Mo3amalatTap> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<WholeAppCubit>(context)
-        .getAllTransaction()
-        .then((value) {});
+    // BlocProvider.of<WholeAppCubit>(context)
+    //     .getAllTransaction()
+    //     .then((value) {});
     BlocProvider.of<WholeAppCubit>(context)
         .getTransactionwithDate()
         .then((value) {});
@@ -42,9 +42,27 @@ class _Mo3amalatTapState extends State<Mo3amalatTap> {
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: BlocProvider.of<WholeAppCubit>(context)
-                    .transactionlist
-                    .isEmpty
-                ? const Center(child: CircularProgressIndicator.adaptive())
+                        .transactionDate1list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate2list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate3list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate4list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate5list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate6list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate7list
+                        .isEmpty
+                ? const Center(child: Text('لا معاملات للان'))
                 : Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),

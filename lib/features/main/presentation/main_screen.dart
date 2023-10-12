@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
                               toAdd: true,
                               walletList: state is GetAllWalletsSuccessState
                                   ? state.wallets
-                                  : [],
+                                  : [], 
                             )));
               },
               child: const Icon(Icons.add),

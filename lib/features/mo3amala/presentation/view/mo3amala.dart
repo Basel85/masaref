@@ -25,9 +25,11 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
     required this.toAdd,
     required this.walletList,
     this.transactionModel,
+    this.transactionList = const [],
   });
   final bool toAdd;
   final TransactionModel? transactionModel;
+  final List<TransactionModel> transactionList;
   final List<WalletModel> walletList;
 
   @override
@@ -46,14 +48,12 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                             transactionModel!.id!, 'Trans_action')
                         .then((value) async {
                       await BlocProvider.of<WholeAppCubit>(context)
-                          .getAllTransaction();
-                      await BlocProvider.of<WholeAppCubit>(context)
-                          .getTransactionwithDate();
-                      showSnackBar(
-                        context: context,
-                        message: 'تم حذف المعاملة',
-                        backgroundColor: Colors.green,
-                      );
+                          .getTransactionwithDate()
+                          .then((value) => showSnackBar(
+                                context: context,
+                                message: 'تم حذف المعاملة',
+                                backgroundColor: Colors.green,
+                              ));
                     });
                   },
                   icon: const Icon(
@@ -100,7 +100,7 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: CustomButton(
                         title: toAdd ? 'إضافة معاملة' : 'تعديل',
-                        onpress: () {
+                        onpress: () async {
                           if (toAdd) {
                             if (walletList.isEmpty ||
                                 BlocProvider.of<Mo3amalaCubit>(context)
@@ -112,7 +112,7 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                 backgroundColor: Colors.red,
                               );
                             } else {
-                              DBHelper.insertIntoTransaction(
+                              await DBHelper.insertIntoTransaction(
                                 price: BlocProvider.of<Mo3amalaCubit>(context)
                                         .price ??
                                     0.0,
@@ -146,17 +146,20 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                 priority:
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                         .importanceIndex,
-                              ).then((value) async {
-                                await BlocProvider.of<WholeAppCubit>(context)
-                                    .getAllTransaction();
-                                await BlocProvider.of<WholeAppCubit>(context)
-                                    .getTransactionwithDate();
-                                showSnackBar(
-                                  context: context,
-                                  message: 'تم إضافة المعاملة',
-                                  backgroundColor: Colors.green,
-                                );
-                              });
+                              );
+                              await BlocProvider.of<WholeAppCubit>(context)
+                                  .getTransactionwithDate();
+                              List<int> categoryIDs = [];
+                              for (var i = 0; i < transactionList.length; i++) {
+                                categoryIDs.add(transactionList[i].categoryID!);
+                              }
+                              await BlocProvider.of<WholeAppCubit>(context)
+                                  .getCategoryName(categoryIDs);
+                              showSnackBar(
+                                context: context,
+                                message: 'تم إضافة المعاملة',
+                                backgroundColor: Colors.green,
+                              );
                             }
                           } else {
                             DBHelper.updateRecordonTransaction(
@@ -181,33 +184,38 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                       .notes ??
                                   transactionModel!.notes!,
                               date: BlocProvider.of<Mo3amalaCubit>(context)
-                                      .transDate
-                                      .toString()
-                                      .substring(0, 10) ??
-                                  transactionModel!.date!,
+                                  .transDate
+                                  .toString()
+                                  .substring(0, 10),
                               time: BlocProvider.of<Mo3amalaCubit>(context)
-                                      .transTime
-                                      .toString()
-                                      .substring(10, 15) ??
-                                  transactionModel!.time!,
+                                  .transTime
+                                  .toString()
+                                  .substring(10, 15),
                               repeat: BlocProvider.of<Mo3amalaCubit>(context)
-                                      .repeatChange
-                                      .toString() ??
-                                  transactionModel!.repeat!,
+                                  .repeatChange
+                                  .toString(),
                               priority: BlocProvider.of<Mo3amalaCubit>(context)
-                                      .importanceIndex
-                                      .toString() ??
-                                  transactionModel!.priority!,
+                                  .importanceIndex
+                                  .toString(),
                             ).then((value) async {
                               await BlocProvider.of<WholeAppCubit>(context)
-                                  .getAllTransaction();
-                              await BlocProvider.of<WholeAppCubit>(context)
-                                  .getTransactionwithDate();
-                              showSnackBar(
-                                context: context,
-                                message: 'تم تعديل المعاملة',
-                                backgroundColor: Colors.green,
-                              );
+                                  .getTransactionwithDate()
+                                  .then((value) async {
+                                List<int> categoryIDs = [];
+                                for (var i = 0;
+                                    i < transactionList.length;
+                                    i++) {
+                                  categoryIDs
+                                      .add(transactionList[i].categoryID!);
+                                }
+                                await BlocProvider.of<WholeAppCubit>(context)
+                                    .getCategoryName(categoryIDs);
+                                showSnackBar(
+                                  context: context,
+                                  message: 'تم تعديل المعاملة',
+                                  backgroundColor: Colors.green,
+                                );
+                              });
                             });
                           }
                         },

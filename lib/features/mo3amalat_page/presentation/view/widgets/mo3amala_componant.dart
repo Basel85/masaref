@@ -13,9 +13,10 @@ class Mo3amalaComponant extends StatelessWidget {
   const Mo3amalaComponant({
     super.key,
     required this.transactionModel,
-    required this.cateName,
+    required this.cateName, required this.transactionlist,
   });
   final TransactionModel transactionModel;
+  final List<TransactionModel> transactionlist;
   final String? cateName;
 
   @override
@@ -35,7 +36,7 @@ class Mo3amalaComponant extends StatelessWidget {
                     toAdd: false,
                     walletList:
                         state is GetAllWalletsSuccessState ? state.wallets : [],
-                    transactionModel: transactionModel,
+                    transactionModel: transactionModel, transactionList: transactionlist,
                   ),
                 ),
               );

@@ -9,15 +9,17 @@ import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/mo3amalat_page.dart';
-import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/date_total_section.dart';
+import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/date_section.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_list_section.dart';
 
 class Mo3amalatByDayContainer extends StatelessWidget {
   const Mo3amalatByDayContainer({
     super.key,
     required this.tList,
+    required this.index,
   });
   final List<TransactionModel> tList;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,11 @@ class Mo3amalatByDayContainer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Mo3amalatPage(transactionList: tList),
+                    builder: (context) => Mo3amalatPage(
+                        transactionList: tList,
+                        categorynamesList:
+                            BlocProvider.of<WholeAppCubit>(context)
+                                .cateNames[index]),
                   ),
                 );
               });
@@ -49,9 +55,9 @@ class Mo3amalatByDayContainer extends StatelessWidget {
                   ? const Center(child: CircularProgressIndicator.adaptive())
                   : Column(
                       children: [
-                        DateAndTotalSection(tList: tList),
+                        DateSection(tList: tList),
                         const Divider(color: AppColors.colorGrey),
-                        Mo3amalatListSection(tranList: tList),
+                        Mo3amalatListSection(tranList: tList, indix: index),
                         const Divider(color: AppColors.colorGrey),
                         Text(
                           'المزيد من التفاصيل',

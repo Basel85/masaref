@@ -10,8 +10,10 @@ class Mo3amalatListSection extends StatefulWidget {
   const Mo3amalatListSection({
     super.key,
     required this.tranList,
+    required this.indix,
   });
   final List<TransactionModel> tranList;
+  final int indix;
 
   @override
   State<Mo3amalatListSection> createState() => _Mo3amalatListSectionState();
@@ -21,35 +23,26 @@ class _Mo3amalatListSectionState extends State<Mo3amalatListSection> {
   @override
   void initState() {
     super.initState();
-    List<int> categoryIDs = [];
-    for (var i = 0; i < widget.tranList.length; i++) {
-      categoryIDs.add(widget.tranList[i].categoryID!);
-    }
-      BlocProvider.of<WholeAppCubit>(context)
-          .getCategoryName(categoryIDs);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return BlocProvider.of<WholeAppCubit>(context).cateNames.isEmpty ||
-                BlocProvider.of<WholeAppCubit>(context).cateNames.length !=
-                    widget.tranList.length
-            ? const CircularProgressIndicator.adaptive()
-            : ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: widget.tranList.length,
-                itemBuilder: (context, index) {
-                  return Mo3amalatListItem(
-                    transactionModel: widget.tranList[index],
-                    name: BlocProvider.of<WholeAppCubit>(context)
-                        .cateNames[index],
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 15.h),
-              );
+        return ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: BlocProvider.of<WholeAppCubit>(context)
+                  .cateNames[widget.indix].length,
+          itemBuilder: (context, index) {
+            return Mo3amalatListItem(
+              transactionModel: widget.tranList[index],
+              name: BlocProvider.of<WholeAppCubit>(context)
+                  .cateNames[widget.indix][index],
+            );
+          },
+          separatorBuilder: (context, index) => SizedBox(height: 15.h),
+        );
       },
     );
   }
