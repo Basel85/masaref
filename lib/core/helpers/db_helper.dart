@@ -10,7 +10,6 @@ class DBHelper {
   }
 
   static _onCreate(Database db, int version) async {
-    print("Hello");
     await db.execute('''CREATE TABLE Wallet (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             balance REAL,
@@ -39,7 +38,6 @@ class DBHelper {
     await db.execute('''CREATE TABLE Trans_action (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             price REAL,
-            subcategoryid INTEGER,
             sectionid INTEGER,
             categoryid INTEGER,
             walletid INTEGER,
@@ -48,16 +46,14 @@ class DBHelper {
             time TEXT,
             repeat TEXT,
             priority TEXT,
-            FOREIGN KEY (subcategoryid) REFERENCES SubCategory (id),
             FOREIGN KEY (sectionid) REFERENCES Section (id),
             FOREIGN KEY (categoryid) REFERENCES Category (id),
             FOREIGN KEY (walletid) REFERENCES Wallet (id)
             )''');
-    print("HI");
-    await insertIntoSection(name: "expenses");
-    await insertIntoSection(name: "Income");
-    await insertIntoCategory(sectionid: 1, name: "Food", image: "");
-    await insertIntoCategory(sectionid: 2, name: "Rateb", image: "");
+    await insertIntoSection(name: "النفقات");
+    await insertIntoSection(name: "الدخل");
+    await insertIntoCategory(sectionid: 1, name: "الطعام", image: "");
+    await insertIntoCategory(sectionid: 2, name: "الراتب", image: "");
   }
 
   static createDatabase() async {
@@ -72,14 +68,26 @@ class DBHelper {
       // },
       onCreate: _onCreate,
       onOpen: (db) async {
-        await getAll('Trans_action');
-        print("Database is open");
+        // print(await getAll('Trans_action'));
       },
     );
   }
 
   static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
+  }
+
+
+  static Future<List<Map<String, dynamic>>> getspecificCategoryName(
+      {required int catyid}) async {
+    return await database
+        .rawQuery('''SELECT name FROM Category WHERE id = $catyid ''');
+  }
+
+  static Future<List<Map<String, dynamic>>> getTransactionOfSpecificDate(
+      {required String date}) async {
+    return await database
+        .rawQuery('''SELECT * FROM Trans_action WHERE date = '$date' ''');
   }
 
   static Future<List<Map<String, dynamic>>> getCategoriesOfSpecificSection(
@@ -96,9 +104,9 @@ class DBHelper {
 
   static Future insertIntoSection({required String name}) async {
     await database.transaction((txn) async {
-      txn.rawInsert('INSERT INTO Section(name) VALUES("$name")').then((value) {
-        print(value);
-      });
+      txn
+          .rawInsert('INSERT INTO Section(name) VALUES("$name")')
+          .then((value) {});
     });
   }
 
@@ -148,9 +156,7 @@ class DBHelper {
   }
 
   static Future insertIntoTransaction(
-      {required int id,
-      required double price,
-      required int subcategoryid,
+      {required double price,
       required int sectionid,
       required int categoryid,
       required int walletid,
@@ -158,20 +164,22 @@ class DBHelper {
       required String date,
       required String time,
       required String repeat,
-      required String priority}) async {
+      required int priority}) async {
     await database.transaction((txn) async {
       txn.rawInsert('''INSERT INTO Trans_action
-          (id,price,subcategoryid,sectionid,categoryid,walletid,
+          (price,sectionid,categoryid,walletid,
           notes,date,time,repeat,priority) 
-          VALUES("$id", "$price", "$subcategoryid", "$sectionid", "$categoryid", "$walletid",
+          VALUES("$price", "$sectionid", "$categoryid", "$walletid",
            "$notes", "$date", "$time", "$repeat", "$priority")''').then((value) {
         getAll('Trans_action');
       });
     });
   }
 
-  static void deleteFromAll(int id, String tableName) async {
-    await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
+
+
+  static Future deleteFromAll(int id, String tableName) async {
+   await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
 
   static void updateRecordonWallet(
@@ -184,10 +192,9 @@ class DBHelper {
         [balance, name, image, id]);
   }
 
-  static void updateRecordonTransaction(
+  static Future updateRecordonTransaction(
       {required int id,
       required double price,
-      required int subcategoryid,
       required int sectionid,
       required int categoryid,
       required int walletid,
@@ -195,26 +202,24 @@ class DBHelper {
       required String date,
       required String time,
       required String repeat,
-      required String priority}) {
-    database.rawUpdate('''UPDATE Transaction SET price = ? 
-        subcategoryid = ? sectionid = ? 
-        categoryid = ? walletid = ? 
-        notes = ? date = ? time = ? 
-        repeat = ? priority = ? 
-        WHERE id = ?''', [
-      price,
-      subcategoryid,
-      sectionid,
-      categoryid,
-      walletid,
-      notes,
-      date,
-      time,
-      repeat,
-      priority,
-      id
-    ]).then((value) {
-      getAll('Transaction');
-    });
+      required String priority}) async {
+    await database.rawUpdate(
+        '''UPDATE Trans_action SET price = ?, sectionid = ?, 
+        categoryid = ?, walletid = ?,
+        notes = ?, date = ?, time = ?,
+        repeat = ?, priority = ?
+        WHERE id = ?''',
+        [
+          price,
+          sectionid,
+          categoryid,
+          walletid,
+          notes,
+          date,
+          time,
+          repeat,
+          priority,
+          id
+        ]);
   }
 }

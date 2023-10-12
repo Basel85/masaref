@@ -4,13 +4,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
-import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_by_day_list.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/palance_section.dart';
-import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/top_listview.dart';
 
-class Mo3amalatTap extends StatelessWidget {
+class Mo3amalatTap extends StatefulWidget {
   const Mo3amalatTap({super.key});
+
+  @override
+  State<Mo3amalatTap> createState() => _Mo3amalatTapState();
+}
+
+class _Mo3amalatTapState extends State<Mo3amalatTap> {
+  @override
+  void initState() {
+    super.initState();
+    // BlocProvider.of<WholeAppCubit>(context)
+    //     .getAllTransaction()
+    //     .then((value) {});
+    BlocProvider.of<WholeAppCubit>(context)
+        .getTransactionwithDate()
+        .then((value) {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,53 +39,49 @@ class Mo3amalatTap extends StatelessWidget {
               icon: const Icon(Icons.dark_mode),
             ),
           ),
-          body: SafeArea(
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
-                child: ScrollConfiguration(
-                  behavior: const ScrollBehavior(),
-                  child: GlowingOverscrollIndicator(
-                    axisDirection: AxisDirection.down,
-                    color: AppColors.primaryColor,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        const SingleChildScrollView(
+          body: Directionality(
+            textDirection: TextDirection.rtl,
+            child: BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate1list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate2list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate3list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate4list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate5list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate6list
+                        .isEmpty &&
+                    BlocProvider.of<WholeAppCubit>(context)
+                        .transactionDate7list
+                        .isEmpty
+                ? const Center(child: Text('لا معاملات للان'))
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+                    child: const ScrollConfiguration(
+                      behavior: ScrollBehavior(),
+                      child: GlowingOverscrollIndicator(
+                        axisDirection: AxisDirection.down,
+                        color: AppColors.primaryColor,
+                        child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              TopListView(),
                               BalanceSection(),
                               Mo3amalatByDayList(),
                             ],
                           ),
                         ),
-                        Container(
-                          height: 40.h,
-                          width: 150.w,
-                          decoration: BoxDecoration(
-                            color: Colors.pink,
-                            borderRadius: BorderRadius.circular(30.r),
-                          ),
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'الكل',
-                              style: AppStyles.textStyle24w400.copyWith(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.colorWhite,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
           ),
         );
       },

@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 
-class DateAndTotalSection extends StatelessWidget {
-  const DateAndTotalSection({
+class DateSection extends StatelessWidget {
+  const DateSection({
     super.key,
+    required this.tList,
   });
+  final List<TransactionModel> tList;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class DateAndTotalSection extends StatelessWidget {
         return Row(
           children: [
             Text(
-              '07',
+              tList[0].date!.substring(8, 10),
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 26.sp,
                 color: BlocProvider.of<WholeAppCubit>(context).isdark
@@ -26,12 +29,12 @@ class DateAndTotalSection extends StatelessWidget {
                     : AppColors.colorBlack,
               ),
             ),
-            SizedBox(width: 5.w),
+            const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'السبت',
+                  tList[0].date!.substring(5, 7),
                   style: AppStyles.textStyle24w400.copyWith(
                     color: AppColors.colorGrey,
                     fontWeight: FontWeight.bold,
@@ -39,30 +42,10 @@ class DateAndTotalSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'أكتوبر, 2023',
+                  tList[0].date!.substring(0, 4),
                   style: AppStyles.textStyle24w400.copyWith(
                     color: AppColors.colorGrey,
                     fontSize: 10.sp,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '0.00',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    color: Colors.green,
-                    fontSize: 14.sp,
-                  ),
-                ),
-                Text(
-                  '160.00',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    color: Colors.red,
-                    fontSize: 14.sp,
                   ),
                 ),
               ],

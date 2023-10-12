@@ -1,7 +1,6 @@
 class TransactionModel {
   int? id;
   double? price;
-  int? subCategoryID;
   int? sectionID;
   int? categoryID;
   int? walletID;
@@ -14,7 +13,6 @@ class TransactionModel {
   TransactionModel(
     this.id,
     this.price,
-    this.subCategoryID,
     this.sectionID,
     this.categoryID,
     this.walletID,
@@ -28,7 +26,6 @@ class TransactionModel {
   TransactionModel.fromDB(db) {
     id = db['id'];
     price = db['price'];
-    subCategoryID = db['subcategoryid'];
     sectionID = db['sectionid'];
     categoryID = db['categoryid'];
     walletID = db['walletid'];

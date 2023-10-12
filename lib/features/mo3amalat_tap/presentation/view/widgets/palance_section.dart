@@ -16,7 +16,7 @@ class BalanceSection extends StatelessWidget {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.h),
+          padding: EdgeInsets.only(bottom: 20.h),
           child: Column(
             children: [
               Align(
@@ -32,7 +32,7 @@ class BalanceSection extends StatelessWidget {
               Text.rich(
                 TextSpan(
                   children: [
-                   const TextSpan(
+                    const TextSpan(
                       text: 'EGP ',
                       style: TextStyle(
                         color: AppColors.colorGrey,

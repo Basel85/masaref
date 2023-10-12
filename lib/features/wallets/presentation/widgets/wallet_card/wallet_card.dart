@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -34,6 +32,7 @@ class WalletCard extends StatelessWidget {
             children: [
               WalletListTile(
                 image: image,
+
                 walletName: walletName,
               ),
               SizedBox(height: 10.h),

@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
+import 'package:masaref/features/categories/presentation/categories_screen.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 
 class CategorySection extends StatelessWidget {
   const CategorySection({
     super.key,
+    required this.cubit,
   });
+  final Mo3amalaCubit cubit;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashFactory: InkRipple.splashFactory,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const CategoriesScreen()));
+      },
       child: Ink(
         padding: EdgeInsets.all(15.r),
         decoration: BoxDecoration(
@@ -31,7 +38,7 @@ class CategorySection extends StatelessWidget {
             ),
             SizedBox(width: 10.w),
             Text(
-              'الزكاة',
+              cubit.pickedCategory?.name ?? 'الفئة',
               style: AppStyles.textStyle24w400.copyWith(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.bold,

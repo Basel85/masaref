@@ -102,6 +102,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                 ),
               )
             ],
+
           ),
         ),
       ),

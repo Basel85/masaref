@@ -36,9 +36,14 @@ class _CategoriesBodyState extends State<CategoriesBody>
         if (state is GetCategoriesOfSectionSuccessState) {
           return ListView.builder(
             itemBuilder: (_, index) {
-              return CategoryListTile(
-                title: state.categories[index].name,
-                image: state.categories[index].image,
+              return BlocProvider<SubCategoriesOfCategoryCubit>(
+                create: (context) => SubCategoriesOfCategoryCubit()
+                  ..getSubCategoriesOfSpecificCategory(
+                      categoryId: state.categories[index].id),
+                child: CategoryListTile(
+                  title: state.categories[index].name,
+                  image: state.categories[index].image, model: state.categories[index],
+                ),
               );
             },
             itemCount: state.categories.length,

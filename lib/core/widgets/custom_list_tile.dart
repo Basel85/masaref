@@ -10,19 +10,22 @@ class CustomListTile extends StatelessWidget {
   final Widget? trailing;
   final double? imageRadius;
   final Color backgroundColor;
-  final String? image;  
+  final String? image;
   const CustomListTile(
       {super.key,
       required this.title,
       this.textColor = AppColors.colorWhite,
-      this.trailing,this.imageRadius,this.backgroundColor=AppColors.primaryColor, this.image});
+      this.trailing,
+      this.imageRadius,
+      this.backgroundColor = AppColors.primaryColor,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
-        radius: imageRadius??20.r,
+        radius: imageRadius ?? 20.r,
         backgroundColor: backgroundColor,
         backgroundImage: image!=null && image!=""? FileImage(File(image!)):null,
       ),

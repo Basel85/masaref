@@ -1,124 +1,104 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 
 class Mo3amalaComponant extends StatelessWidget {
   const Mo3amalaComponant({
     super.key,
+    required this.transactionModel,
+    required this.cateName, required this.transactionlist,
   });
+  final TransactionModel transactionModel;
+  final List<TransactionModel> transactionlist;
+  final String? cateName;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashFactory: InkRipple.splashFactory,
-      splashColor: AppColors.primaryColor.withOpacity(0.2),
-      onTap: () async {
-        await Future.delayed(const Duration(milliseconds: 200), () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Mo3amalaPage(toAdd: false),
-            ),
-          );
-        });
-      },
-      child: Ink(
-        padding: EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '07/10/2023 03:54 PM',
-              textDirection: TextDirection.ltr,
-              style: TextStyle(
-                fontSize: 10.sp,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 10.r,
-                  backgroundColor: AppColors.primaryColor,
+    return BlocBuilder<GetAllWalletsCubit, GetAllWalletsStates>(
+      builder: (context, state) {
+        return InkWell(
+          splashFactory: InkRipple.splashFactory,
+          splashColor: AppColors.primaryColor.withOpacity(0.2),
+          onTap: () async {
+            await Future.delayed(const Duration(milliseconds: 200), () {
+              GetAllWalletsCubit.get(context).getAllWallets();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Mo3amalaPage(
+                    toAdd: false,
+                    walletList:
+                        state is GetAllWalletsSuccessState ? state.wallets : [],
+                    transactionModel: transactionModel, transactionList: transactionlist,
+                  ),
                 ),
-                SizedBox(width: 3.w),
+              );
+            });
+          },
+          child: Ink(
+            padding:
+                EdgeInsets.only(right: 5.w, top: 5.h, left: 5.w, bottom: 10.h),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  'المواصلات',
+                  '${transactionModel.date}  ${transactionModel.time}',
+                  textDirection: TextDirection.ltr,
                   style: TextStyle(
                     fontSize: 10.sp,
                     color: Colors.grey,
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 10.h,
-              child: const Divider(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 16.r,
-                      backgroundColor: AppColors.primaryColor,
-                    ),
-                    SizedBox(width: 5.w),
-                    Text(
-                      'الأجرة',
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        color: AppColors.colorBlack,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 10.h,
+                  child: const Divider(),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(height: 5.h),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          radius: 10.r,
+                          radius: 16.r,
                           backgroundColor: AppColors.primaryColor,
                         ),
                         SizedBox(width: 5.w),
-                        SizedBox(
-                          width: 60.w,
-                          child: Text(
-                            'مصروف الشهر',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: AppColors.colorBlack,
-                            ),
+                        Text(
+                          cateName??"",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: AppColors.colorBlack,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                    const Text.rich(
+                    Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: '150.00 ',
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
+                            text: transactionModel.price.toString(),
+                            style: transactionModel.sectionID == 1
+                                ? const TextStyle(
+                                    color: Colors.red,
+                                  )
+                                : const TextStyle(
+                                    color: Colors.green,
+                                  ),
                           ),
-                          TextSpan(
-                            text: 'ج.م',
+                          const TextSpan(
+                            text: ' ج.م',
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -130,9 +110,9 @@ class Mo3amalaComponant extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
