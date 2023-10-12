@@ -17,9 +17,11 @@ class Elma7fazaSection extends StatelessWidget {
     super.key,
     required this.walletList,
     required this.cubit,
+    required this.toadd,
   });
   final Mo3amalaCubit cubit;
   final List<WalletModel> walletList;
+  final bool toadd;
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +64,12 @@ class Elma7fazaSection extends StatelessWidget {
                                       : walletList.length == 1
                                           ? BottomSheetListItem(
                                               walletModel: walletList[0],
-                                              cubit: cubit)
+                                              cubit: cubit,
+                                              toadd: toadd)
                                           : BottomSheetListItem(
                                               walletModel: walletList[index],
-                                              cubit: cubit),
+                                              cubit: cubit,
+                                              toadd: toadd),
                               // separatorBuilder: (context, index) =>
                               //     const Divider(color: AppColors.colorGrey),
                             ),
@@ -73,6 +77,7 @@ class Elma7fazaSection extends StatelessWidget {
                               title: 'إضافة محفظة',
                               color: AppColors.primaryColor,
                               onpress: () {
+                                Navigator.pop(context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -99,9 +104,7 @@ class Elma7fazaSection extends StatelessWidget {
                       radius: 16.r,
                       backgroundColor: AppColors.primaryColor,
                       backgroundImage: cubit.pickedWallet == null
-                          ? walletList.isEmpty
-                              ? null
-                              : FileImage(File(walletList[0].image))
+                          ? null
                           : FileImage(File(cubit.pickedWallet!.image)),
                     ),
                     SizedBox(width: 10.w),
@@ -110,9 +113,7 @@ class Elma7fazaSection extends StatelessWidget {
                       children: [
                         Text(
                           cubit.pickedWallet == null
-                              ? walletList.isEmpty
-                                  ? 'الاسم'
-                                  : walletList[0].name
+                              ? 'المحفظة'
                               : cubit.pickedWallet!.name,
                           style: AppStyles.textStyle24w400.copyWith(
                             fontSize: 10.sp,
@@ -128,9 +129,7 @@ class Elma7fazaSection extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: cubit.pickedWallet == null
-                                    ? walletList.isEmpty
-                                        ? 'الرصيد'
-                                        : '${walletList[0].balance} '
+                                    ? 'الرصيد'
                                     : '${cubit.pickedWallet!.balance} ',
                                 style: AppStyles.textStyle24w400.copyWith(
                                   fontSize: 10.sp,
@@ -208,9 +207,11 @@ class BottomSheetListItem extends StatelessWidget {
     super.key,
     required this.walletModel,
     required this.cubit,
+    required this.toadd,
   });
   final WalletModel walletModel;
   final Mo3amalaCubit cubit;
+  final bool toadd;
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +219,7 @@ class BottomSheetListItem extends StatelessWidget {
       splashColor: Colors.green[100],
       splashFactory: InkRipple.splashFactory,
       onTap: () {
+        cubit.ispicked = true;
         cubit.changeWallet(walletModel);
         Navigator.pop(context);
       },

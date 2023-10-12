@@ -12,8 +12,6 @@ import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/price_text_form_field.dart';
 import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
 import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_states.dart';
-import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
-import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_states.dart';
 import 'package:masaref/core/widgets/add_image.dart';
 import 'package:masaref/core/widgets/wallet_name_text_form_field.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
@@ -95,37 +93,6 @@ class _AddNewWalletScreenState extends State<AddNewWalletScreen>
                       height: 16.h,
                     ),
                     const AddImage(),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                              color: AppColors.colorGrey.withOpacity(0.5)),
-                          bottom: BorderSide(
-                              color: AppColors.colorGrey.withOpacity(0.5)),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          BlocBuilder<CheckBoxCubit, CheckBoxStates>(
-                            builder: (_, state) => Checkbox.adaptive(
-                                value: state is CheckBoxChangedState
-                                    ? state.isChecked
-                                    : false,
-                                activeColor: AppColors.colorBlack,
-                                onChanged: (isChecked) {
-                                  CheckBoxCubit.get(context)
-                                      .update(isChecked: isChecked!);
-                                }),
-                          ),
-                          Text("اخفاء الرصيد من الشاشة الرئيسية",
-                              style: TextStyle(
-                                  fontSize: 16.sp, color: AppColors.colorGrey)),
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 16.h,
                     ),
