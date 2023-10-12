@@ -6,7 +6,6 @@ class GetMainTypeOfTransactionCubit extends Cubit<GetMainTypeOfTransactionStates
   final Map<Enum, String> _types = {
     MainTypesOfTransactions.expense: "المصروف",
     MainTypesOfTransactions.income: "الدخل",
-    MainTypesOfTransactions.debt: "الديون"
   };
   Map<Enum, String> get types => _types;
   GetMainTypeOfTransactionCubit() : super(GetMainTypeOfTransactionInitialState());

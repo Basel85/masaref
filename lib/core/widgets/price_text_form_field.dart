@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
 
@@ -18,7 +20,14 @@ class PriceTextFormField extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.primaryColor),
             ),
-            child: const Text("ج.م"),
+            child: Text(
+              "ج.م",
+              style: TextStyle(
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
+              ),
+            ),
           ),
           SizedBox(
             width: 16.w,
@@ -27,6 +36,11 @@ class PriceTextFormField extends StatelessWidget {
             child: CustomFormField(
               controller: priceController,
               hinttext: " المبلغ",
+              inputStyle: TextStyle(
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
+              ),
               hintsize: 14.sp,
               validator: (value) {
                 if (value!.isEmpty) {

@@ -29,6 +29,11 @@ class Elma7fazaSection extends StatelessWidget {
         color: BlocProvider.of<WholeAppCubit>(context).isdark
             ? AppColors.colorBlack
             : AppColors.colorWhite,
+        border: const Border(
+          bottom: BorderSide(
+            color: AppColors.colorGrey,
+          ),
+        ),
       ),
       child: Column(
         children: [
@@ -177,7 +182,9 @@ class Elma7fazaSection extends StatelessWidget {
                   height: 35.h,
                   child: CustomFormField(
                     inputStyle: AppStyles.textStyle24w400.copyWith(
-                      color: AppColors.primaryColor,
+                      color: BlocProvider.of<WholeAppCubit>(context).isdark
+                          ? AppColors.colorWhite
+                          : AppColors.colorBlack,
                       fontSize: 14.sp,
                     ),
                     hinttext: 'الملاحظات',

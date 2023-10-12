@@ -12,6 +12,11 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: TextStyle(
+        color: BlocProvider.of<WholeAppCubit>(context).isdark
+            ? AppColors.colorWhite
+            : AppColors.colorBlack,
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorBlack.withOpacity(0.05),

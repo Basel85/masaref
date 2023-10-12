@@ -1,1 +1,1 @@
-enum MainTypesOfTransactions { expense, income, debt }
+enum MainTypesOfTransactions { expense, income }

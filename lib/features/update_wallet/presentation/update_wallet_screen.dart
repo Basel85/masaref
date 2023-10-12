@@ -57,7 +57,7 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
           IconButton(
             icon: Icon(
               Icons.delete,
-              color: AppColors.colorBlack,
+              color: AppColors.colorWhite,
               size: 30.r,
             ),
             onPressed: () {
@@ -126,7 +126,7 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
               ),
               CustomButton(
                 title: "تعديل",
-                color: AppColors.redColor,
+                color: AppColors.primaryColor,
                 onpress: () {
                   UpdateWalletCubit.get(context).updateWallet(
                       name: _nameController.text,

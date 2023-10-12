@@ -36,7 +36,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
       appBar: CustomAppBar(actions: [
         const AppBarDropDownButton(),
         SizedBox(width: 16.w),
-      ]),
+      ],),
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: BlocBuilder<GetMainTypeOfTransactionCubit,
@@ -63,7 +63,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                     if (addCategorystate is AddCategorySuccessState) {
                       showSnackBar(
                           context: context,
-                          message: "Done",
+                          message: "تم",
                           backgroundColor: Colors.green);
                       GetCategoriesOfSectionCubit.get(context)
                           .getCategoriesOfSection(
@@ -79,7 +79,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                     } else if (addCategorystate is AddCategoryErrorState) {
                       showSnackBar(
                           context: context,
-                          message: "Error",
+                          message: "خطأ",
                           backgroundColor: Colors.red);
                     }
                   },

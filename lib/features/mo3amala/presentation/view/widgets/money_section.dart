@@ -25,8 +25,8 @@ class MoneySection extends StatelessWidget {
             color: BlocProvider.of<WholeAppCubit>(context).isdark
                 ? AppColors.colorBlack
                 : AppColors.colorWhite,
-            border: const Border.symmetric(
-              horizontal: BorderSide(
+            border: const Border(
+              bottom: BorderSide(
                 color: AppColors.colorGrey,
               ),
             ),

@@ -22,6 +22,11 @@ class RepeatSection extends StatelessWidget {
         color: BlocProvider.of<WholeAppCubit>(context).isdark
             ? AppColors.colorBlack
             : AppColors.colorWhite,
+        border: const Border(
+          bottom: BorderSide(
+            color: AppColors.colorGrey,
+          ),
+        ),
       ),
       child: Column(
         children: [
