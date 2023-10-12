@@ -18,8 +18,10 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/elma7faza_se
 import 'package:masaref/features/mo3amala/presentation/view/widgets/importance_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/money_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_section.dart';
+import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 
-class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
+class Mo3amalaPage extends StatefulWidget {
   const Mo3amalaPage({
     super.key,
     required this.toAdd,
@@ -33,6 +35,22 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
   final List<WalletModel> walletList;
 
   @override
+  State<Mo3amalaPage> createState() => _Mo3amalaPageState();
+}
+
+class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
+  @override
+  void initState() {
+    if (widget.transactionModel != null) {
+      BlocProvider.of<Mo3amalaCubit>(context).pickedWallet = widget.walletList
+          .where((wallet) => wallet.id == widget.transactionModel!.walletID)
+          .toList()[0];
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<Mo3amalaCubit, Mo3amalaState>(
       listener: (context, state) {},
@@ -41,12 +59,32 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
           appBar: AppBar(
             backgroundColor: Colors.grey[350],
             actions: [
-              if (!toAdd)
+              if (!widget.toAdd)
                 IconButton(
                   onPressed: () {
+                    double firstOperand =
+                        BlocProvider.of<Mo3amalaCubit>(context)
+                            .pickedWallet!
+                            .balance;
+                    double secondOperand =
+                        (widget.transactionModel!.sectionID == 1
+                            ? widget.transactionModel!.price!
+                            : -1 * widget.transactionModel!.price!);
                     DBHelper.deleteFromAll(
-                            transactionModel!.id!, 'Trans_action')
+                            widget.transactionModel!.id!, 'Trans_action')
                         .then((value) async {
+                      UpdateWalletCubit.get(context).updateWallet(
+                          name: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .name,
+                          balance: firstOperand + secondOperand,
+                          imagePath: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .image,
+                          id: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .id);
+                      GetAllWalletsCubit.get(context).getAllWallets();
                       await BlocProvider.of<WholeAppCubit>(context)
                           .getTransactionwithDate()
                           .then((value) => showSnackBar(
@@ -85,7 +123,7 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                     CategorySection(
                         cubit: BlocProvider.of<Mo3amalaCubit>(context)),
                     Elma7fazaSection(
-                        walletList: walletList,
+                        walletList: widget.walletList,
                         cubit: BlocProvider.of<Mo3amalaCubit>(context)),
                     SizedBox(height: 10.h),
                     DateSection(cubit: BlocProvider.of<Mo3amalaCubit>(context)),
@@ -99,10 +137,10 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: CustomButton(
-                        title: toAdd ? 'إضافة معاملة' : 'تعديل',
+                        title: widget.toAdd ? 'إضافة معاملة' : 'تعديل',
                         onpress: () async {
-                          if (toAdd) {
-                            if (walletList.isEmpty ||
+                          if (widget.toAdd) {
+                            if (widget.walletList.isEmpty ||
                                 BlocProvider.of<Mo3amalaCubit>(context)
                                         .pickedCategory ==
                                     null) {
@@ -128,7 +166,7 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                             .pickedWallet
                                             ?.id ??
-                                        walletList[0].id,
+                                        widget.walletList[0].id,
                                 notes: BlocProvider.of<Mo3amalaCubit>(context)
                                         .notes ??
                                     '',
@@ -147,11 +185,49 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                         .importanceIndex,
                               );
+                              // print(BlocProvider.of<Mo3amalaCubit>(context)
+                              //     .price);
+                              double balance =
+                                  BlocProvider.of<Mo3amalaCubit>(context)
+                                          .price ??
+                                      0.0;
+                              double firstOperand =
+                                  BlocProvider.of<Mo3amalaCubit>(context)
+                                          .pickedWallet
+                                          ?.balance ??
+                                      widget.walletList[0].balance;
+                              double secondOperand =
+                                  (BlocProvider.of<Mo3amalaCubit>(context)
+                                              .pickedCategory!
+                                              .sectionId ==
+                                          1
+                                      ? -1 * balance
+                                      : balance);
+                              UpdateWalletCubit.get(context).updateWallet(
+                                name: BlocProvider.of<Mo3amalaCubit>(context)
+                                        .pickedWallet
+                                        ?.name ??
+                                    widget.walletList[0].name,
+                                balance: firstOperand + secondOperand,
+                                imagePath:
+                                    BlocProvider.of<Mo3amalaCubit>(context)
+                                            .pickedWallet
+                                            ?.image ??
+                                        widget.walletList[0].image,
+                                id: BlocProvider.of<Mo3amalaCubit>(context)
+                                        .pickedWallet
+                                        ?.id ??
+                                    widget.walletList[0].id,
+                              );
+                              GetAllWalletsCubit.get(context).getAllWallets();
                               await BlocProvider.of<WholeAppCubit>(context)
                                   .getTransactionwithDate();
                               List<int> categoryIDs = [];
-                              for (var i = 0; i < transactionList.length; i++) {
-                                categoryIDs.add(transactionList[i].categoryID!);
+                              for (var i = 0;
+                                  i < widget.transactionList.length;
+                                  i++) {
+                                categoryIDs
+                                    .add(widget.transactionList[i].categoryID!);
                               }
                               await BlocProvider.of<WholeAppCubit>(context)
                                   .getCategoryName(categoryIDs);
@@ -162,27 +238,27 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                               );
                             }
                           } else {
-                            DBHelper.updateRecordonTransaction(
-                              id: transactionModel!.id!,
+                            await DBHelper.updateRecordonTransaction(
+                              id: widget.transactionModel!.id!,
                               price: BlocProvider.of<Mo3amalaCubit>(context)
                                       .price ??
-                                  transactionModel!.price!,
+                                  widget.transactionModel!.price!,
                               sectionid: BlocProvider.of<Mo3amalaCubit>(context)
                                       .pickedCategory
                                       ?.sectionId ??
-                                  transactionModel!.sectionID!,
+                                  widget.transactionModel!.sectionID!,
                               categoryid:
                                   BlocProvider.of<Mo3amalaCubit>(context)
                                           .pickedCategory
                                           ?.id ??
-                                      transactionModel!.categoryID!,
+                                      widget.transactionModel!.categoryID!,
                               walletid: BlocProvider.of<Mo3amalaCubit>(context)
                                       .pickedWallet
                                       ?.id ??
-                                  transactionModel!.walletID!,
+                                  widget.transactionModel!.walletID!,
                               notes: BlocProvider.of<Mo3amalaCubit>(context)
                                       .notes ??
-                                  transactionModel!.notes!,
+                                  widget.transactionModel!.notes!,
                               date: BlocProvider.of<Mo3amalaCubit>(context)
                                   .transDate
                                   .toString()
@@ -197,26 +273,58 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                               priority: BlocProvider.of<Mo3amalaCubit>(context)
                                   .importanceIndex
                                   .toString(),
-                            ).then((value) async {
-                              await BlocProvider.of<WholeAppCubit>(context)
-                                  .getTransactionwithDate()
-                                  .then((value) async {
-                                List<int> categoryIDs = [];
-                                for (var i = 0;
-                                    i < transactionList.length;
-                                    i++) {
-                                  categoryIDs
-                                      .add(transactionList[i].categoryID!);
-                                }
-                                await BlocProvider.of<WholeAppCubit>(context)
-                                    .getCategoryName(categoryIDs);
-                                showSnackBar(
-                                  context: context,
-                                  message: 'تم تعديل المعاملة',
-                                  backgroundColor: Colors.green,
-                                );
-                              });
-                            });
+                            );
+                            double balance =
+                                BlocProvider.of<Mo3amalaCubit>(context).price ??
+                                    widget.transactionModel!.price!;
+                            double firstOperand =
+                                BlocProvider.of<Mo3amalaCubit>(context)
+                                    .pickedWallet!
+                                    .balance;
+                            double secondOperand =
+                                (BlocProvider.of<Mo3amalaCubit>(context)
+                                            .pickedCategory
+                                            ?.sectionId ==
+                                        null
+                                    ? widget.transactionModel!.sectionID! == 1
+                                        ? -1 * balance
+                                        : balance
+                                    : BlocProvider.of<Mo3amalaCubit>(context)
+                                                .pickedCategory
+                                                ?.sectionId ==
+                                            1
+                                        ? -1 * balance
+                                        : balance);
+                            print(widget.transactionModel!.sectionID);
+                            UpdateWalletCubit.get(context).updateWallet(
+                                name: BlocProvider.of<Mo3amalaCubit>(context)
+                                    .pickedWallet!
+                                    .name,
+                                balance: firstOperand + secondOperand,
+                                imagePath:
+                                    BlocProvider.of<Mo3amalaCubit>(context)
+                                        .pickedWallet!
+                                        .image,
+                                id: BlocProvider.of<Mo3amalaCubit>(context)
+                                    .pickedWallet!
+                                    .id);
+                            GetAllWalletsCubit.get(context).getAllWallets();
+                            await BlocProvider.of<WholeAppCubit>(context)
+                                .getTransactionwithDate();
+                            List<int> categoryIDs = [];
+                            for (var i = 0;
+                                i < widget.transactionList.length;
+                                i++) {
+                              categoryIDs
+                                  .add(widget.transactionList[i].categoryID!);
+                            }
+                            await BlocProvider.of<WholeAppCubit>(context)
+                                .getCategoryName(categoryIDs);
+                            showSnackBar(
+                              context: context,
+                              message: 'تم تعديل المعاملة',
+                              backgroundColor: Colors.green,
+                            );
                           }
                         },
                       ),

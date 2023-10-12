@@ -7,7 +7,7 @@ import 'package:masaref/features/on_boarding/presentation/on_boarding_screen.dar
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 
-import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
+// import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 // import 'package:masaref/features/categories/presentation/categories_screen.dart';
 import 'package:masaref/features/main/presentation/main_screen.dart';
 
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> with SnackBarViewer {
         listener: (context, state) {
           if (state is GetAllWalletsSuccessState) {
             Future.delayed(const Duration(seconds: 3)).then((_) {
-              Navigator.pushReplacement(
+              Navigator.pushReplacement(     
                   context,
                   MaterialPageRoute(
                       builder: (_) => state.wallets.isEmpty

@@ -131,19 +131,12 @@ class _AddNewWalletScreenState extends State<AddNewWalletScreen>
                     title: "اضافة محفظة",
                     onpress: () {
                       if (_formKey.currentState!.validate()) {
-                        if (ImagePickerCubit.get(context).imagePath == null) {
-                          showSnackBar(
-                              context: context,
-                              message: "من فضلك اختر صورة",
-                              backgroundColor: Colors.red);
-                        } else {
-                          AddNewWalletCubit.get(context).addNewWallet(
-                              name: _nameController.text,
-                              balance: double.parse(_balanceController.text),
-                              imagePath:
-                                  ImagePickerCubit.get(context).imagePath!.path,
-                              color: int.parse("0xFF$_hexColor"));
-                        }
+                        AddNewWalletCubit.get(context).addNewWallet(
+                            name: _nameController.text,
+                            balance: double.parse(_balanceController.text),
+                            imagePath:
+                                ImagePickerCubit.get(context).imagePath ?? "",
+                            color: int.parse("0xFF$_hexColor"));
                       }
                     },
                   ),

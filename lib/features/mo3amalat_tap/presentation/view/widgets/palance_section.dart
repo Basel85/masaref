@@ -5,6 +5,8 @@ import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 
 class BalanceSection extends StatelessWidget {
   const BalanceSection({
@@ -29,24 +31,27 @@ class BalanceSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'EGP ',
-                      style: TextStyle(
-                        color: AppColors.colorGrey,
+              BlocBuilder<GetAllWalletsCubit,GetAllWalletsStates>(
+                buildWhen: (previous, current) => current is GetAllWalletsSuccessState,
+                builder:(_,state)=> Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'EGP ',
+                        style: TextStyle(
+                          color: AppColors.colorGrey,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: '5,840.00',
-                      style: AppStyles.textStyle24w400.copyWith(
-                        color: BlocProvider.of<WholeAppCubit>(context).isdark
-                            ? AppColors.colorWhite
-                            : AppColors.colorBlack,
+                      TextSpan(
+                        text: state is GetAllWalletsSuccessState? state.totalBalance.toString() : '0.0',
+                        style: AppStyles.textStyle24w400.copyWith(
+                          color: BlocProvider.of<WholeAppCubit>(context).isdark
+                              ? AppColors.colorWhite
+                              : AppColors.colorBlack,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

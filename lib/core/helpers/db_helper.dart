@@ -58,7 +58,7 @@ class DBHelper {
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref48.db');
+    String path = join(dbpath, 'masaref488.db');
     database = await openDatabase(
       path,
       version: 2,
