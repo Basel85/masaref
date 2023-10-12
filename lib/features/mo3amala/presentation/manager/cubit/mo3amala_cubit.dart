@@ -9,6 +9,7 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
 
   bool repeatChange = false;
   bool change = false;
+  bool ispicked = false;
   WalletModel? pickedWallet;
   CategoryModel? pickedCategory;
   int importanceIndex = 0;
@@ -27,7 +28,7 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
     emit(Mo3amalaNotes());
   }
 
-  changeWallet(WalletModel wallet) {
+  changeWallet(WalletModel? wallet) {
     pickedWallet = wallet;
     emit(Mo3amalaChangeWallet());
   }

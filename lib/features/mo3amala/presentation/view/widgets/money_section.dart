@@ -68,7 +68,9 @@ class MoneySection extends StatelessWidget {
                     hinttext: 'المبلغ',
                     hintsize: 16.sp,
                     onchange: (p0) {
-                      cubit.setPrice(double.parse(p0));
+                      if (p0.isNotEmpty) {
+                        cubit.setPrice(double.parse(p0));
+                      }
                     },
                   ),
                 ),
