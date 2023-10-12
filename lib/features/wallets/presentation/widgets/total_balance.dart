@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 
 class TotalBalance extends StatelessWidget {
@@ -8,25 +11,31 @@ class TotalBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: Text(
-            ' اجمالي الرصيد',
-            style: TextStyle(fontSize: 16.sp, color: AppColors.colorGrey),
-          ),
-        ),
-        SizedBox(height: 10.h),
-        Text(
-          "$totalBalance EGP",
-          style: TextStyle(
-            color: AppColors.colorBlack,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
+    return BlocBuilder<WholeAppCubit, WholeAppStates>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                ' اجمالي الرصيد',
+                style: TextStyle(fontSize: 16.sp, color: AppColors.colorGrey),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              "$totalBalance EGP",
+              style: TextStyle(
+                color: BlocProvider.of<WholeAppCubit>(context).isdark
+                    ? AppColors.colorWhite
+                    : AppColors.colorBlack,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

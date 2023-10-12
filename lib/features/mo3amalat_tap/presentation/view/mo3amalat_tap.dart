@@ -30,18 +30,30 @@ class _Mo3amalatTapState extends State<Mo3amalatTap> {
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                BlocProvider.of<WholeAppCubit>(context).changeAppTheme();
-              },
-              icon: const Icon(Icons.dark_mode),
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'مصاريف',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    BlocProvider.of<WholeAppCubit>(context).changeAppTheme();
+                  },
+                  icon: BlocProvider.of<WholeAppCubit>(context).isdark
+                      ? const Icon(Icons.light_mode)
+                      : const Icon(Icons.dark_mode),
+                ),
+              ],
             ),
-          ),
-          body: Directionality(
-            textDirection: TextDirection.rtl,
-            child: BlocProvider.of<WholeAppCubit>(context)
+            body: BlocProvider.of<WholeAppCubit>(context)
                         .transactionDate1list
                         .isEmpty &&
                     BlocProvider.of<WholeAppCubit>(context)

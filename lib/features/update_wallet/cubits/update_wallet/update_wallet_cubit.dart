@@ -11,10 +11,6 @@ class UpdateWalletCubit extends Cubit<UpdateWalletStates> {
       required String imagePath,
       required int id}) {
     try {
-      print(id);
-      print(name);
-      print(balance);
-      print(imagePath);
       WalletRepository.updateWallet(
         id: id,
         name: name,
