@@ -18,11 +18,16 @@ class DateSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15.r),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 15.w),
       decoration: BoxDecoration(
         color: BlocProvider.of<WholeAppCubit>(context).isdark
             ? AppColors.colorBlack
             : AppColors.colorWhite,
+        border: const Border(
+          bottom: BorderSide(
+            color: AppColors.colorGrey,
+          ),
+        ),
       ),
       child: GestureDetector(
         onTap: () async {

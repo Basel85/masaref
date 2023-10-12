@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_states.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -16,7 +17,9 @@ class NameOfCategory extends StatelessWidget with SnackBarViewer {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.colorWhite,
+      color: BlocProvider.of<WholeAppCubit>(context).isdark
+          ? AppColors.colorBlack
+          : AppColors.colorWhite,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Row(
         children: [
@@ -39,7 +42,7 @@ class NameOfCategory extends StatelessWidget with SnackBarViewer {
                   current is ImagePickerPickedState,
               builder: (_, state) => CircleAvatar(
                 radius: 25.r,
-                backgroundColor: AppColors.colorLightBlue,
+                backgroundColor: AppColors.primaryColor,
                 backgroundImage: state is ImagePickerPickedState
                     ? FileImage(File(state.imagePath))
                     : null,
@@ -56,6 +59,10 @@ class NameOfCategory extends StatelessWidget with SnackBarViewer {
           ),
           Expanded(
             child: CustomFormField(
+              inputStyle: TextStyle(
+                  color: BlocProvider.of<WholeAppCubit>(context).isdark
+                      ? AppColors.colorWhite
+                      : AppColors.colorBlack),
               controller: categoryController,
               hinttext: "اسم القسم ",
               hintsize: 14.sp,

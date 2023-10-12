@@ -33,6 +33,11 @@ class _SearchFieldState extends State<SearchField> {
         SearchCubit.get(context)
             .search(_searchController.text, widget.categorynamesList);
       },
+      style: TextStyle(
+        color: BlocProvider.of<WholeAppCubit>(context).isdark
+            ? AppColors.colorWhite
+            : AppColors.colorBlack,
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorBlack.withOpacity(0.05),

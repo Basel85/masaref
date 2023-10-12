@@ -22,24 +22,25 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: CustomAppBar(
-              sizeFromHeight: 100.h,
-              backgroundColor: AppColors.colorGrey,
-              title: Text(
-                'الاقسام',
-                style: TextStyle(
-                    color: AppColors.colorBlack,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp),
-              ),
-              bottom: const PreferredSize(
-                  preferredSize: Size.fromHeight(0), child: CustomTabBar())),
-          body: TabBarView(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: CustomAppBar(
+            centerTitle: true,
+            sizeFromHeight: 100.h,
+            backgroundColor: AppColors.primaryColor,
+            title: Text(
+              'الاقسام',
+              style: TextStyle(
+                  color: AppColors.colorWhite,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.sp),
+            ),
+            bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(0), child: CustomTabBar())),
+        body: Directionality(
+          textDirection: TextDirection.rtl,
+          child: TabBarView(
             children: [
               BlocProvider<GetCategoriesOfSectionCubit>(
                 create: (context) => GetCategoriesOfSectionCubit(),
@@ -55,33 +56,33 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               ),
             ],
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return MultiBlocProvider(
-                  providers: [
-                    
-                    BlocProvider<GetMainTypeOfTransactionCubit>(
-                      create: (_) => GetMainTypeOfTransactionCubit(),
-                    ),
-                    
-                    BlocProvider<MainCategoryCubit>(
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider<GetMainTypeOfTransactionCubit>(
+                    create: (_) => GetMainTypeOfTransactionCubit(),
+                  ),
+                  BlocProvider<MainCategoryCubit>(
                       create: (context) => MainCategoryCubit()),
-                    BlocProvider<AddCategoryCubit>(create: (_) => AddCategoryCubit()),
-                    BlocProvider<SwitchButtonCubit>(
-                  create: (context) => SwitchButtonCubit(),)
-                  ],
-                  child: const AddNewCategoryScreen(),
-                );
-              }));
-            },
-            backgroundColor: AppColors.primaryColor,
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 24.r,
-            ),
+                  BlocProvider<AddCategoryCubit>(
+                      create: (_) => AddCategoryCubit()),
+                  BlocProvider<SwitchButtonCubit>(
+                    create: (context) => SwitchButtonCubit(),
+                  )
+                ],
+                child: const AddNewCategoryScreen(),
+              );
+            }));
+          },
+          backgroundColor: AppColors.primaryColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 24.r,
           ),
         ),
       ),

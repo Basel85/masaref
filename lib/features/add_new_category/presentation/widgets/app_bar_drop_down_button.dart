@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_states.dart';
@@ -38,7 +39,10 @@ class AppBarDropDownButton extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 16.w, vertical: 16.h),
                           decoration: BoxDecoration(
-                            color: AppColors.colorWhite,
+                            color:
+                                BlocProvider.of<WholeAppCubit>(context).isdark
+                                    ? AppColors.colorBlack
+                                    : AppColors.colorWhite,
                             border: Border(
                               bottom: BorderSide(
                                 color: Colors.grey[300]!,
@@ -51,7 +55,12 @@ class AppBarDropDownButton extends StatelessWidget {
                                 .types
                                 .values
                                 .toList()[index],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: BlocProvider.of<WholeAppCubit>(context)
+                                        .isdark
+                                    ? AppColors.colorWhite
+                                    : AppColors.colorBlack),
                           ),
                         ),
                       ),

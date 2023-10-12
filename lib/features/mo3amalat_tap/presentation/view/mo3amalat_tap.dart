@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_by_day_list.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/palance_section.dart';
 
@@ -74,7 +75,11 @@ class _Mo3amalatTapState extends State<Mo3amalatTap> {
                     BlocProvider.of<WholeAppCubit>(context)
                         .transactionDate7list
                         .isEmpty
-                ? const Center(child: Text('لا معاملات للان'))
+                ? Center(
+                    child: Text(
+                    'لا معاملات للان',
+                    style: AppStyles.textStyle14PrimaryColor,
+                  ))
                 : Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),

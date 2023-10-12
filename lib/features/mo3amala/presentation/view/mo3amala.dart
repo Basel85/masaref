@@ -61,7 +61,7 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.grey[350],
+                backgroundColor: AppColors.primaryColor,
                 actions: [
                   if (!widget.toAdd)
                     IconButton(
@@ -105,7 +105,7 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                       },
                       icon: const Icon(
                         Icons.delete,
-                        color: AppColors.colorBlack,
+                        color: AppColors.colorWhite,
                       ),
                     ),
                 ],
@@ -115,7 +115,7 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                   },
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: AppColors.colorBlack,
+                    color: AppColors.colorWhite,
                   ),
                 ),
               ),
@@ -134,13 +134,10 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                         Elma7fazaSection(
                             walletList: widget.walletList,
                             cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                        SizedBox(height: 10.h),
                         DateSection(
                             cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                        SizedBox(height: 10.h),
                         RepeatSection(
                             cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                        SizedBox(height: 10.h),
                         ImportanceSection(
                             cubit: BlocProvider.of<Mo3amalaCubit>(context)),
                         SizedBox(height: 20.h),

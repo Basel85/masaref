@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_states.dart';
+import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
 
 class AddImage extends StatelessWidget with SnackBarViewer {
@@ -35,14 +37,19 @@ class AddImage extends StatelessWidget with SnackBarViewer {
             radius: 20.r,
             backgroundImage: state is ImagePickerPickedState
                 ? FileImage(File(state.imagePath))
-                : imagePath!=""
+                : imagePath != ""
                     ? FileImage(File(imagePath))
                     : null,
           ),
         ),
-        title: const Text(
+        title: Text(
           "اضف صورة",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: BlocProvider.of<WholeAppCubit>(context).isdark
+                ? AppColors.colorWhite
+                : AppColors.colorBlack,
+          ),
         ),
       ),
     );
