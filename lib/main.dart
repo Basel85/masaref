@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
@@ -15,7 +16,6 @@ import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cu
 // import 'package:masaref/features/mo3amalat_tap/presentation/view/mo3amalat_tap.dart';
 import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +43,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<AddNewWalletCubit>(
                         create: (_) => AddNewWalletCubit()),
         BlocProvider<GetCategoriesOfSectionCubit>(
-                        create: (_) => GetCategoriesOfSectionCubit()),
+            create: (_) => GetCategoriesOfSectionCubit()),
+        BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
+        BlocProvider<ImagePickerCubit>(create: (_) => ImagePickerCubit()),
+        BlocProvider<BottomNavigationBarCubit>(
+          create: (context) => BottomNavigationBarCubit(),
+        )
       ],
     child: ScreenUtilInit(
       designSize: const Size(360, 690),
@@ -78,7 +83,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-    ),
-  );
+    );
   }
 }

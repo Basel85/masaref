@@ -58,8 +58,8 @@ class DBHelper {
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref56.db');
-    openDatabase(
+    String path = join(dbpath, 'masaref48.db');
+    database = await openDatabase(
       path,
       version: 2,
       onConfigure: _onConfigure,
@@ -70,14 +70,13 @@ class DBHelper {
       onOpen: (db) async {
         // print(await getAll('Trans_action'));
       },
-    ).then((value) {
-      database = value;
-    });
+    );
   }
 
   static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
   }
+
 
   static Future<List<Map<String, dynamic>>> getspecificCategoryName(
       {required int catyid}) async {
@@ -177,17 +176,20 @@ class DBHelper {
     });
   }
 
+
+
   static Future deleteFromAll(int id, String tableName) async {
    await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
 
   static void updateRecordonWallet(
-      {required int id, required double balance, required String name}) {
-    database.rawUpdate(
-        '''UPDATE Wallet SET balance = ? name = ? WHERE id = ?''',
-        [balance, name, id]).then((value) {
-      getAll('Wallet');
-    });
+      {required int id,
+      required double balance,
+      required String name,
+      required String image}) async {
+    await database.rawUpdate(
+        '''UPDATE Wallet SET balance = ?, name = ?, image = ? WHERE id = ?''',
+        [balance, name, image, id]);
   }
 
   static Future updateRecordonTransaction(

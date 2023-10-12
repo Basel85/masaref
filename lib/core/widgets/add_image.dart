@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +8,8 @@ import 'package:masaref/core/cubits/image_picker/image_picker_states.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
 
 class AddImage extends StatelessWidget with SnackBarViewer {
-  const AddImage({super.key});
+  final String imagePath;
+  const AddImage({super.key, this.imagePath = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +34,10 @@ class AddImage extends StatelessWidget with SnackBarViewer {
             backgroundColor: Colors.blue,
             radius: 20.r,
             backgroundImage: state is ImagePickerPickedState
-                ? FileImage(state.imagePath)
-                : null,
+                ? FileImage(File(state.imagePath))
+                : imagePath!=""
+                    ? FileImage(File(imagePath))
+                    : null,
           ),
         ),
         title: const Text(

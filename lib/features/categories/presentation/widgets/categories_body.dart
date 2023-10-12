@@ -31,10 +31,7 @@ class _CategoriesBodyState extends State<CategoriesBody>
     super.build(context);
     return BlocBuilder<GetCategoriesOfSectionCubit,
         GetCategoriesOfSectionStates>(
-      // buildWhen: (previous, current) =>
-      //     (current is GetCategoriesOfSectionSuccessState &&
-      //         current.sectionId == widget.sectionId) ||
-      //     current is GetCategoriesOfSectionErrorState,
+     
       builder: (_, state) {
         if (state is GetCategoriesOfSectionSuccessState) {
           return ListView.builder(

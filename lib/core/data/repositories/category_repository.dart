@@ -23,17 +23,11 @@ class CategoryRepository {
         .cast<SubCategoryModel>();
   }
 
-  static void addCategoryOrSubCategory(
-      {required bool isCategory,
-      required String name,
+  static void addCategory(
+      {required String name,
       required String imagePath,
-      required int id}) async {
-    if (isCategory) {
-      await DBHelper.insertIntoCategory(
-          sectionid: id, name: name, image: imagePath);
-    } else {
-      await DBHelper.insertIntoSubCategory(
-          categoryid: id, name: name, image: imagePath);
-    }
+      required int sectionid}) async {
+    await DBHelper.insertIntoCategory(
+        sectionid: sectionid, name: name, image: imagePath);
   }
 }

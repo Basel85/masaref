@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 
 class TotalBalance extends StatelessWidget {
-  const TotalBalance({super.key});
+  final double totalBalance;
+  const TotalBalance({super.key, required this.totalBalance});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class TotalBalance extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
         Text(
-          "114,464.00 EGP",
+          "$totalBalance EGP",
           style: TextStyle(
             color: AppColors.colorBlack,
             fontSize: 20.sp,

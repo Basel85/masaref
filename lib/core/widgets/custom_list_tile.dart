@@ -22,13 +22,12 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    File? imagefile = image != '' ? File(image!) : null;
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
         radius: imageRadius ?? 20.r,
         backgroundColor: backgroundColor,
-        backgroundImage: imagefile != null ? FileImage(imagefile) : null,
+        backgroundImage: image!=null && image!=""? FileImage(File(image!)):null,
       ),
       title: Text(
         title,

@@ -6,6 +6,9 @@ import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/get_error_message.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
+import 'package:masaref/features/update_wallet/cubits/delete_wallet/delete_wallet_cubit.dart';
+import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
+import 'package:masaref/features/update_wallet/presentation/update_wallet_screen.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 import 'package:masaref/features/wallets/presentation/widgets/total_balance.dart';
@@ -50,8 +53,6 @@ class _WalletsScreenState extends State<WalletsScreen> {
                     BlocProvider<CheckBoxCubit>(
                       create: (_) => CheckBoxCubit(),
                     ),
-                    BlocProvider<ImagePickerCubit>(
-                        create: (_) => ImagePickerCubit()),
                   ],
                   child: const AddNewWalletScreen(),
                 );
@@ -66,17 +67,46 @@ class _WalletsScreenState extends State<WalletsScreen> {
           return ListView(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             children: [
-              const TotalBalance(),
+              TotalBalance(
+                totalBalance: state.totalBalance,
+              ),
               SizedBox(height: 20.h),
               ...List.generate(
                   state.wallets.length,
                   (index) => Padding(
                         padding: EdgeInsets.only(bottom: 10.h),
-                        child: WalletCard(
-                          color: state.wallets[index].color,
-                          walletName: state.wallets[index].name,
-                          balance: state.wallets[index].balance,
-                          image: state.wallets[index].image,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => MultiBlocProvider(
+                                          providers: [
+                                            BlocProvider<ImagePickerCubit>(
+                                              create: (_) => ImagePickerCubit(),
+                                            ),
+                                            BlocProvider<UpdateWalletCubit>(
+                                                create: (_) =>
+                                                    UpdateWalletCubit()),
+                                            BlocProvider<DeleteWalletCubit>(
+                                                create: (_) =>
+                                                    DeleteWalletCubit())
+                                          ],
+                                          child: UpdateWalletScreen(
+                                              name: state.wallets[index].name,
+                                              balance:
+                                                  state.wallets[index].balance,
+                                              walletId: state.wallets[index].id,
+                                              imagePath:
+                                                  state.wallets[index].image),
+                                        )));
+                          },
+                          child: WalletCard(
+                            color: state.wallets[index].color,
+                            walletName: state.wallets[index].name,
+                            balance: state.wallets[index].balance,
+                            image: state.wallets[index].image,
+                          ),
                         ),
                       ))
             ],
@@ -89,7 +119,7 @@ class _WalletsScreenState extends State<WalletsScreen> {
               });
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator.adaptive(),
           );
         }
       }),

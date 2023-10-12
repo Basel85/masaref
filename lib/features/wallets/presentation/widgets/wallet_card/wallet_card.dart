@@ -31,7 +31,8 @@ class WalletCard extends StatelessWidget {
           child: Column(
             children: [
               WalletListTile(
-                image:image,
+                image: image,
+
                 walletName: walletName,
               ),
               SizedBox(height: 10.h),

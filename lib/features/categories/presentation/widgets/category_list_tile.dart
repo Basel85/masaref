@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_list_tile.dart';
+
 import 'package:masaref/features/categories/cubits/sub_categories_of_category/sub_categories_of_category_cubit.dart';
 import 'package:masaref/features/categories/cubits/sub_categories_of_category/sub_categories_of_category_states.dart';
 import 'package:masaref/features/categories/data/category_model.dart';

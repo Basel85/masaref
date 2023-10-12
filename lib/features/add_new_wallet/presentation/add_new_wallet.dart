@@ -12,8 +12,8 @@ import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wa
 import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_states.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_states.dart';
-import 'package:masaref/features/add_new_wallet/presentation/widgets/add_image.dart';
-import 'package:masaref/features/add_new_wallet/presentation/widgets/wallet_name_text_form_field.dart';
+import 'package:masaref/core/widgets/add_image.dart';
+import 'package:masaref/core/widgets/wallet_name_text_form_field.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 
 class AddNewWalletScreen extends StatefulWidget {
