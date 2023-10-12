@@ -11,6 +11,7 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
+import 'package:masaref/features/main/presentation/main_screen.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_state.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/category_section.dart';
@@ -96,6 +97,11 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                                     backgroundColor: Colors.green,
                                   ));
                         });
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const MainScreen()),
+                            (route) => false);
                       },
                       icon: const Icon(
                         Icons.delete,
@@ -308,12 +314,29 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                                             1
                                         ? -1 * balance
                                         : balance);
+                                double thirdOperand = (BlocProvider.of<
+                                                Mo3amalaCubit>(context)
+                                            .pickedCategory
+                                            ?.sectionId ==
+                                        null
+                                    ? widget.transactionModel!.sectionID! == 1
+                                        ? widget.transactionModel!.price!
+                                        : -1 * widget.transactionModel!.price!
+                                    : BlocProvider.of<Mo3amalaCubit>(context)
+                                                .pickedCategory
+                                                ?.sectionId ==
+                                            1
+                                        ? widget.transactionModel!.price!
+                                        : -1 * widget.transactionModel!.price!);
+
                                 UpdateWalletCubit.get(context).updateWallet(
                                     name:
                                         BlocProvider.of<Mo3amalaCubit>(context)
                                             .pickedWallet!
                                             .name,
-                                    balance: firstOperand + secondOperand,
+                                    balance: firstOperand +
+                                        thirdOperand +
+                                        secondOperand,
                                     imagePath:
                                         BlocProvider.of<Mo3amalaCubit>(context)
                                             .pickedWallet!

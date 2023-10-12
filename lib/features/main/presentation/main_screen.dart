@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
             builder: (context, state) {
               return Scaffold(
                 floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerDocked,
+                    FloatingActionButtonLocation.centerFloat,
                 floatingActionButton: FloatingActionButton(
                   elevation: 0,
                   backgroundColor:

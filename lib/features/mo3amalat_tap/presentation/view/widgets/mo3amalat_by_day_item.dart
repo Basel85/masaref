@@ -8,6 +8,7 @@ import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
+import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/mo3amalat_page.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/date_section.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_list_section.dart';
@@ -35,11 +36,14 @@ class Mo3amalatByDayContainer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Mo3amalatPage(
-                        transactionList: tList,
-                        categorynamesList:
-                            BlocProvider.of<WholeAppCubit>(context)
-                                .cateNames[index]),
+                    builder: (context) => BlocProvider<SearchCubit>(
+                      create: (context) => SearchCubit(),
+                      child: Mo3amalatPage(
+                          transactionList: tList,
+                          categorynamesList:
+                              BlocProvider.of<WholeAppCubit>(context)
+                                  .cateNames[index]),
+                    ),
                   ),
                 );
               });

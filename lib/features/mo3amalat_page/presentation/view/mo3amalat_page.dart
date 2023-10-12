@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
+import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
+import 'package:masaref/features/mo3amalat_page/cubits/search/search_states.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/mo3amala_componant.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/search_field.dart';
 
@@ -35,25 +37,34 @@ class Mo3amalatPage extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: Column(
               children: [
-                const SearchField(),
+                SearchField(
+                  categorynamesList: categorynamesList,
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(10.r),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount:
-                          transactionList.length == categorynamesList.length
-                              ? categorynamesList.length
-                              : transactionList.length,
-                      itemBuilder: (context, index) {
-                        return Mo3amalaComponant(
-                            transactionModel: transactionList[index],
-                            cateName: categorynamesList[index],
-                            transactionlist: transactionList);
-                      },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 10.h),
+                    child: BlocBuilder<SearchCubit, SearchStates>(
+                      builder: (_, state) => ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state is SearchSearchedState
+                            ? state.searchedList.length
+                            : categorynamesList.length,
+                        itemBuilder: (context, index) {
+                          return Mo3amalaComponant(
+                              transactionModel: state is SearchSearchedState
+                                  ? transactionList[categorynamesList
+                                      .indexOf(state.searchedList[index])]
+                                  : transactionList[index],
+                              cateName: state is SearchSearchedState
+                                  ? categorynamesList[categorynamesList
+                                      .indexOf(state.searchedList[index])]
+                                  : categorynamesList[index],
+                              transactionlist: transactionList);
+                        },
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 10.h),
+                      ),
                     ),
                   ),
                 ),
