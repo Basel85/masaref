@@ -141,7 +141,7 @@ class _AddNewWalletScreenState extends State<AddNewWalletScreen>
                               name: _nameController.text,
                               balance: double.parse(_balanceController.text),
                               imagePath:
-                                  ImagePickerCubit.get(context).imagePath!.path,
+                                  ImagePickerCubit.get(context).imagePath!,
                               color: int.parse("0xFF$_hexColor"));
                         }
                       }

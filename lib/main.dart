@@ -12,6 +12,7 @@ import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
+import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 // import 'package:masaref/features/mo3amalat_tap/presentation/view/mo3amalat_tap.dart';
 import 'package:masaref/features/splash/presentation/splash_screen.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+    )
     );
   }
 }
