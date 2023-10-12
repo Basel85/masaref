@@ -18,6 +18,7 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/elma7faza_se
 import 'package:masaref/features/mo3amala/presentation/view/widgets/importance_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/money_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_section.dart';
+import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 
 class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
   const Mo3amalaPage({
@@ -162,7 +163,7 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                               );
                             }
                           } else {
-                            DBHelper.updateRecordonTransaction(
+                            await DBHelper.updateRecordonTransaction(
                               id: transactionModel!.id!,
                               price: BlocProvider.of<Mo3amalaCubit>(context)
                                       .price ??
@@ -197,26 +198,21 @@ class Mo3amalaPage extends StatelessWidget with SnackBarViewer {
                               priority: BlocProvider.of<Mo3amalaCubit>(context)
                                   .importanceIndex
                                   .toString(),
-                            ).then((value) async {
-                              await BlocProvider.of<WholeAppCubit>(context)
-                                  .getTransactionwithDate()
-                                  .then((value) async {
-                                List<int> categoryIDs = [];
-                                for (var i = 0;
-                                    i < transactionList.length;
-                                    i++) {
-                                  categoryIDs
-                                      .add(transactionList[i].categoryID!);
-                                }
-                                await BlocProvider.of<WholeAppCubit>(context)
-                                    .getCategoryName(categoryIDs);
-                                showSnackBar(
-                                  context: context,
-                                  message: 'تم تعديل المعاملة',
-                                  backgroundColor: Colors.green,
-                                );
-                              });
-                            });
+                            );
+                            // UpdateWalletCubit.get(context).updateWallet(name: name, balance: balance, imagePath: imagePath, id: id)
+                            await BlocProvider.of<WholeAppCubit>(context)
+                                .getTransactionwithDate();
+                            List<int> categoryIDs = [];
+                            for (var i = 0; i < transactionList.length; i++) {
+                              categoryIDs.add(transactionList[i].categoryID!);
+                            }
+                            await BlocProvider.of<WholeAppCubit>(context)
+                                .getCategoryName(categoryIDs);
+                            showSnackBar( 
+                              context: context,
+                              message: 'تم تعديل المعاملة',
+                              backgroundColor: Colors.green,
+                            );
                           }
                         },
                       ),
