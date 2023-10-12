@@ -19,6 +19,7 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/importance_s
 import 'package:masaref/features/mo3amala/presentation/view/widgets/money_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_section.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 
 class Mo3amalaPage extends StatefulWidget {
   const Mo3amalaPage({
@@ -42,8 +43,8 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
   void initState() {
     if (widget.transactionModel != null) {
       BlocProvider.of<Mo3amalaCubit>(context).pickedWallet = widget.walletList
-              .where((wallet) => wallet.id == widget.transactionModel!.walletID)
-          as WalletModel?;
+          .where((wallet) => wallet.id == widget.transactionModel!.walletID)
+          .toList()[0];
     }
 
     super.initState();
@@ -61,9 +62,29 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
               if (!widget.toAdd)
                 IconButton(
                   onPressed: () {
+                    double firstOperand =
+                        BlocProvider.of<Mo3amalaCubit>(context)
+                            .pickedWallet!
+                            .balance;
+                    double secondOperand =
+                        (widget.transactionModel!.sectionID == 1
+                            ? widget.transactionModel!.price!
+                            : -1 * widget.transactionModel!.price!);
                     DBHelper.deleteFromAll(
                             widget.transactionModel!.id!, 'Trans_action')
                         .then((value) async {
+                      UpdateWalletCubit.get(context).updateWallet(
+                          name: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .name,
+                          balance: firstOperand + secondOperand,
+                          imagePath: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .image,
+                          id: BlocProvider.of<Mo3amalaCubit>(context)
+                              .pickedWallet!
+                              .id);
+                      GetAllWalletsCubit.get(context).getAllWallets();
                       await BlocProvider.of<WholeAppCubit>(context)
                           .getTransactionwithDate()
                           .then((value) => showSnackBar(
@@ -164,6 +185,41 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                         .importanceIndex,
                               );
+                              // print(BlocProvider.of<Mo3amalaCubit>(context)
+                              //     .price);
+                              double balance =
+                                  BlocProvider.of<Mo3amalaCubit>(context)
+                                          .price ??
+                                      0.0;
+                              double firstOperand =
+                                  BlocProvider.of<Mo3amalaCubit>(context)
+                                          .pickedWallet
+                                          ?.balance ??
+                                      widget.walletList[0].balance;
+                              double secondOperand =
+                                  (BlocProvider.of<Mo3amalaCubit>(context)
+                                              .pickedCategory!
+                                              .sectionId ==
+                                          1
+                                      ? -1 * balance
+                                      : balance);
+                              UpdateWalletCubit.get(context).updateWallet(
+                                name: BlocProvider.of<Mo3amalaCubit>(context)
+                                        .pickedWallet
+                                        ?.name ??
+                                    widget.walletList[0].name,
+                                balance: firstOperand + secondOperand,
+                                imagePath:
+                                    BlocProvider.of<Mo3amalaCubit>(context)
+                                            .pickedWallet
+                                            ?.image ??
+                                        widget.walletList[0].image,
+                                id: BlocProvider.of<Mo3amalaCubit>(context)
+                                        .pickedWallet
+                                        ?.id ??
+                                    widget.walletList[0].id,
+                              );
+                              GetAllWalletsCubit.get(context).getAllWallets();
                               await BlocProvider.of<WholeAppCubit>(context)
                                   .getTransactionwithDate();
                               List<int> categoryIDs = [];
@@ -221,16 +277,30 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                             double balance =
                                 BlocProvider.of<Mo3amalaCubit>(context).price ??
                                     widget.transactionModel!.price!;
+                            double firstOperand =
+                                BlocProvider.of<Mo3amalaCubit>(context)
+                                    .pickedWallet!
+                                    .balance;
+                            double secondOperand =
+                                (BlocProvider.of<Mo3amalaCubit>(context)
+                                            .pickedCategory
+                                            ?.sectionId ==
+                                        null
+                                    ? widget.transactionModel!.sectionID! == 1
+                                        ? -1 * balance
+                                        : balance
+                                    : BlocProvider.of<Mo3amalaCubit>(context)
+                                                .pickedCategory
+                                                ?.sectionId ==
+                                            1
+                                        ? -1 * balance
+                                        : balance);
+                            print(widget.transactionModel!.sectionID);
                             UpdateWalletCubit.get(context).updateWallet(
                                 name: BlocProvider.of<Mo3amalaCubit>(context)
                                     .pickedWallet!
                                     .name,
-                                balance: BlocProvider.of<Mo3amalaCubit>(context)
-                                        .pickedWallet!
-                                        .balance +
-                                    (widget.transactionModel!.sectionID == 1
-                                        ? -1*balance
-                                        : balance),
+                                balance: firstOperand + secondOperand,
                                 imagePath:
                                     BlocProvider.of<Mo3amalaCubit>(context)
                                         .pickedWallet!
@@ -238,6 +308,7 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                                 id: BlocProvider.of<Mo3amalaCubit>(context)
                                     .pickedWallet!
                                     .id);
+                            GetAllWalletsCubit.get(context).getAllWallets();
                             await BlocProvider.of<WholeAppCubit>(context)
                                 .getTransactionwithDate();
                             List<int> categoryIDs = [];

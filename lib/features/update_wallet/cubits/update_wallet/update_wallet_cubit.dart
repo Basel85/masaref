@@ -11,12 +11,16 @@ class UpdateWalletCubit extends Cubit<UpdateWalletStates> {
       required String imagePath,
       required int id}) {
     try {
+      print(id);
+      print(name);
+      print(balance);
+      print(imagePath);
       WalletRepository.updateWallet(
-          id: id,
-          name: name,
-          balance: balance,
-          image: imagePath,
-          );
+        id: id,
+        name: name,
+        balance: balance,
+        image: imagePath,
+      );
       emit(UpdateWalletSuccessState());
     } catch (e) {
       emit(UpdateWalletErrorState(errorMessage: "Something went wrong"));
