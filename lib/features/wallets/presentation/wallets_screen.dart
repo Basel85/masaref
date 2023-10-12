@@ -7,7 +7,6 @@ import 'package:masaref/core/widgets/get_error_message.dart';
 import 'package:masaref/features/add_new_wallet/cubits/check_box/check_box_cubit.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
 import 'package:masaref/features/update_wallet/cubits/delete_wallet/delete_wallet_cubit.dart';
-import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 import 'package:masaref/features/update_wallet/presentation/update_wallet_screen.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
@@ -85,9 +84,7 @@ class _WalletsScreenState extends State<WalletsScreen> {
                                             BlocProvider<ImagePickerCubit>(
                                               create: (_) => ImagePickerCubit(),
                                             ),
-                                            BlocProvider<UpdateWalletCubit>(
-                                                create: (_) =>
-                                                    UpdateWalletCubit()),
+                                            
                                             BlocProvider<DeleteWalletCubit>(
                                                 create: (_) =>
                                                     DeleteWalletCubit())
