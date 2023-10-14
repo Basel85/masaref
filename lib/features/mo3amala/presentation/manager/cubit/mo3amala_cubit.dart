@@ -7,13 +7,12 @@ import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_st
 class Mo3amalaCubit extends Cubit<Mo3amalaState> {
   Mo3amalaCubit() : super(Mo3amalaInitial());
 
-  bool repeatChange = false;
-  bool change = false;
+  String? notes;
+  double? price;
   WalletModel? pickedWallet;
   CategoryModel? pickedCategory;
+  bool repeatChange = false;
   int importanceIndex = 0;
-  double? price;
-  String? notes;
   DateTime transDate = DateTime.now();
   TimeOfDay transTime = TimeOfDay.now();
 
@@ -22,7 +21,7 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
     emit(Mo3amalaPrice());
   }
 
-  setNotes(String note) {
+  setNotes(String? note) {
     notes = note;
     emit(Mo3amalaNotes());
   }
@@ -52,8 +51,8 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
     emit(Mo3amalaRepeatSwitch());
   }
 
-  sWitCh() {
-    change = !change;
+  changeSwitch(bool change) {
+    repeatChange = change;
     emit(Mo3amalaRepeatSwitch());
   }
 

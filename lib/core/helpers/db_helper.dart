@@ -28,13 +28,6 @@ class DBHelper {
             image TEXT,
             FOREIGN KEY (sectionid) REFERENCES Section (id)
             )''');
-    await db.execute('''CREATE TABLE SubCategory (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            categoryid INTEGER,
-            name TEXT,
-            image TEXT,
-            FOREIGN KEY (categoryid) REFERENCES Category (id)
-            )''');
     await db.execute('''CREATE TABLE Trans_action (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             price REAL,
@@ -73,13 +66,7 @@ class DBHelper {
       path,
       version: 2,
       onConfigure: _onConfigure,
-      // onUpgrade: (db, oldVersion, newVersion) async {
-
-      // },
       onCreate: _onCreate,
-      onOpen: (db) async {
-        // print(await getAll('Trans_action'));
-      },
     );
   }
 

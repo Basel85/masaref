@@ -185,6 +185,7 @@ class Elma7fazaSection extends StatelessWidget {
                 child: SizedBox(
                   height: 35.h,
                   child: CustomFormField(
+                    initvalue: BlocProvider.of<Mo3amalaCubit>(context).notes,
                     inputStyle: AppStyles.textStyle24w400.copyWith(
                       color: BlocProvider.of<WholeAppCubit>(context).isdark
                           ? AppColors.colorWhite

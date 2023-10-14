@@ -11,7 +11,7 @@ class CategoryModel {
     required this.image,
   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+  factory CategoryModel.fromJson(Map<dynamic, dynamic> json) {
     return CategoryModel(
       id: json['id'],
       sectionId: json['sectionid'],
