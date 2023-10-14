@@ -9,16 +9,15 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
 
   bool repeatChange = false;
   bool change = false;
-  bool ispicked = false;
   WalletModel? pickedWallet;
   CategoryModel? pickedCategory;
   int importanceIndex = 0;
-  double? price = 0;
+  double? price;
   String? notes;
   DateTime transDate = DateTime.now();
   TimeOfDay transTime = TimeOfDay.now();
 
-  setPrice(double pric) {
+  setPrice(double? pric) {
     price = pric;
     emit(Mo3amalaPrice());
   }
@@ -33,12 +32,10 @@ class Mo3amalaCubit extends Cubit<Mo3amalaState> {
     emit(Mo3amalaChangeWallet());
   }
 
-  changeCategory(CategoryModel category) {
+  changeCategory(CategoryModel? category) {
     pickedCategory = category;
     emit(Mo3amalaChangeCategory());
   }
-
-  
 
   chooseDate(DateTime? date) {
     transDate = date ?? transDate;

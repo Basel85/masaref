@@ -58,8 +58,11 @@ class Elma7fazaSection extends StatelessWidget {
                                   walletList.isEmpty ? 1 : walletList.length,
                               itemBuilder: (context, index) =>
                                   walletList.isEmpty
-                                      ? const Center(
-                                          child: Text('No Wallets!'),
+                                      ? Center(
+                                          child: Text('No Wallets!',
+                                              style: TextStyle(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.bold)),
                                         )
                                       : walletList.length == 1
                                           ? BottomSheetListItem(
@@ -105,7 +108,9 @@ class Elma7fazaSection extends StatelessWidget {
                       backgroundColor: AppColors.primaryColor,
                       backgroundImage: cubit.pickedWallet == null
                           ? null
-                          : FileImage(File(cubit.pickedWallet!.image)),
+                          : cubit.pickedWallet?.image == ''
+                              ? null
+                              : FileImage(File(cubit.pickedWallet!.image)),
                     ),
                     SizedBox(width: 10.w),
                     Column(
@@ -219,7 +224,6 @@ class BottomSheetListItem extends StatelessWidget {
       splashColor: Colors.green[100],
       splashFactory: InkRipple.splashFactory,
       onTap: () {
-        cubit.ispicked = true;
         cubit.changeWallet(walletModel);
         Navigator.pop(context);
       },
@@ -233,7 +237,9 @@ class BottomSheetListItem extends StatelessWidget {
             CircleAvatar(
               radius: 16.r,
               backgroundColor: AppColors.primaryColor,
-              backgroundImage: FileImage(File(walletModel.image)),
+              backgroundImage: walletModel.image == ''
+                  ? null
+                  : FileImage(File(walletModel.image)),
             ),
             SizedBox(width: 10.w),
             Text(

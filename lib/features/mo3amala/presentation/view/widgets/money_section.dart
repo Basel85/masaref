@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
@@ -12,8 +13,10 @@ class MoneySection extends StatelessWidget {
   const MoneySection({
     super.key,
     required this.cubit,
+    this.transactionModel,
   });
   final Mo3amalaCubit cubit;
+  final TransactionModel? transactionModel;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +63,9 @@ class MoneySection extends StatelessWidget {
                 child: SizedBox(
                   height: 45.h,
                   child: CustomFormField(
+                    initvalue: transactionModel == null
+                        ? null
+                        : transactionModel!.price.toString(),
                     inputStyle: AppStyles.textStyle24w400.copyWith(
                       color: AppColors.primaryColor,
                       fontSize: 20.sp,
@@ -70,6 +76,8 @@ class MoneySection extends StatelessWidget {
                     onchange: (p0) {
                       if (p0.isNotEmpty) {
                         cubit.setPrice(double.parse(p0));
+                      } else {
+                        cubit.setPrice(null);
                       }
                     },
                   ),

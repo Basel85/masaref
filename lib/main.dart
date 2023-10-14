@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<GetAllWalletsCubit>(create: (_) => GetAllWalletsCubit()),
           BlocProvider(create: (_) => Mo3amalaCubit()),
+          BlocProvider(create: (context) => WholeAppCubit()),
           BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
           BlocProvider<GetCategoriesOfSectionCubit>(
               create: (_) => GetCategoriesOfSectionCubit()),
@@ -59,32 +60,29 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) => Directionality(
             textDirection: TextDirection.rtl,
-            child: BlocProvider(
-              create: (context) => WholeAppCubit(),
-              child: BlocBuilder<WholeAppCubit, WholeAppStates>(
-                builder: (context, state) {
-                  return MaterialApp(
-                    navigatorKey: navigatorKey,
-                    debugShowCheckedModeBanner: false,
-                    theme: BlocProvider.of<WholeAppCubit>(context).isdark
-                        ? ThemeData(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            appBarTheme: const AppBarTheme(
-                              color: AppColors.primaryColor,
-                            ),
-                            scaffoldBackgroundColor: AppColors.darkMode,
-                          )
-                        : ThemeData(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            appBarTheme: const AppBarTheme(
-                              color: AppColors.primaryColor,
-                            ),
-                            scaffoldBackgroundColor: AppColors.lightMode,
+            child: BlocBuilder<WholeAppCubit, WholeAppStates>(
+              builder: (context, state) {
+                return MaterialApp(
+                  navigatorKey: navigatorKey,
+                  debugShowCheckedModeBanner: false,
+                  theme: BlocProvider.of<WholeAppCubit>(context).isdark
+                      ? ThemeData(
+                          fontFamily: GoogleFonts.cairo().fontFamily,
+                          appBarTheme: const AppBarTheme(
+                            color: AppColors.primaryColor,
                           ),
-                    home: const SplashScreen(),
-                  );
-                },
-              ),
+                          scaffoldBackgroundColor: AppColors.darkMode,
+                        )
+                      : ThemeData(
+                          fontFamily: GoogleFonts.cairo().fontFamily,
+                          appBarTheme: const AppBarTheme(
+                            color: AppColors.primaryColor,
+                          ),
+                          scaffoldBackgroundColor: AppColors.lightMode,
+                        ),
+                  home: const SplashScreen(),
+                );
+              },
             ),
           ),
         ));

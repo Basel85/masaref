@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
+import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/features/mo3amalat_page/cubits/search/search_states.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/mo3amala_componant.dart';
@@ -22,20 +23,25 @@ class Mo3amalatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-              ),
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    textDirection: TextDirection.ltr,
+                    color: AppColors.colorWhite,
+                  ),
+                ),
+              ],
             ),
-          ),
-          body: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Column(
+            body: Column(
               children: [
                 SearchField(
                   categorynamesList: categorynamesList,

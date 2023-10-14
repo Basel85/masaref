@@ -53,7 +53,17 @@ class DBHelper {
     await insertIntoSection(name: "النفقات");
     await insertIntoSection(name: "الدخل");
     await insertIntoCategory(sectionid: 1, name: "الطعام", image: "");
+    await insertIntoCategory(sectionid: 1, name: "المواصلات", image: "");
+    await insertIntoCategory(sectionid: 1, name: "فواتير", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التعليم", image: "");
+    await insertIntoCategory(sectionid: 1, name: "الترفيه", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التبرعات", image: "");
+    await insertIntoCategory(sectionid: 1, name: "الصحة", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التسوق", image: "");
     await insertIntoCategory(sectionid: 2, name: "الراتب", image: "");
+    await insertIntoCategory(sectionid: 2, name: "المكافآت", image: "");
+    await insertIntoCategory(sectionid: 2, name: "الهدايا", image: "");
+    await insertIntoCategory(sectionid: 2, name: "أجرة", image: "");
   }
 
   static createDatabase() async {
