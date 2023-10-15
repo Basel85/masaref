@@ -11,6 +11,8 @@ class CustomListTile extends StatelessWidget {
   final double? imageRadius;
   final Color backgroundColor;
   final String? image;
+  final Icon? icon;
+  final void Function()? onTap;
   const CustomListTile(
       {super.key,
       required this.title,
@@ -18,26 +20,29 @@ class CustomListTile extends StatelessWidget {
       this.trailing,
       this.imageRadius,
       this.backgroundColor = AppColors.primaryColor,
-      required this.image});
+      this.image, this.onTap, this.icon});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        radius: imageRadius ?? 20.r,
-        backgroundColor: backgroundColor,
-        backgroundImage: image!=null && image!=""? FileImage(File(image!)):null,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16.sp,
-          color: textColor,
-          fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onTap,
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: image!=null? CircleAvatar(
+          radius: imageRadius ?? 20.r,
+          backgroundColor: backgroundColor,
+          backgroundImage: image!=null && image!=""? FileImage(File(image!)):null,
+        ):icon,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: textColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        trailing: trailing,
       ),
-      trailing: trailing,
     );
   }
 }
