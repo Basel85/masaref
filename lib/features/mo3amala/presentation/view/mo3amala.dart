@@ -190,8 +190,9 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
       id: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.id,
     );
     GetAllWalletsCubit.get(context).getAllWallets();
+    await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
     await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
-
+    await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
     showSnackBar(
       context: context,
       message: 'تم حذف المعاملة',
@@ -238,7 +239,9 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
         imagePath: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.image,
         id: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.id);
     GetAllWalletsCubit.get(context).getAllWallets();
+    await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
     await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
+    await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
     showSnackBar(
       context: context,
       message: 'تم تعديل المعاملة',
@@ -297,6 +300,8 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
       );
       GetAllWalletsCubit.get(context).getAllWallets();
       await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
+      await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
+      await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
       showSnackBar(
         context: context,
         message: 'تم إضافة المعاملة',

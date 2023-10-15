@@ -20,6 +20,7 @@ class _MoreScreenState extends State<MoreScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
+    BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
   }
 
   @override
@@ -61,7 +62,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                   .repeatedTransactionlist,
                           categorynamesList:
                               BlocProvider.of<WholeAppCubit>(context)
-                                  .repeatedcateNames),
+                                  .repeatedcateNames,
+                          isPriorities: false),
                     ),
                   );
                 },
@@ -76,7 +78,21 @@ class _MoreScreenState extends State<MoreScreen> {
                   color: AppColors.primaryColor,
                   size: 24.r,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Mo3amalatPage(
+                        transactionList: BlocProvider.of<WholeAppCubit>(context)
+                            .allTransactionlist,
+                        categorynamesList:
+                            BlocProvider.of<WholeAppCubit>(context)
+                                .allTransactioncateNames,
+                        isPriorities: true,
+                      ),
+                    ),
+                  );
+                },
               ),
               CustomListTile(
                 title: "تنبيهات التطبيق",

@@ -15,9 +15,11 @@ class Mo3amalatPage extends StatelessWidget {
     super.key,
     required this.transactionList,
     required this.categorynamesList,
+    required this.isPriorities,
   });
   final List<TransactionModel> transactionList;
   final List<String> categorynamesList;
+  final bool isPriorities;
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +60,17 @@ class Mo3amalatPage extends StatelessWidget {
                             : categorynamesList.length,
                         itemBuilder: (context, index) {
                           return Mo3amalaComponant(
-                              transactionModel: state is SearchSearchedState
-                                  ? transactionList[categorynamesList
-                                      .indexOf(state.searchedList[index])]
-                                  : transactionList[index],
-                              cateName: state is SearchSearchedState
-                                  ? categorynamesList[categorynamesList
-                                      .indexOf(state.searchedList[index])]
-                                  : categorynamesList[index],
-                              transactionlist: transactionList);
+                            transactionModel: state is SearchSearchedState
+                                ? transactionList[categorynamesList
+                                    .indexOf(state.searchedList[index])]
+                                : transactionList[index],
+                            cateName: state is SearchSearchedState
+                                ? categorynamesList[categorynamesList
+                                    .indexOf(state.searchedList[index])]
+                                : categorynamesList[index],
+                            transactionlist: transactionList,
+                            isPriorities: isPriorities,
+                          );
                         },
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 10.h),

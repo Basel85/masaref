@@ -11,6 +11,8 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
   List<List<String>> cateNames = [[], [], [], [], [], [], []];
   List<int> repeatedcateIds = [];
   List<String> repeatedcateNames = [];
+  List<int> allTransactioncateIds = [];
+  List<String> allTransactioncateNames = [];
   List<String> cateNames1 = [];
   List<String> cateNames2 = [];
   List<String> cateNames3 = [];
@@ -25,6 +27,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
   double byDayTotal5 = 0;
   double byDayTotal6 = 0;
   double byDayTotal7 = 0;
+  List<TransactionModel> allTransactionlist = [];
   List<TransactionModel> repeatedTransactionlist = [];
   List<TransactionModel> transactionlist = [];
   List<TransactionModel> transactionDate1list = [];
@@ -64,6 +67,21 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     }
     repeatedcateNames = await getCategoryName(repeatedcateIds);
     emit(WholeAppRepeatedTransactions());
+  }
+
+  Future getAllTransactions() async {
+    allTransactionlist.clear();
+    allTransactioncateIds.clear();
+    allTransactioncateNames.clear();
+    List<Map> values = await DBHelper.getAll('Trans_action');
+    for (var element in values) {
+      allTransactionlist.add(TransactionModel.fromDB(element));
+    }
+    for (var element in allTransactionlist) {
+      allTransactioncateIds.add(element.categoryID!);
+    }
+    allTransactioncateNames = await getCategoryName(allTransactioncateIds);
+    emit(WholeAppAllTransactions());
   }
 
   Future getTransactionwithDate() async {
