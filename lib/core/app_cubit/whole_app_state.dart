@@ -4,6 +4,8 @@ class WholeAppInitial extends WholeAppStates {}
 
 class WholeAppAllTransactions extends WholeAppStates {}
 
+class WholeAppRepeatedTransactions extends WholeAppStates {}
+
 class WholeAppModeChange extends WholeAppStates {}
 
 class WholeAppGetByDayTotal extends WholeAppStates {}

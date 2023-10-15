@@ -8,7 +8,9 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
 
   bool isdark = false;
   String? cateName;
-  List<List<String>> cateNames = [];
+  List<List<String>> cateNames = [[], [], [], [], [], [], []];
+  List<int> repeatedcateIds = [];
+  List<String> repeatedcateNames = [];
   List<String> cateNames1 = [];
   List<String> cateNames2 = [];
   List<String> cateNames3 = [];
@@ -23,6 +25,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
   double byDayTotal5 = 0;
   double byDayTotal6 = 0;
   double byDayTotal7 = 0;
+  List<TransactionModel> repeatedTransactionlist = [];
   List<TransactionModel> transactionlist = [];
   List<TransactionModel> transactionDate1list = [];
   List<TransactionModel> transactionDate2list = [];
@@ -47,8 +50,24 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     return values;
   }
 
+  Future getRepeatedTransactions() async {
+    repeatedcateIds.clear();
+    repeatedTransactionlist.clear();
+    repeatedcateNames.clear();
+    List<Map<String, dynamic>> values =
+        await DBHelper.getRepeatedTransactions();
+    for (var element in values) {
+      repeatedTransactionlist.add(TransactionModel.fromDB(element));
+    }
+    for (var element in repeatedTransactionlist) {
+      repeatedcateIds.add(element.categoryID!);
+    }
+    repeatedcateNames = await getCategoryName(repeatedcateIds);
+    emit(WholeAppRepeatedTransactions());
+  }
+
   Future getTransactionwithDate() async {
-    cateNames.clear();
+    cateNames = [[], [], [], [], [], [], []];
     transactionDate1list.clear();
     transactionDate2list.clear();
     transactionDate3list.clear();
@@ -65,7 +84,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate1list.length; i++) {
       categoryIDsday1.add(transactionDate1list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday1));
+    cateNames[0] = await getCategoryName(categoryIDsday1);
 
     List<Map> day2 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
@@ -79,7 +98,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate2list.length; i++) {
       categoryIDsday2.add(transactionDate2list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday2));
+    cateNames[1] = await getCategoryName(categoryIDsday2);
     List<Map> day3 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
             .subtract(const Duration(days: 2))
@@ -92,7 +111,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate3list.length; i++) {
       categoryIDsday3.add(transactionDate3list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday3));
+    cateNames[2] = await getCategoryName(categoryIDsday3);
     List<Map> day4 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
             .subtract(const Duration(days: 3))
@@ -105,7 +124,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate4list.length; i++) {
       categoryIDsday4.add(transactionDate4list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday4));
+    cateNames[3] = await getCategoryName(categoryIDsday4);
     List<Map> day5 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
             .subtract(const Duration(days: 4))
@@ -118,7 +137,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate5list.length; i++) {
       categoryIDsday5.add(transactionDate5list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday5));
+    cateNames[4] = await getCategoryName(categoryIDsday5);
     List<Map> day6 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
             .subtract(const Duration(days: 5))
@@ -131,7 +150,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate6list.length; i++) {
       categoryIDsday6.add(transactionDate6list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday6));
+    cateNames[5] = await getCategoryName(categoryIDsday6);
     List<Map> day7 = await DBHelper.getTransactionOfSpecificDate(
         date: DateTime.now()
             .subtract(const Duration(days: 6))
@@ -144,7 +163,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     for (var i = 0; i < transactionDate7list.length; i++) {
       categoryIDsday7.add(transactionDate7list[i].categoryID!);
     }
-    cateNames.add(await getCategoryName(categoryIDsday7));
+    cateNames[6] = await getCategoryName(categoryIDsday7);
     emit(WholeAppAllTransactions());
   }
 }

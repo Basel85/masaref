@@ -27,22 +27,31 @@ class _Mo3amalatListSectionState extends State<Mo3amalatListSection> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
-        return ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: BlocProvider.of<WholeAppCubit>(context)
-                  .cateNames[widget.indix].length,
-          itemBuilder: (context, index) {
-            return Mo3amalatListItem(
-              transactionModel: widget.tranList[index],
-              name: BlocProvider.of<WholeAppCubit>(context)
-                  .cateNames[widget.indix][index],
-            );
-          },
-          separatorBuilder: (context, index) => SizedBox(height: 15.h),
-        );
+        return BlocProvider.of<WholeAppCubit>(context).cateNames.isEmpty
+            ? const Center(child: CircularProgressIndicator.adaptive())
+            : ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: BlocProvider.of<WholeAppCubit>(context)
+                            .cateNames[widget.indix]
+                            .length >
+                        3
+                    ? 3
+                    : BlocProvider.of<WholeAppCubit>(context)
+                        .cateNames[widget.indix]
+                        .length,
+                itemBuilder: (context, index) {
+                  return Mo3amalatListItem(
+                    transactionModel: widget.tranList[index],
+                    name: BlocProvider.of<WholeAppCubit>(context)
+                        .cateNames[widget.indix][index],
+                  );
+                },
+                separatorBuilder: (context, index) => SizedBox(height: 15.h),
+              );
       },
     );
   }

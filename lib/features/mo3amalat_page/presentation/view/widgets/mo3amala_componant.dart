@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,7 +45,8 @@ class Mo3amalaComponant extends StatelessWidget {
                     walletList:
                         state is GetAllWalletsSuccessState ? state.wallets : [],
                     transactionModel: transactionModel,
-                    transactionList: transactionlist, categoryList: categorymodels,
+                    transactionList: transactionlist,
+                    categoryList: categorymodels,
                   ),
                 ),
               );
@@ -99,6 +99,11 @@ class Mo3amalaComponant extends StatelessWidget {
                         ),
                       ],
                     ),
+                    // Icon(transactionModel.priority == '0'
+                    //     ? FontAwesomeIcons.faceSmile
+                    //     : transactionModel.priority == '1'
+                    //         ? FontAwesomeIcons.faceMeh
+                    //         : FontAwesomeIcons.faceMehBlank),
                     Text.rich(
                       TextSpan(
                         children: [
