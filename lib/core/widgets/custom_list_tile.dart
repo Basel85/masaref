@@ -27,6 +27,7 @@ class CustomListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: ListTile(
+        
         contentPadding: EdgeInsets.zero,
         leading: image!=null? CircleAvatar(
           radius: imageRadius ?? 20.r,
