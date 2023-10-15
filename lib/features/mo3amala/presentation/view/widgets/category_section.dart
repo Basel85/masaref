@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,9 +41,11 @@ class CategorySection extends StatelessWidget {
             CircleAvatar(
               radius: 16.r,
               backgroundColor: AppColors.primaryColor,
-              // backgroundImage: cubit.pickedCategory?.image == null
-              //     ? null
-              //     : cubit.pickedCategory!.image,
+              backgroundImage: cubit.pickedCategory?.image == null
+                  ? null
+                  : cubit.pickedCategory?.image == ''
+                      ? null
+                      : FileImage(File(cubit.pickedCategory!.image)),
             ),
             SizedBox(width: 10.w),
             Text(

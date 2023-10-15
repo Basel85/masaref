@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/features/categories/data/category_model.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
@@ -29,6 +31,11 @@ class Mo3amalaComponant extends StatelessWidget {
           splashFactory: InkRipple.splashFactory,
           splashColor: AppColors.primaryColor.withOpacity(0.2),
           onTap: () async {
+            List<Map> cates = await DBHelper.getAll('Category');
+            List<CategoryModel> categorymodels = [];
+            for (var element in cates) {
+              categorymodels.add(CategoryModel.fromJson(element));
+            }
             await Future.delayed(const Duration(milliseconds: 200), () {
               GetAllWalletsCubit.get(context).getAllWallets();
               Navigator.push(
@@ -39,7 +46,7 @@ class Mo3amalaComponant extends StatelessWidget {
                     walletList:
                         state is GetAllWalletsSuccessState ? state.wallets : [],
                     transactionModel: transactionModel,
-                    transactionList: transactionlist,
+                    transactionList: transactionlist, categoryList: categorymodels,
                   ),
                 ),
               );

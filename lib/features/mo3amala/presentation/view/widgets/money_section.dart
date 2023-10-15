@@ -60,6 +60,7 @@ class MoneySection extends StatelessWidget {
                 child: SizedBox(
                   height: 45.h,
                   child: CustomFormField(
+                    initvalue: BlocProvider.of<Mo3amalaCubit>(context).price.toString(),
                     inputStyle: AppStyles.textStyle24w400.copyWith(
                       color: AppColors.primaryColor,
                       fontSize: 20.sp,
@@ -70,6 +71,8 @@ class MoneySection extends StatelessWidget {
                     onchange: (p0) {
                       if (p0.isNotEmpty) {
                         cubit.setPrice(double.parse(p0));
+                      } else {
+                        cubit.setPrice(null);
                       }
                     },
                   ),

@@ -19,9 +19,6 @@ class _Mo3amalatTapState extends State<Mo3amalatTap> {
   @override
   void initState() {
     super.initState();
-    // BlocProvider.of<WholeAppCubit>(context)
-    //     .getAllTransaction()
-    //     .then((value) {});
     BlocProvider.of<WholeAppCubit>(context)
         .getTransactionwithDate()
         .then((value) {});

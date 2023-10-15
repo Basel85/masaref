@@ -28,13 +28,6 @@ class DBHelper {
             image TEXT,
             FOREIGN KEY (sectionid) REFERENCES Section (id)
             )''');
-    await db.execute('''CREATE TABLE SubCategory (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            categoryid INTEGER,
-            name TEXT,
-            image TEXT,
-            FOREIGN KEY (categoryid) REFERENCES Category (id)
-            )''');
     await db.execute('''CREATE TABLE Trans_action (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             price REAL,
@@ -53,7 +46,17 @@ class DBHelper {
     await insertIntoSection(name: "النفقات");
     await insertIntoSection(name: "الدخل");
     await insertIntoCategory(sectionid: 1, name: "الطعام", image: "");
+    await insertIntoCategory(sectionid: 1, name: "المواصلات", image: "");
+    await insertIntoCategory(sectionid: 1, name: "فواتير", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التعليم", image: "");
+    await insertIntoCategory(sectionid: 1, name: "الترفيه", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التبرعات", image: "");
+    await insertIntoCategory(sectionid: 1, name: "الصحة", image: "");
+    await insertIntoCategory(sectionid: 1, name: "التسوق", image: "");
     await insertIntoCategory(sectionid: 2, name: "الراتب", image: "");
+    await insertIntoCategory(sectionid: 2, name: "المكافآت", image: "");
+    await insertIntoCategory(sectionid: 2, name: "الهدايا", image: "");
+    await insertIntoCategory(sectionid: 2, name: "أجرة", image: "");
   }
 
   static createDatabase() async {
@@ -63,13 +66,7 @@ class DBHelper {
       path,
       version: 2,
       onConfigure: _onConfigure,
-      // onUpgrade: (db, oldVersion, newVersion) async {
-
-      // },
       onCreate: _onCreate,
-      onOpen: (db) async {
-        // print(await getAll('Trans_action'));
-      },
     );
   }
 
