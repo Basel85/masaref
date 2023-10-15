@@ -9,6 +9,7 @@ import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_naviga
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_states.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/mo3amalat_tap.dart';
+import 'package:masaref/features/more/presentation/more_screen.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 import 'package:masaref/features/wallets/presentation/wallets_screen.dart';
@@ -62,10 +63,11 @@ class MainScreen extends StatelessWidget {
                       Directionality(
                           textDirection: TextDirection.rtl,
                           child: Mo3amalatTap()),
-                      // Container(),
                       Directionality(
                           textDirection: TextDirection.rtl,
                           child: WalletsScreen()),
+                      Directionality(
+                          textDirection: TextDirection.rtl, child: MoreScreen())
                       // Container(),
                     ],
                   ),
@@ -106,10 +108,10 @@ class MainScreen extends StatelessWidget {
                         icon: Icon(Icons.account_balance_wallet),
                         label: 'المحفظات',
                       ),
-                      // BottomNavigationBarItem(
-                      //   icon: Icon(Icons.more_rounded),
-                      //   label: 'المزيد',
-                      // ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.more_rounded),
+                        label: 'المزيد',
+                      ),
                     ],
                   ),
                 ),
