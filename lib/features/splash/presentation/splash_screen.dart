@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masaref/core/helpers/notification_helper.dart';
 import 'package:masaref/core/utils/app_assets.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
@@ -22,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SnackBarViewer {
   @override
   void initState() {
+    NotificationHelper.showScheduledNotification();
     GetAllWalletsCubit.get(context).getAllWallets();
     super.initState();
   }
