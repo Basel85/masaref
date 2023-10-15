@@ -86,6 +86,11 @@ class DBHelper {
         .rawQuery('''SELECT * FROM Trans_action WHERE date = '$date' ''');
   }
 
+  static Future<List<Map<String, dynamic>>> getRepeatedTransactions() async {
+    return await database
+        .rawQuery('''SELECT * FROM Trans_action WHERE repeat = 'true' ''');
+  }
+
   static Future<List<Map<String, dynamic>>> getCategoriesOfSpecificSection(
       {required int sectionId}) async {
     return await database
