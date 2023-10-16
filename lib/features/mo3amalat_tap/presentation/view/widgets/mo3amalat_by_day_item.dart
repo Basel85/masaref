@@ -36,10 +36,11 @@ class Mo3amalatByDayContainer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => Mo3amalatPage(
-                        transactionList: tList,
-                        categorynamesList:
-                            BlocProvider.of<WholeAppCubit>(context)
-                                .cateNames[index]),
+                      transactionList: tList,
+                      categorynamesList: BlocProvider.of<WholeAppCubit>(context)
+                          .cateNames[index],
+                      isPriorities: false,
+                    ),
                   ),
                 );
               });

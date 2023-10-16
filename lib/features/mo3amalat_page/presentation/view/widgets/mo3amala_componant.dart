@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
@@ -17,10 +18,12 @@ class Mo3amalaComponant extends StatelessWidget {
     required this.transactionModel,
     required this.cateName,
     required this.transactionlist,
+    required this.isPriorities,
   });
   final TransactionModel transactionModel;
   final List<TransactionModel> transactionlist;
   final String? cateName;
+  final bool isPriorities;
 
   @override
   Widget build(BuildContext context) {
@@ -99,33 +102,42 @@ class Mo3amalaComponant extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Icon(transactionModel.priority == '0'
-                    //     ? FontAwesomeIcons.faceSmile
-                    //     : transactionModel.priority == '1'
-                    //         ? FontAwesomeIcons.faceMeh
-                    //         : FontAwesomeIcons.faceMehBlank),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: transactionModel.price.toString(),
-                            style: transactionModel.sectionID == 1
-                                ? const TextStyle(
-                                    color: Colors.red,
-                                  )
-                                : const TextStyle(
-                                    color: Colors.green,
-                                  ),
-                          ),
-                          const TextSpan(
-                            text: ' ج.م',
-                            style: TextStyle(
-                              color: Colors.grey,
+                    if (isPriorities)
+                      Icon(
+                          transactionModel.priority == '0'
+                              ? FontAwesomeIcons.faceSmile
+                              : transactionModel.priority == '1'
+                                  ? FontAwesomeIcons.faceMeh
+                                  : FontAwesomeIcons.faceMehBlank,
+                          color: transactionModel.priority == '0'
+                              ? AppColors.primaryColor
+                              : transactionModel.priority == '1'
+                                  ? Colors.amber
+                                  : AppColors.redColor,
+                          size: 30,),
+                    if (!isPriorities)
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: transactionModel.price.toString(),
+                              style: transactionModel.sectionID == 1
+                                  ? const TextStyle(
+                                      color: Colors.red,
+                                    )
+                                  : const TextStyle(
+                                      color: Colors.green,
+                                    ),
                             ),
-                          ),
-                        ],
+                            const TextSpan(
+                              text: ' ج.م',
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ],

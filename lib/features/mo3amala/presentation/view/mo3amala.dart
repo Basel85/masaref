@@ -99,10 +99,9 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: AppColors.primaryColor,
-                  leading: Row(
-                    children: [
-                      if (!widget.toAdd)
-                        IconButton(
+                  leading: widget.toAdd
+                      ? null
+                      : IconButton(
                           onPressed: () async {
                             await deleteTransactioMethod(context);
                           },
@@ -112,8 +111,6 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                             color: AppColors.colorWhite,
                           ),
                         ),
-                    ],
-                  ),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -190,8 +187,9 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
       id: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.id,
     );
     GetAllWalletsCubit.get(context).getAllWallets();
+    await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
     await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
-
+    await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
     showSnackBar(
       context: context,
       message: 'تم حذف المعاملة',
@@ -201,6 +199,8 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
   }
 
   Future<void> updateTransactionMethod(BuildContext context) async {
+    BlocProvider.of<Mo3amalaCubit>(context).chooseDate(DateTime.now());
+    BlocProvider.of<Mo3amalaCubit>(context).chooseTime(TimeOfDay.now());
     await DBHelper.updateRecordonTransaction(
       id: widget.transactionModel!.id!,
       price: BlocProvider.of<Mo3amalaCubit>(context).price ??
@@ -223,22 +223,31 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
       priority:
           BlocProvider.of<Mo3amalaCubit>(context).importanceIndex.toString(),
     );
-    double balance = BlocProvider.of<Mo3amalaCubit>(context).price ??
-        widget.transactionModel!.price!;
+    double balance = BlocProvider.of<Mo3amalaCubit>(context).price!;
     double firstOperand =
         BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.balance;
     double secondOperand = balance;
     double thirdOperand = widget.transactionModel!.price!;
-    double finalResult = widget.transactionModel!.sectionID! == 1
-        ? firstOperand + (thirdOperand - secondOperand)
-        : firstOperand + (secondOperand - thirdOperand);
+    double finalResult = 0;
+    if (widget.transactionModel!.sectionID ==
+        BlocProvider.of<Mo3amalaCubit>(context).pickedCategory!.sectionId) {
+      finalResult = widget.transactionModel!.sectionID! == 1
+          ? firstOperand + (thirdOperand - secondOperand)
+          : firstOperand + (secondOperand - thirdOperand);
+    } else {
+      finalResult = widget.transactionModel!.sectionID! == 1
+          ? firstOperand - (thirdOperand - secondOperand)
+          : firstOperand - (secondOperand - thirdOperand);
+    }
     UpdateWalletCubit.get(context).updateWallet(
         name: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.name,
         balance: finalResult,
         imagePath: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.image,
         id: BlocProvider.of<Mo3amalaCubit>(context).pickedWallet!.id);
     GetAllWalletsCubit.get(context).getAllWallets();
+    await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
     await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
+    await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
     showSnackBar(
       context: context,
       message: 'تم تعديل المعاملة',
@@ -297,6 +306,8 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
       );
       GetAllWalletsCubit.get(context).getAllWallets();
       await BlocProvider.of<WholeAppCubit>(context).getTransactionwithDate();
+      await BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
+      await BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
       showSnackBar(
         context: context,
         message: 'تم إضافة المعاملة',

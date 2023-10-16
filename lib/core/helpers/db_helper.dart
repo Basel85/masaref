@@ -85,6 +85,11 @@ class DBHelper {
     return await database
         .rawQuery('''SELECT * FROM Trans_action WHERE date = '$date' ''');
   }
+  static Future<List<Map<String, dynamic>>> getTransactionOfSpecificPriority(
+      {required int? priority}) async {
+    return await database
+        .rawQuery('''SELECT * FROM Trans_action WHERE priority = $priority ''');
+  }
 
   static Future<List<Map<String, dynamic>>> getRepeatedTransactions() async {
     return await database
