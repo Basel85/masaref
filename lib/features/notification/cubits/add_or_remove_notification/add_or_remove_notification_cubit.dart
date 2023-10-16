@@ -13,7 +13,7 @@ class AddOrRemoveNotificationCubit
   void addOrRemoveNotification({required bool isSwitchedOn, required int id,required DateTime currentDateTime}) {
     try {
       if (isSwitchedOn) {
-        NotificationRepository.addNotification(id: id);
+        NotificationRepository.addNotification(id: id,currentDate: currentDateTime);
       } else {
         NotificationRepository.removeNotification(id: id);
       }
