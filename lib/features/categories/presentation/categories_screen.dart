@@ -6,7 +6,7 @@ import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/features/add_new_category/cubits/add_category/add_category_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/main_category/main_category_cubit.dart';
-import 'package:masaref/features/add_new_category/cubits/switch_button/switch_button_cubit.dart';
+import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
 import 'package:masaref/features/add_new_category/presentation/add_new_category_screen.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
 import 'package:masaref/features/categories/presentation/widgets/categories_body.dart';

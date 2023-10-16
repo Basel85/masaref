@@ -7,6 +7,8 @@ import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/custom_list_tile.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/mo3amalat_page.dart';
+import 'package:masaref/features/notification/cubits/add_or_remove_notification/add_or_remove_notification_cubit.dart';
+import 'package:masaref/features/notification/presentation/notification_screen.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -88,7 +90,16 @@ class _MoreScreenState extends State<MoreScreen> {
                   color: AppColors.redColor,
                   size: 24.r,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => BlocProvider(
+                                create: (context) =>
+                                    AddOrRemoveNotificationCubit(),
+                                child: const NotificationScreen(),
+                              )));
+                },
               ),
             ],
           ),

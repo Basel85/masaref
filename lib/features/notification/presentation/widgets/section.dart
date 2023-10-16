@@ -10,6 +10,7 @@ class Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         if (sectionName != null)
@@ -23,10 +24,7 @@ class Section extends StatelessWidget {
         Container(
           color: AppColors.colorWhite,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: contents
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: contents),
         )
       ],
     );

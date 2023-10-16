@@ -3,16 +3,14 @@ import 'package:masaref/features/notification/presentation/widgets/notification_
 import 'package:masaref/features/notification/presentation/widgets/switch_button.dart';
 
 class NotificationTime extends StatelessWidget {
-  const NotificationTime({super.key});
+  final int id;
+  const NotificationTime({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return  Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        NotificationTimeText(),
-        SwitchButton()
-      ],
+      children: [NotificationTimeText(id: id,), SwitchButton(id: id,)],
     );
   }
 }

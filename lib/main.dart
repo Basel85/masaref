@@ -19,7 +19,6 @@ import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cu
 import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
-import 'package:timezone/data/latest.dart' as time_zone_initializer;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 bool isRunFromNotification = false;
@@ -28,7 +27,6 @@ void main() async {
   Bloc.observer = Observer();
   NotificationHelper.init();
   isRunFromNotification = await NotificationHelper.checkAppNotification();
-  time_zone_initializer.initializeTimeZones();
   await CacheHelper.init();
   await DBHelper.createDatabase();
   runApp(const MyApp());
@@ -53,7 +51,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
           BlocProvider<GetCategoriesOfSectionCubit>(
               create: (_) => GetCategoriesOfSectionCubit()),
-          BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
           BlocProvider<ImagePickerCubit>(create: (_) => ImagePickerCubit()),
           BlocProvider<BottomNavigationBarCubit>(
             create: (context) => BottomNavigationBarCubit(),
