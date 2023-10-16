@@ -99,10 +99,9 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: AppColors.primaryColor,
-                  leading: Row(
-                    children: [
-                      if (!widget.toAdd)
-                        IconButton(
+                  leading: widget.toAdd
+                      ? null
+                      : IconButton(
                           onPressed: () async {
                             await deleteTransactioMethod(context);
                           },
@@ -112,8 +111,6 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
                             color: AppColors.colorWhite,
                           ),
                         ),
-                    ],
-                  ),
                   actions: [
                     IconButton(
                       onPressed: () {

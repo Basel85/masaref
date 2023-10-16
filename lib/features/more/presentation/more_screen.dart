@@ -21,6 +21,7 @@ class _MoreScreenState extends State<MoreScreen> {
     super.initState();
     BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
     BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
+    BlocProvider.of<WholeAppCubit>(context).changePriorityIndex(null);
   }
 
   @override
@@ -84,10 +85,20 @@ class _MoreScreenState extends State<MoreScreen> {
                     MaterialPageRoute(
                       builder: (context) => Mo3amalatPage(
                         transactionList: BlocProvider.of<WholeAppCubit>(context)
-                            .allTransactionlist,
+                                    .priorityIndex ==
+                                null
+                            ? BlocProvider.of<WholeAppCubit>(context)
+                                .allTransactionlist
+                            : BlocProvider.of<WholeAppCubit>(context)
+                                .priorityTransactionlist,
                         categorynamesList:
                             BlocProvider.of<WholeAppCubit>(context)
-                                .allTransactioncateNames,
+                                        .priorityIndex ==
+                                    null
+                                ? BlocProvider.of<WholeAppCubit>(context)
+                                    .allTransactioncateNames
+                                : BlocProvider.of<WholeAppCubit>(context)
+                                    .prioritycateNames,
                         isPriorities: true,
                       ),
                     ),
