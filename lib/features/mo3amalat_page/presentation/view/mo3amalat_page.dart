@@ -48,6 +48,11 @@ class Mo3amalatPage extends StatelessWidget {
                           BlocProvider.of<WholeAppCubit>(context).priorityIndex,
                       items: const [
                         DropdownMenuItem(
+                          value: null,
+                          alignment: Alignment.centerRight,
+                          child: Text('الكل'),
+                        ),
+                        DropdownMenuItem(
                           alignment: Alignment.centerRight,
                           value: 0,
                           child: Text('اساسى'),
@@ -61,11 +66,6 @@ class Mo3amalatPage extends StatelessWidget {
                           value: 2,
                           alignment: Alignment.centerRight,
                           child: Text('ترفيهى'),
-                        ),
-                        DropdownMenuItem(
-                          value: null,
-                          alignment: Alignment.centerRight,
-                          child: Text('الكل'),
                         ),
                       ],
                       onChanged: (value) async {
