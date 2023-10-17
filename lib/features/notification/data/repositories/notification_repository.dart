@@ -8,13 +8,11 @@ class NotificationRepository {
       {required int id,
       required DateTime currentDate,
       required int isSwitchedOn}) {
-    print("Hello");
     DBHelper.updateRecordonNotification(
         id: id,
         time:
             "${currentDate.hour < 9 ? "0${currentDate.hour}" : "${currentDate.hour}"}:${currentDate.minute < 9 ? "0${currentDate.minute}" : "${currentDate.minute}"} ${currentDate.hour >= 12 ? "PM" : "AM"}",
         isSwitchedOn: isSwitchedOn);
-    print(currentDate);
     if (isSwitchedOn == 1) {
       NotificationHelper.cancelNotification(id: id);
       NotificationHelper.addScheduledNotification(

@@ -90,6 +90,12 @@ class DBHelper {
         .rawQuery('''SELECT name FROM Category WHERE id = $catyid ''');
   }
 
+  static Future<List<Map<String, dynamic>>> getspecificCategoryImage(
+      {required int catyid}) async {
+    return await database
+        .rawQuery('''SELECT image FROM Category WHERE id = $catyid ''');
+  }
+
   static Future<List<Map<String, dynamic>>> getTransactionOfSpecificDate(
       {required String date}) async {
     return await database

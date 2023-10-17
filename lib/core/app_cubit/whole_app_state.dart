@@ -14,4 +14,4 @@ class WholeAppPriorityChange extends WholeAppStates {}
 
 class WholeAppGetByDayTotal extends WholeAppStates {}
 
-class WholeAppGetCategoryName extends WholeAppStates {}
+class WholeAppGetCategoryImage extends WholeAppStates {}
