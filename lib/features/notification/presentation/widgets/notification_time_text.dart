@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/notification/cubits/add_or_remove_notification/add_or_remove_notification_cubit.dart';
 import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
 import 'package:masaref/features/notification/cubits/time/time_cubit.dart';
 import 'package:masaref/features/notification/cubits/time/time_states.dart';
+import 'package:masaref/features/notification/cubits/update_notification/update_notification_cubit.dart';
+import 'package:masaref/features/notification/cubits/update_notification/update_notification_states.dart';
 
 class NotificationTimeText extends StatefulWidget {
-  final int id;
-  const NotificationTimeText({super.key, required this.id});
+  const NotificationTimeText({super.key});
 
   @override
   State<NotificationTimeText> createState() => _NotificationTimeTextState();
@@ -18,7 +18,7 @@ class NotificationTimeText extends StatefulWidget {
 
 class _NotificationTimeTextState extends State<NotificationTimeText> {
   void _changeTime(TimeOfDay? time) {
-    TimeCubit.get(context).changeTime(time!);
+    UpdateNotificationCubit.get(context).updateNotification(newTime: time);
   }
 
   @override
@@ -27,26 +27,14 @@ class _NotificationTimeTextState extends State<NotificationTimeText> {
       onTap: () async {
         TimeOfDay? time = await showTimePicker(
           context: context,
-          initialTime: TimeCubit.get(context).time,
+          initialTime: UpdateNotificationCubit.get(context).time,
         );
         _changeTime(time);
       },
-      child: BlocConsumer<TimeCubit, TimeStates>(
-        listener: (_, state) {
-          // AddOrRemoveNotificationCubit.get(context).addOrRemoveNotification(
-          //   isSwitchedOn: SwitchButtonCubit.get(context).isSwitchedOn,
-          //   id: widget.id
-          // );
-        },
+      child: BlocBuilder<UpdateNotificationCubit, UpdateNotificationStates>(
         builder: (_, state) => Text(
-          state is TimeChangedState
-              ? state.time.format(context)
-              : DateFormat('a hh:mm').format(DateTime(
-                  2023,
-                  1,
-                  1,
-                  TimeCubit.get(context).time.hour,
-                  TimeCubit.get(context).time.minute)),
+          "${UpdateNotificationCubit.get(context).time.hourOfPeriod < 9 ? "0${UpdateNotificationCubit.get(context).time.hourOfPeriod}" : "${UpdateNotificationCubit.get(context).time.hourOfPeriod}"} : ${UpdateNotificationCubit.get(context).time.minute < 9 ? "0${UpdateNotificationCubit.get(context).time.minute}" : UpdateNotificationCubit.get(context).time.minute} ${UpdateNotificationCubit.get(context).time.hour >= 12 ? "PM" : "AM"}",
+          textDirection: TextDirection.ltr,
           style: TextStyle(
             color: AppColors.colorBlack,
             fontSize: 16.sp,

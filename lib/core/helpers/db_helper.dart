@@ -43,6 +43,12 @@ class DBHelper {
             FOREIGN KEY (categoryid) REFERENCES Category (id),
             FOREIGN KEY (walletid) REFERENCES Wallet (id) ON DELETE CASCADE
             )''');
+    await db.execute('''CREATE TABLE Notification (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            time TEXT,
+            is_switched_on INTEGER
+            )''');
+
     await insertIntoSection(name: "النفقات");
     await insertIntoSection(name: "الدخل");
     await insertIntoCategory(sectionid: 1, name: "الطعام", image: "");
@@ -57,11 +63,15 @@ class DBHelper {
     await insertIntoCategory(sectionid: 2, name: "المكافآت", image: "");
     await insertIntoCategory(sectionid: 2, name: "الهدايا", image: "");
     await insertIntoCategory(sectionid: 2, name: "أجرة", image: "");
+    insertIntoNotification(time: "08:00", isSwitchedOn: 0);
+    insertIntoNotification(time: "12:00", isSwitchedOn: 0);
+    insertIntoNotification(time: "01:00", isSwitchedOn: 0);
+    insertIntoNotification(time: "02:00", isSwitchedOn: 0);
   }
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref488.db');
+    String path = join(dbpath, 'masaref08094.db');
     database = await openDatabase(
       path,
       version: 2,
@@ -85,6 +95,7 @@ class DBHelper {
     return await database
         .rawQuery('''SELECT * FROM Trans_action WHERE date = '$date' ''');
   }
+
   static Future<List<Map<String, dynamic>>> getTransactionOfSpecificPriority(
       {required int? priority}) async {
     return await database
@@ -182,6 +193,15 @@ class DBHelper {
     });
   }
 
+  static void insertIntoNotification(
+      {required String time, required int isSwitchedOn}) async {
+    await database.transaction((txn) async {
+      txn.rawInsert('''INSERT INTO Notification
+          (time,is_switched_on) 
+          VALUES("$time", "$isSwitchedOn")''');
+    });
+  }
+
   static Future deleteFromAll(int id, String tableName) async {
     await database.rawDelete('DELETE FROM $tableName WHERE id = ?', [id]);
   }
@@ -225,5 +245,14 @@ class DBHelper {
           priority,
           id
         ]);
+  }
+
+  static void updateRecordonNotification(
+      {required int id,
+      required String time,
+      required int isSwitchedOn}) async {
+    await database.rawUpdate(
+        '''UPDATE Notification SET time = ?, is_switched_on = ? WHERE id = ?''',
+        [time, isSwitchedOn, id]);
   }
 }

@@ -8,7 +8,7 @@ class NotificationHelper {
   static final _notification = FlutterLocalNotificationsPlugin();
   static const _notificationDetails = NotificationDetails(
       android: AndroidNotificationDetails(
-    "channel id 1",
+    "channel id",
     "channel name",
     channelDescription: "channel description",
     importance: Importance.max,
@@ -48,7 +48,7 @@ class NotificationHelper {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.dateAndTime);
+        matchDateTimeComponents: DateTimeComponents.time);
   }
 
   static void cancelNotification({required int id}) async {
