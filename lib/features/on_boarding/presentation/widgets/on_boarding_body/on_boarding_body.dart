@@ -30,57 +30,60 @@ class OnBoardingBody extends StatelessWidget {
           color: color,
         ),
         Positioned(right: 12.w, top: 4.h, child: const SkipButton()),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: 200.r,
-              child: Stack(
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.primaryColor,
-                      radius: 100.r,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 200.r,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: color,
+                        radius: 100.r,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.primaryColor,
-                      radius: 80.r,
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: color,
+                        radius: 80.r,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.primaryColor,
-                      radius: 60.r,
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: color,
+                        radius: 60.r,
+                      ),
                     ),
-                  ),
-                  Center(child: icon)
-                ],
+                    Center(child: icon)
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.colorWhite),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              descirpiton,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.colorWhite),
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            OnBoardingButton(buttonText: buttonText, onTap: onTap)
-          ],
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.colorWhite),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                descirpiton,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.colorWhite),
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              OnBoardingButton(buttonText: buttonText, onTap: onTap)
+            ],
+          ),
         ),
       ],
     );

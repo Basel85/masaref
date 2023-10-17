@@ -20,6 +20,7 @@ class InitialScreen extends StatefulWidget {
 
 class _InitialScreenState extends State<InitialScreen> with SnackBarViewer {
   final TextEditingController _totalBalanceController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     _totalBalanceController.dispose();
@@ -34,58 +35,71 @@ class _InitialScreenState extends State<InitialScreen> with SnackBarViewer {
           body: SafeArea(
               child: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-        child: Column(
-          children: [
-            Text(
-              "اعداد التطبيق للمرة الاولي",
-              style: TextStyle(
-                  color: AppColors.colorBlack,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.sp),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            const AddImage(),
-            CustomFormField(
-              controller: _totalBalanceController,
-              hinttext: "الرصيد الحالي",
-              hintsize: 14.sp,
-              inputType: TextInputType.number,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            BlocListener<AddNewWalletCubit, AddNewWalletStates>(
-              listener: (_, state) {
-                if (state is AddNewWalletSuccessState) {
-                  showSnackBar(
-                      context: context,
-                      message: "تم اعداد التطبيق بنجاح",
-                      backgroundColor: AppColors.primaryColor);
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) {
-                    return const MainScreen();
-                  }));
-                } else if (state is AddNewWalletErrorState) {
-                  showSnackBar(
-                      context: context,
-                      message: state.errorMessage,
-                      backgroundColor: AppColors.redColor);
-                }
-              },
-              child: CustomButton(
-                  title: "ابدأ الان",
-                  onpress: () {
-                    AddNewWalletCubit.get(context).addNewWallet(
-                        name: "مصروف الشهر",
-                        balance: double.parse(_totalBalanceController.text),
-                        imagePath:
-                            ImagePickerCubit.get(context).imagePath ?? "",
-                        color: 0xFFE91E63);
-                  }),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text(
+                "اعداد التطبيق للمرة الاولي",
+                style: TextStyle(
+                    color: AppColors.colorBlack,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.sp),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              const AddImage(),
+              CustomFormField(
+                controller: _totalBalanceController,
+                hinttext: "الرصيد الحالي",
+                hintsize: 14.sp,
+                inputType: TextInputType.number,
+                validator: (_) {
+                  if (_totalBalanceController.text.isEmpty) {
+                    return "من فضلك ادخل الرصيد الحالي";
+                  } else if (!(int.parse(_totalBalanceController.text) > 0)) {
+                    return "من فضلك ادخل رصيد صحيح";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              BlocListener<AddNewWalletCubit, AddNewWalletStates>(
+                listener: (_, state) {
+                  if (state is AddNewWalletSuccessState) {
+                    showSnackBar(
+                        context: context,
+                        message: "تم اعداد التطبيق بنجاح",
+                        backgroundColor: AppColors.primaryColor);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) {
+                      return const MainScreen();
+                    }));
+                  } else if (state is AddNewWalletErrorState) {
+                    showSnackBar(
+                        context: context,
+                        message: state.errorMessage,
+                        backgroundColor: AppColors.redColor);
+                  }
+                },
+                child: CustomButton(
+                    title: "ابدأ الان",
+                    onpress: () {
+                      if (_formKey.currentState!.validate()) {
+                        AddNewWalletCubit.get(context).addNewWallet(
+                            name: "مصروف الشهر",
+                            balance: double.parse(_totalBalanceController.text),
+                            imagePath:
+                                ImagePickerCubit.get(context).imagePath ?? "",
+                            color: 0xFFE91E63);
+                      }
+                    }),
+              ),
+            ],
+          ),
         ),
       ))),
     );

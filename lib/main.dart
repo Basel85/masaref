@@ -9,6 +9,7 @@ import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/notification_helper.dart';
+import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -19,7 +20,7 @@ import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cu
 import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
-import 'package:timezone/data/latest.dart' as time_zone_initializer;
+import 'package:timezone/data/latest.dart' as timezone;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 bool isRunFromNotification = false;
@@ -27,8 +28,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observer();
   NotificationHelper.init();
+  timezone.initializeTimeZones();
   isRunFromNotification = await NotificationHelper.checkAppNotification();
-  time_zone_initializer.initializeTimeZones();
   await CacheHelper.init();
   await DBHelper.createDatabase();
   runApp(const MyApp());
@@ -53,13 +54,12 @@ class MyApp extends StatelessWidget {
           BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
           BlocProvider<GetCategoriesOfSectionCubit>(
               create: (_) => GetCategoriesOfSectionCubit()),
-          BlocProvider<AddNewWalletCubit>(create: (_) => AddNewWalletCubit()),
           BlocProvider<ImagePickerCubit>(create: (_) => ImagePickerCubit()),
           BlocProvider<BottomNavigationBarCubit>(
             create: (context) => BottomNavigationBarCubit(),
           ),
           BlocProvider<UpdateWalletCubit>(create: (_) => UpdateWalletCubit()),
-          BlocProvider(create: (context) => SearchCubit(),),
+          // BlocProvider(create: (context) => SearchCubit(),),
         ],
         child: ScreenUtilInit(
           designSize: const Size(360, 690),
@@ -78,14 +78,6 @@ class MyApp extends StatelessWidget {
                           appBarTheme: const AppBarTheme(
                             color: AppColors.primaryColor,
                           ),
-// <<<<<<< baselv3
-//                     home: isRunFromNotification
-//                         ? const Mo3amalaPage(toAdd: true, walletList: [])
-//                         : const SplashScreen(),
-//                   );
-//                 },
-//               ),
-// =======
                           scaffoldBackgroundColor: AppColors.darkMode,
                         )
                       : ThemeData(
@@ -95,7 +87,9 @@ class MyApp extends StatelessWidget {
                           ),
                           scaffoldBackgroundColor: AppColors.lightMode,
                         ),
-                  home: const SplashScreen(),
+                  home: isRunFromNotification
+                        ? const Mo3amalaPage(toAdd: true, walletList: [])
+                        : const SplashScreen(),
                 );
               },
             ),

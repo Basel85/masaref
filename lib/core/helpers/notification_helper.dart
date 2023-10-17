@@ -8,7 +8,7 @@ class NotificationHelper {
   static final _notification = FlutterLocalNotificationsPlugin();
   static const _notificationDetails = NotificationDetails(
       android: AndroidNotificationDetails(
-    "channel id 1",
+    "channel id",
     "channel name",
     channelDescription: "channel description",
     importance: Importance.max,
@@ -37,23 +37,21 @@ class NotificationHelper {
     );
   }
 
-  static void showNotification() async {
-    await _notification.show(0, "Gooaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal",
-        "Alahly is the world cup for clubs winner", _notificationDetails);
-  }
-
-  static void showScheduledNotification() async {
-    _notification.zonedSchedule(
-        0,
-        "Gooooooooooooooooooooooooooooooooooooooooooooooooooooooaaaaaaaaaaaaaaaal",
-        "Alahly is the world cup for clubs winner",
-        timezone.TZDateTime.from(
-            DateTime.now().add(const Duration(seconds: 30)), timezone.local),
+  static void addScheduledNotification(
+      {required int id, required DateTime currentDate}) async {
+    await _notification.zonedSchedule(
+        id,
+        "المصاربف",
+        "سجل مصاريفك اول بأول",
+        timezone.TZDateTime.from(currentDate, timezone.local),
         _notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
-        androidScheduleMode: AndroidScheduleMode.exact,
-        payload: "Basel");
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  static void cancelNotification({required int id}) async {
+    await _notification.cancel(id);
   }
 }
