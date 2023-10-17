@@ -34,9 +34,10 @@ class _WalletsScreenState extends State<WalletsScreen> {
         title: Text(
           "المحفظات",
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,),
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
@@ -63,6 +64,11 @@ class _WalletsScreenState extends State<WalletsScreen> {
       body: BlocBuilder<GetAllWalletsCubit, GetAllWalletsStates>(
           builder: (_, state) {
         if (state is GetAllWalletsSuccessState) {
+          if (state.wallets.isEmpty) {
+            return const Center(
+              child: Text("لا يوجد محفظة مضافة بعد"),
+            );
+          }
           return ListView(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
             children: [
@@ -84,7 +90,6 @@ class _WalletsScreenState extends State<WalletsScreen> {
                                             BlocProvider<ImagePickerCubit>(
                                               create: (_) => ImagePickerCubit(),
                                             ),
-                                            
                                             BlocProvider<DeleteWalletCubit>(
                                                 create: (_) =>
                                                     DeleteWalletCubit())

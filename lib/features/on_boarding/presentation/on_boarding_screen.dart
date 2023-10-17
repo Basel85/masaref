@@ -12,7 +12,6 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  // ignore: unused_field
   final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               },
             ),
             OnBoardingBody(
-              color: AppColors.primaryColor.withOpacity(0.5),
+              color: AppColors.colorDarkGreen,
               icon: Icon(
                 Icons.repeat,
                 color: AppColors.colorWhite,

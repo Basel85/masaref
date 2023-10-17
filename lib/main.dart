@@ -9,6 +9,7 @@ import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/notification_helper.dart';
+import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
 import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
@@ -77,14 +78,6 @@ class MyApp extends StatelessWidget {
                           appBarTheme: const AppBarTheme(
                             color: AppColors.primaryColor,
                           ),
-// <<<<<<< baselv3
-//                     home: isRunFromNotification
-//                         ? const Mo3amalaPage(toAdd: true, walletList: [])
-//                         : const SplashScreen(),
-//                   );
-//                 },
-//               ),
-// =======
                           scaffoldBackgroundColor: AppColors.darkMode,
                         )
                       : ThemeData(
@@ -94,7 +87,9 @@ class MyApp extends StatelessWidget {
                           ),
                           scaffoldBackgroundColor: AppColors.lightMode,
                         ),
-                  home: const SplashScreen(),
+                  home: isRunFromNotification
+                        ? const Mo3amalaPage(toAdd: true, walletList: [])
+                        : const SplashScreen(),
                 );
               },
             ),

@@ -55,9 +55,11 @@ class _InitialScreenState extends State<InitialScreen> with SnackBarViewer {
                 hinttext: "الرصيد الحالي",
                 hintsize: 14.sp,
                 inputType: TextInputType.number,
-                validator: (p0) {
-                  if (!(int.parse(p0!) > 0)) {
+                validator: (_) {
+                  if (_totalBalanceController.text.isEmpty) {
                     return "من فضلك ادخل الرصيد الحالي";
+                  } else if (!(int.parse(_totalBalanceController.text) > 0)) {
+                    return "من فضلك ادخل رصيد صحيح";
                   }
                   return null;
                 },
