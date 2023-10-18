@@ -85,9 +85,10 @@ class MyApp extends StatelessWidget {
                           ),
                           scaffoldBackgroundColor: AppColors.lightMode,
                         ),
-                  home: isRunFromNotification
-                        ? const Mo3amalaPage(toAdd: true, walletList: [])
-                        : const SplashScreen(),
+                  home: const SplashScreen(),
+                  // home: isRunFromNotification
+                  //       ? const Mo3amalaPage(toAdd: true, walletList: [])
+                  //       : const SplashScreen(),
                 );
               },
             ),

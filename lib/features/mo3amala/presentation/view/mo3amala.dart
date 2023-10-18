@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
+import 'package:masaref/core/helpers/notification_helper.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
@@ -304,7 +305,6 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
         repeat: BlocProvider.of<Mo3amalaCubit>(context).repeatChange.toString(),
         priority: BlocProvider.of<Mo3amalaCubit>(context).importanceIndex,
       );
-
       double balance = BlocProvider.of<Mo3amalaCubit>(context).price!;
       double firstOperand =
           BlocProvider.of<Mo3amalaCubit>(context).pickedWallet?.balance ??

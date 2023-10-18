@@ -24,16 +24,16 @@ class NotificationHelper {
       const InitializationSettings(
         android: AndroidInitializationSettings("@mipmap/ic_launcher"),
       ),
-      onDidReceiveNotificationResponse: (details) {
-        navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (_) => const Mo3amalaPage(
-              toAdd: true,
-              walletList: [],
-            ),
-          ),
-        );
-      },
+      // onDidReceiveNotificationResponse: (details) {
+      //   navigatorKey.currentState!.push(
+      //     MaterialPageRoute(
+      //       builder: (_) => const Mo3amalaPage(
+      //         toAdd: true,
+      //         walletList: [],
+      //       ),
+      //     ),
+      //   );
+      // },
     );
   }
 
