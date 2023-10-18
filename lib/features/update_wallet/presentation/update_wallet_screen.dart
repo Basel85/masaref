@@ -10,7 +10,6 @@ import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/price_text_form_field.dart';
 import 'package:masaref/core/widgets/wallet_name_text_form_field.dart';
-import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 import 'package:masaref/features/update_wallet/cubits/delete_wallet/delete_wallet_cubit.dart';
 import 'package:masaref/features/update_wallet/cubits/delete_wallet/delete_wallet_states.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';

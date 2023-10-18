@@ -89,7 +89,6 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                               .changeCategory(state.categoryModel);
                           Navigator.pop(context);
                           Navigator.pop(context);
-                          print("ddd");
                         } else if (state is GetCategoryByNameErrorState) {
                           showSnackBar(
                               context: context,

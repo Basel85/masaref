@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
-import 'package:masaref/core/helpers/notification_helper.dart';
 import 'package:masaref/core/helpers/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
@@ -20,11 +19,9 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/elma7faza_se
 import 'package:masaref/features/mo3amala/presentation/view/widgets/importance_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/money_section.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_section.dart';
-import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
-import 'package:masaref/main.dart';
 
 class Mo3amalaPage extends StatefulWidget {
   const Mo3amalaPage(

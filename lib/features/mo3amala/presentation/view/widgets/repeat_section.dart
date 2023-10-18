@@ -46,24 +46,6 @@ class RepeatSection extends StatelessWidget {
                         : AppColors.colorBlack,
                   ),
                 ),
-                SizedBox(width: 10.w),
-                Icon(
-                  Icons.arrow_drop_down,
-                  size: 30,
-                  color: BlocProvider.of<WholeAppCubit>(context).isdark
-                      ? AppColors.colorWhite
-                      : AppColors.colorBlack,
-                ),
-                SizedBox(width: 5.w),
-                Text(
-                  'شهريا',
-                  style: AppStyles.textStyle24w400.copyWith(
-                    fontSize: 10.sp,
-                    color: BlocProvider.of<WholeAppCubit>(context).isdark
-                        ? AppColors.colorWhite
-                        : AppColors.colorBlack,
-                  ),
-                ),
                 const Spacer(),
                 Switch.adaptive(
                   activeColor: AppColors.primaryColor,
