@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
+import 'package:masaref/core/utils/price_check.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
 
-class PriceTextFormField extends StatelessWidget {
+class PriceTextFormField extends StatelessWidget with PriceCheck {
   final TextEditingController priceController;
   const PriceTextFormField({super.key, required this.priceController});
 
@@ -43,10 +44,7 @@ class PriceTextFormField extends StatelessWidget {
               ),
               hintsize: 14.sp,
               validator: (value) {
-                if (value!.isEmpty) {
-                  return "من فضلك ادخل المبلغ";
-                }
-                return null;
+                return checkPrice(value);
               },
             ),
           ),

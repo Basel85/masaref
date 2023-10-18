@@ -8,11 +8,13 @@ import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/features/add_new_category/cubits/add_category/add_category_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/add_category/add_category_states.dart';
+import 'package:masaref/features/add_new_category/cubits/get_category_by_name/get_category_by_name_cubit.dart';
+import 'package:masaref/features/add_new_category/cubits/get_category_by_name/get_category_by_name_states.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_states.dart';
 import 'package:masaref/features/add_new_category/presentation/widgets/app_bar_drop_down_button.dart';
 import 'package:masaref/features/add_new_category/presentation/widgets/name_of_category.dart';
-import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
+import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 
 class AddNewCategoryScreen extends StatefulWidget {
   const AddNewCategoryScreen({super.key});
@@ -33,10 +35,12 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(actions: [
-        const AppBarDropDownButton(),
-        SizedBox(width: 16.w),
-      ],),
+      appBar: CustomAppBar(
+        actions: [
+          const AppBarDropDownButton(),
+          SizedBox(width: 16.w),
+        ],
+      ),
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: BlocBuilder<GetMainTypeOfTransactionCubit,
@@ -58,31 +62,42 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
               },
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                child: BlocListener<AddCategoryCubit, AddCategoryStates>(
-                  listener: (context, addCategorystate) {
-                    if (addCategorystate is AddCategorySuccessState) {
-                      showSnackBar(
-                          context: context,
-                          message: "تم",
-                          backgroundColor: Colors.green);
-                      GetCategoriesOfSectionCubit.get(context)
-                          .getCategoriesOfSection(
-                        sectionId: state is GetMainTypeOfTransactionGetState
-                            ? GetMainTypeOfTransactionCubit.get(context)
-                                    .types
-                                    .keys
-                                    .toList()
-                                    .indexOf(state.key) +
-                                1
-                            : 1,
-                      );
-                    } else if (addCategorystate is AddCategoryErrorState) {
-                      showSnackBar(
-                          context: context,
-                          message: "خطأ",
-                          backgroundColor: Colors.red);
-                    }
-                  },
+                child: MultiBlocListener(
+                  listeners: [
+                    BlocListener<AddCategoryCubit, AddCategoryStates>(
+                      listener: (context, addCategorystate) {
+                        if (addCategorystate is AddCategorySuccessState) {
+                          GetCategoryByNameCubit.get(context).getCategoryByName(
+                              name: _categoryController.text);
+                        } else if (addCategorystate is AddCategoryErrorState) {
+                          showSnackBar(
+                              context: context,
+                              message: "خطأ",
+                              backgroundColor: Colors.red);
+                        }
+                      },
+                    ),
+                    BlocListener<GetCategoryByNameCubit,
+                        GetCategoryByNameStates>(
+                      listener: (context, state) {
+                        if (state is GetCategoryByNameSuccessState) {
+                          showSnackBar(
+                              context: context,
+                              message: "تم",
+                              backgroundColor: Colors.green);
+                          BlocProvider.of<Mo3amalaCubit>(context)
+                              .changeCategory(state.categoryModel);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        } else if (state is GetCategoryByNameErrorState) {
+                          showSnackBar(
+                              context: context,
+                              message: state.errorMessage,
+                              backgroundColor: Colors.red);
+                        }
+                      },
+                    ),
+                  ],
                   child: CustomButton(
                       title: "اضافة قسم ",
                       onpress: () {
@@ -102,7 +117,6 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen>
                 ),
               )
             ],
-
           ),
         ),
       ),

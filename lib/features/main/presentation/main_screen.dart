@@ -33,7 +33,7 @@ class MainScreen extends StatelessWidget {
                   backgroundColor:
                       BlocProvider.of<WholeAppCubit>(context).isdark
                           ? AppColors.colorWhite
-                          : AppColors.colorPurple,
+                          : AppColors.primaryColor,
                   onPressed: () {
                     GetAllWalletsCubit.get(context).getAllWallets();
                     Navigator.push(
@@ -49,7 +49,7 @@ class MainScreen extends StatelessWidget {
                   child: Icon(
                     Icons.add,
                     color: BlocProvider.of<WholeAppCubit>(context).isdark
-                        ? AppColors.colorPurple
+                        ? AppColors.primaryColor
                         : AppColors.colorWhite,
                   ),
                 ),

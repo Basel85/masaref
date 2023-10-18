@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
-import 'package:masaref/features/add_new_category/cubits/switch_button/switch_button_cubit.dart';
-import 'package:masaref/features/add_new_category/cubits/switch_button/switch_button_states.dart';
+import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
+import 'package:masaref/features/notification/cubits/switch_button/switch_button_states.dart';
 
 class AddNewCategorySwitch extends StatelessWidget {
   const AddNewCategorySwitch({super.key});

@@ -12,7 +12,6 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  // ignore: unused_field
   final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               icon: Icon(
                 Icons.money_rounded,
                 color: AppColors.colorWhite,
-                size: 30.r,
+                size: 100.r,
               ),
               title: "المصاريف",
               descirpiton: "احسبها صح.. كن علي علم بمصاريفك و مصادر دخلك",
@@ -38,7 +37,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               color: AppColors.colorPurple,
               icon: Text(
                 "اضافة",
-                style: TextStyle(color: AppColors.colorWhite, fontSize: 20.sp),
+                style: TextStyle(color: AppColors.colorWhite, fontSize: 40.sp),
               ),
               title: "تسجبل المعاملات",
               descirpiton:
@@ -48,11 +47,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               },
             ),
             OnBoardingBody(
-              color: AppColors.primaryColor.withOpacity(0.5),
+              color: AppColors.colorDarkGreen,
               icon: Icon(
                 Icons.repeat,
                 color: AppColors.colorWhite,
-                size: 30.r,
+                size: 100.r,
               ),
               title: "تكرار المعاملة",
               descirpiton:
@@ -66,7 +65,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               icon: Icon(
                 Icons.money,
                 color: AppColors.colorWhite,
-                size: 30.r,
+                size: 100.r,
               ),
               title: "الميزانية الشهرية",
               descirpiton:

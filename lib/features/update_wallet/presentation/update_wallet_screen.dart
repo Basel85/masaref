@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
@@ -35,6 +36,7 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
     with SnackBarViewer {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _balanceController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _nameController.text = widget.name;
@@ -61,7 +63,49 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
               size: 30.r,
             ),
             onPressed: () {
-              DeleteWalletCubit.get(context).deleteWallet(id: widget.walletId);
+              showDialog(
+                  context: context,
+                  builder: (_) => Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: AlertDialog.adaptive(
+                          title: Text(
+                            "حذف",
+                            style: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          ),
+                          content: Text(
+                            "تنبيه!!!\nسوف يتم حذف جميع المعاملات المرتبطة بهذه المحفظة",
+                            style: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.bold),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "اغلاق",
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.colorGrey),
+                                )),
+                            TextButton(
+                                onPressed: () {
+                                  DeleteWalletCubit.get(context)
+                                      .deleteWallet(id: widget.walletId);
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "موافق",
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primaryColor),
+                                )),
+                          ],
+                        ),
+                      ));
             },
           ),
           SizedBox(
@@ -81,6 +125,7 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
                       message: "تم التعديل بنجاح",
                       backgroundColor: Colors.green);
                   GetAllWalletsCubit.get(context).getAllWallets();
+                  Navigator.pop(context);
                 } else if (state is UpdateWalletErrorState) {
                   showSnackBar(
                       context: context,
@@ -97,6 +142,8 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
                       message: "تم الحذف بنجاح",
                       backgroundColor: Colors.green);
                   GetAllWalletsCubit.get(context).getAllWallets();
+                  BlocProvider.of<WholeAppCubit>(context)
+                      .getTransactionwithDate();
                   Navigator.pop(context);
                 } else if (state is DeleteWalletErrorState) {
                   showSnackBar(
@@ -107,36 +154,43 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
               },
             ),
           ],
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 90.h),
-            children: [
-              WalletNameTextFormField(nameController: _nameController),
-              SizedBox(
-                height: 20.h,
-              ),
-              PriceTextFormField(priceController: _balanceController),
-              SizedBox(
-                height: 20.h,
-              ),
-              AddImage(
-                imagePath: widget.imagePath,
-              ),
-              SizedBox(
-                height: 60.h,
-              ),
-              CustomButton(
-                title: "تعديل",
-                color: AppColors.primaryColor,
-                onpress: () {
-                  UpdateWalletCubit.get(context).updateWallet(
-                      name: _nameController.text,
-                      balance: double.parse(_balanceController.text),
-                      imagePath: ImagePickerCubit.get(context).imagePath ??
-                          widget.imagePath,
-                      id: widget.walletId);
-                },
-              )
-            ],
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 90.h),
+              children: [
+                WalletNameTextFormField(
+                  nameController: _nameController,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                PriceTextFormField(priceController: _balanceController),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AddImage(
+                  imagePath: widget.imagePath,
+                ),
+                SizedBox(
+                  height: 60.h,
+                ),
+                CustomButton(
+                  title: "تعديل",
+                  color: AppColors.redColor,
+                  onpress: () {
+                    if (_formKey.currentState!.validate()) {
+                      UpdateWalletCubit.get(context).updateWallet(
+                          name: _nameController.text,
+                          balance: double.parse(_balanceController.text),
+                          imagePath: ImagePickerCubit.get(context).imagePath ??
+                              widget.imagePath,
+                          id: widget.walletId);
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

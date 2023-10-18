@@ -6,7 +6,11 @@ import 'package:masaref/core/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/custom_list_tile.dart';
+import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/mo3amalat_page.dart';
+// import 'package:masaref/features/notification/cubits/add_or_remove_notification/add_or_remove_notification_cubit.dart';
+import 'package:masaref/features/notification/cubits/get_all_notifications/get_all_notification_cubit.dart';
+import 'package:masaref/features/notification/presentation/notification_screen.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -20,6 +24,8 @@ class _MoreScreenState extends State<MoreScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<WholeAppCubit>(context).getRepeatedTransactions();
+    BlocProvider.of<WholeAppCubit>(context).getAllTransactions();
+    BlocProvider.of<WholeAppCubit>(context).changePriorityIndex(null);
   }
 
   @override
@@ -55,13 +61,17 @@ class _MoreScreenState extends State<MoreScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Mo3amalatPage(
-                          transactionList:
-                              BlocProvider.of<WholeAppCubit>(context)
-                                  .repeatedTransactionlist,
-                          categorynamesList:
-                              BlocProvider.of<WholeAppCubit>(context)
-                                  .repeatedcateNames),
+                      builder: (context) => BlocProvider(
+                        create: (context) => SearchCubit(),
+                        child: Mo3amalatPage(
+                            transactionList:
+                                BlocProvider.of<WholeAppCubit>(context)
+                                    .repeatedTransactionlist,
+                            categorynamesList:
+                                BlocProvider.of<WholeAppCubit>(context)
+                                    .repeatedcateNames,
+                            isPriorities: false),
+                      ),
                     ),
                   );
                 },
@@ -76,7 +86,35 @@ class _MoreScreenState extends State<MoreScreen> {
                   color: AppColors.primaryColor,
                   size: 24.r,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => SearchCubit(),
+                        child: Mo3amalatPage(
+                          transactionList:
+                              BlocProvider.of<WholeAppCubit>(context)
+                                          .priorityIndex ==
+                                      null
+                                  ? BlocProvider.of<WholeAppCubit>(context)
+                                      .allTransactionlist
+                                  : BlocProvider.of<WholeAppCubit>(context)
+                                      .priorityTransactionlist,
+                          categorynamesList:
+                              BlocProvider.of<WholeAppCubit>(context)
+                                          .priorityIndex ==
+                                      null
+                                  ? BlocProvider.of<WholeAppCubit>(context)
+                                      .allTransactioncateNames
+                                  : BlocProvider.of<WholeAppCubit>(context)
+                                      .prioritycateNames,
+                          isPriorities: true,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               CustomListTile(
                 title: "تنبيهات التطبيق",
@@ -88,7 +126,16 @@ class _MoreScreenState extends State<MoreScreen> {
                   color: AppColors.redColor,
                   size: 24.r,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => BlocProvider(
+                                create: (context) =>
+                                    GetAllNotificationCubit()..getAllNotifications(),
+                                child: const NotificationScreen(),
+                              )));
+                },
               ),
             ],
           ),

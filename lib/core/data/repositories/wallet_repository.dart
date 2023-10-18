@@ -29,7 +29,7 @@ class WalletRepository {
         id: id, balance: balance, name: name, image: image);
   }
 
-  static void deleteWallet({required int id}) {
-    DBHelper.deleteFromAll(id,"Wallet");
+  static void deleteWallet({required int id}) async{
+    await DBHelper.deleteFromAll(id,"Wallet");
   }
 }

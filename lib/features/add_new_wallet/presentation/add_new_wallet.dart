@@ -62,6 +62,7 @@ class _AddNewWalletScreenState extends State<AddNewWalletScreen>
                     message: "تم اضافة المحفظة بنجاح",
                     backgroundColor: Colors.green);
                 GetAllWalletsCubit.get(context).getAllWallets();
+                Navigator.pop(context);
               } else if (state is AddNewWalletErrorState) {
                 showSnackBar(
                     context: context,
