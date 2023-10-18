@@ -23,6 +23,7 @@ import 'package:masaref/features/mo3amala/presentation/view/widgets/repeat_secti
 import 'package:masaref/features/splash/presentation/splash_screen.dart';
 import 'package:masaref/features/update_wallet/cubits/update_wallet/update_wallet_cubit.dart';
 import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
+import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_states.dart';
 import 'package:masaref/main.dart';
 
 class Mo3amalaPage extends StatefulWidget {
@@ -90,105 +91,95 @@ class _Mo3amalaPageState extends State<Mo3amalaPage> with SnackBarViewer {
     super.initState();
   }
 
-  void leaveFromThisPage() {
-    if (isRunFromNotification) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SplashScreen()),
-      );
-    } else {
-      Navigator.pop(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        leaveFromThisPage();
-        return true;
-      },
-      child: BlocBuilder<WholeAppCubit, WholeAppStates>(
-        builder: (context, state) {
-          return BlocConsumer<Mo3amalaCubit, Mo3amalaState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              return Directionality(
-                textDirection: TextDirection.rtl,
-                child: Scaffold(
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: AppColors.primaryColor,
-                    leading: widget.toAdd
-                        ? null
-                        : IconButton(
-                            onPressed: () async {
-                              await deleteTransactioMethod(context);
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              textDirection: TextDirection.ltr,
-                              color: AppColors.colorWhite,
-                            ),
+    return BlocBuilder<WholeAppCubit, WholeAppStates>(
+      builder: (context, state) {
+        return BlocConsumer<Mo3amalaCubit, Mo3amalaState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: AppColors.primaryColor,
+                  leading: widget.toAdd
+                      ? null
+                      : IconButton(
+                          onPressed: () async {
+                            await deleteTransactioMethod(context);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            textDirection: TextDirection.ltr,
+                            color: AppColors.colorWhite,
                           ),
-                    actions: [
-                      IconButton(
-                        onPressed: () {
-                          leaveFromThisPage();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          textDirection: TextDirection.ltr,
-                          color: AppColors.colorWhite,
                         ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        textDirection: TextDirection.ltr,
+                        color: AppColors.colorWhite,
                       ),
-                    ],
-                  ),
-                  body: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          MoneySection(
-                            cubit: BlocProvider.of<Mo3amalaCubit>(context),
+                    ),
+                  ],
+                ),
+                body: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.h),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        MoneySection(
+                          cubit: BlocProvider.of<Mo3amalaCubit>(context),
+                        ),
+                        CategorySection(
+                            isAdd: widget.toAdd,
+                            cubit: BlocProvider.of<Mo3amalaCubit>(context)),
+                        BlocBuilder<GetAllWalletsCubit, GetAllWalletsStates>(
+                          builder: (context, state) {
+                            return Elma7fazaSection(
+                                walletList: state is GetAllWalletsSuccessState
+                                    ? state.wallets
+                                    : widget.walletList,
+                                cubit: BlocProvider.of<Mo3amalaCubit>(context),
+                                toadd: widget.toAdd);
+                          },
+                        ),
+                        DateSection(
+                            cubit: BlocProvider.of<Mo3amalaCubit>(context)),
+                        RepeatSection(
+                            cubit: BlocProvider.of<Mo3amalaCubit>(context)),
+                        ImportanceSection(
+                            cubit: BlocProvider.of<Mo3amalaCubit>(context)),
+                        SizedBox(height: 20.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: CustomButton(
+                            title: widget.toAdd ? 'إضافة معاملة' : 'تعديل',
+                            onpress: () async {
+                              if (widget.toAdd) {
+                                await addTransactionMethod(context);
+                              } else {
+                                await updateTransactionMethod(context);
+                              }
+                            },
                           ),
-                          CategorySection(
-                              cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                          Elma7fazaSection(
-                              walletList: widget.walletList,
-                              cubit: BlocProvider.of<Mo3amalaCubit>(context),
-                              toadd: widget.toAdd),
-                          DateSection(
-                              cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                          RepeatSection(
-                              cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                          ImportanceSection(
-                              cubit: BlocProvider.of<Mo3amalaCubit>(context)),
-                          SizedBox(height: 20.h),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: CustomButton(
-                              title: widget.toAdd ? 'إضافة معاملة' : 'تعديل',
-                              onpress: () async {
-                                if (widget.toAdd) {
-                                  await addTransactionMethod(context);
-                                } else {
-                                  await updateTransactionMethod(context);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

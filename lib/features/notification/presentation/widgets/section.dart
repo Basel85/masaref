@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 
 class Section extends StatelessWidget {
@@ -22,7 +24,9 @@ class Section extends StatelessWidget {
             ),
           ),
         Container(
-          color: AppColors.colorWhite,
+          color: BlocProvider.of<WholeAppCubit>(context).isdark
+              ? AppColors.darkMode
+              : AppColors.lightMode,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Column(mainAxisSize: MainAxisSize.min, children: contents),
         )

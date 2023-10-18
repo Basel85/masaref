@@ -13,17 +13,23 @@ class CategorySection extends StatelessWidget {
   const CategorySection({
     super.key,
     required this.cubit,
+    required this.isAdd,
   });
   final Mo3amalaCubit cubit;
+  final bool isAdd;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashFactory: InkRipple.splashFactory,
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CategoriesScreen()));
-      },
+      onTap: isAdd
+          ? () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CategoriesScreen()));
+            }
+          : () {},
       child: Ink(
         padding: EdgeInsets.all(15.r),
         decoration: BoxDecoration(

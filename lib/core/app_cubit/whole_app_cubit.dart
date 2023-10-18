@@ -48,8 +48,9 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
     emit(WholeAppModeChange());
   }
 
-  changePriorityIndex(int? index) {
+  changePriorityIndex(int? index) async{
     priorityIndex = index;
+    await getPriorityTransactions();
   }
 
   Future<List<String>> getCategoryName(catyids) async {

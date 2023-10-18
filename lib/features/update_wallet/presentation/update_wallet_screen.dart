@@ -126,6 +126,7 @@ class _UpdateWalletScreenState extends State<UpdateWalletScreen>
                       message: "تم التعديل بنجاح",
                       backgroundColor: Colors.green);
                   GetAllWalletsCubit.get(context).getAllWallets();
+                  Navigator.pop(context);
                 } else if (state is UpdateWalletErrorState) {
                   showSnackBar(
                       context: context,
