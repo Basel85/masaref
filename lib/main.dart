@@ -10,7 +10,6 @@ import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/notification_helper.dart';
 import 'package:masaref/features/mo3amala/presentation/view/mo3amala.dart';
-import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
             create: (context) => BottomNavigationBarCubit(),
           ),
           BlocProvider<UpdateWalletCubit>(create: (_) => UpdateWalletCubit()),
-          // BlocProvider(create: (context) => SearchCubit(),),
         ],
         child: ScreenUtilInit(
           designSize: const Size(360, 690),

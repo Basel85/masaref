@@ -21,13 +21,6 @@ class Mo3amalatListItem extends StatefulWidget {
 }
 
 class _Mo3amalatListItemState extends State<Mo3amalatListItem> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   BlocProvider.of<WholeAppCubit>(context)
-  //       .getCategoryName(widget.transactionModel.categoryID);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
@@ -35,10 +28,10 @@ class _Mo3amalatListItemState extends State<Mo3amalatListItem> {
         return Row(
           children: [
             CircleAvatar(
-              radius: 15.r,
+              radius: 6.r,
               backgroundColor: AppColors.primaryColor,
             ),
-            SizedBox(width: 5.w),
+            SizedBox(width: 10.w),
             Text(
               widget.name,
               style: AppStyles.textStyle24w400.copyWith(
@@ -51,13 +44,15 @@ class _Mo3amalatListItemState extends State<Mo3amalatListItem> {
             const Spacer(),
             Text(
               widget.transactionModel.price.toString(),
-              style:widget.transactionModel.sectionID==1? AppStyles.textStyle24w400.copyWith(
-                color: Colors.red,
-                fontSize: 12.sp,
-              ):AppStyles.textStyle24w400.copyWith(
-                color: Colors.green,
-                fontSize: 12.sp,
-              ),
+              style: widget.transactionModel.sectionID == 1
+                  ? AppStyles.textStyle24w400.copyWith(
+                      color: Colors.red,
+                      fontSize: 12.sp,
+                    )
+                  : AppStyles.textStyle24w400.copyWith(
+                      color: Colors.green,
+                      fontSize: 12.sp,
+                    ),
             ),
           ],
         );

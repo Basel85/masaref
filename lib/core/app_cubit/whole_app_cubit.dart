@@ -9,6 +9,7 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
   bool isdark = false;
   int? priorityIndex;
   String? cateName;
+  String? cateImage;
   List<List<String>> cateNames = [[], [], [], [], [], [], []];
   List<int> repeatedcateIds = [];
   List<String> repeatedcateNames = [];
@@ -49,7 +50,6 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
 
   changePriorityIndex(int? index) {
     priorityIndex = index;
-    emit(WholeAppPriorityChange());
   }
 
   Future<List<String>> getCategoryName(catyids) async {
@@ -59,6 +59,18 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
       cateName = value[0]['name'];
       values.add(cateName!);
     }
+    return values;
+  }
+
+  Future<List<String>> getCategoryimages(catyids) async {
+    List<String> values = [];
+    for (var element in catyids) {
+      List<Map> value =
+          await DBHelper.getspecificCategoryImage(catyid: element);
+      cateImage = value[0]['image'];
+      values.add(cateImage!);
+    }
+    emit(WholeAppGetCategoryImage());
     return values;
   }
 

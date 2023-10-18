@@ -11,7 +11,7 @@ import 'package:masaref/features/mo3amalat_page/cubits/search/search_states.dart
 import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/mo3amala_componant.dart';
 import 'package:masaref/features/mo3amalat_page/presentation/view/widgets/search_field.dart';
 
-class Mo3amalatPage extends StatelessWidget {
+class Mo3amalatPage extends StatefulWidget {
   const Mo3amalatPage({
     super.key,
     required this.transactionList,
@@ -23,6 +23,31 @@ class Mo3amalatPage extends StatelessWidget {
   final bool isPriorities;
 
   @override
+  State<Mo3amalatPage> createState() => _Mo3amalatPageState();
+}
+
+class _Mo3amalatPageState extends State<Mo3amalatPage> {
+  List<int> catyids = [];
+  List<String> catyimages = [];
+  List<Map> value = [];
+
+  void getImages() async {
+    catyids.clear();
+    catyimages.clear();
+    for (var element in widget.transactionList) {
+      catyids.add(element.categoryID!);
+    }
+    catyimages = await BlocProvider.of<WholeAppCubit>(context)
+        .getCategoryimages(catyids);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getImages();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<WholeAppCubit, WholeAppStates>(
       builder: (context, state) {
@@ -31,7 +56,7 @@ class Mo3amalatPage extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: !isPriorities
+              title: !widget.isPriorities
                   ? null
                   : DropdownButton(
                       dropdownColor:
@@ -88,57 +113,65 @@ class Mo3amalatPage extends StatelessWidget {
                 ),
               ],
             ),
-            body: Column(
-              children: [
-                SearchField(
-                  categorynamesList: categorynamesList,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.r),
-                    child: BlocBuilder<SearchCubit, SearchStates>(
-                      builder: (_, state) => ListView.separated(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: transactionList.isEmpty
-                            ? 1
-                            : state is SearchSearchedState
-                                ? state.searchedList.length
-                                : categorynamesList.length,
-                        itemBuilder: (context, index) {
-                          if (transactionList.isEmpty) {
-                            return Padding(
-                              padding: EdgeInsets.only(top: 90.h),
-                              child: Center(
-                                child: Text(
-                                  'لا معاملات للان',
-                                  style: AppStyles.textStyle14PrimaryColor,
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Mo3amalaComponant(
-                              transactionModel: state is SearchSearchedState
-                                  ? transactionList[categorynamesList
-                                      .indexOf(state.searchedList[index])]
-                                  : transactionList[index],
-                              cateName: state is SearchSearchedState
-                                  ? categorynamesList[categorynamesList
-                                      .indexOf(state.searchedList[index])]
-                                  : categorynamesList[index],
-                              transactionlist: transactionList,
-                              isPriorities: isPriorities,
-                            );
-                          }
-                        },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 10.h),
+            body: catyimages.isEmpty
+                ?const Center(child: CircularProgressIndicator.adaptive())
+                : Column(
+                    children: [
+                      if (!widget.isPriorities)
+                        SearchField(
+                          categorynamesList: widget.categorynamesList,
+                        ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.r),
+                          child: BlocBuilder<SearchCubit, SearchStates>(
+                            builder: (_, state) => ListView.separated(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: widget.transactionList.isEmpty
+                                  ? 1
+                                  : state is SearchSearchedState
+                                      ? state.searchedList.length
+                                      : widget.categorynamesList.length,
+                              itemBuilder: (context, index) {
+                                if (widget.transactionList.isEmpty) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: 90.h),
+                                    child: Center(
+                                      child: Text(
+                                        'لا معاملات للان',
+                                        style:
+                                            AppStyles.textStyle14PrimaryColor,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Mo3amalaComponant(
+                                    transactionModel: state
+                                            is SearchSearchedState
+                                        ? widget.transactionList[widget
+                                            .categorynamesList
+                                            .indexOf(state.searchedList[index])]
+                                        : widget.transactionList[index],
+                                    cateName: state is SearchSearchedState
+                                        ? widget.categorynamesList[widget
+                                            .categorynamesList
+                                            .indexOf(state.searchedList[index])]
+                                        : widget.categorynamesList[index],
+                                    transactionlist: widget.transactionList,
+                                    isPriorities: widget.isPriorities,
+                                    cateImage: catyimages[index],
+                                  );
+                                }
+                              },
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: 10.h),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         );
       },

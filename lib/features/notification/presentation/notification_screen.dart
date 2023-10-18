@@ -7,14 +7,9 @@ import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/core/widgets/get_error_message.dart';
 import 'package:masaref/features/notification/cubits/get_all_notifications/get_all_notification_cubit.dart';
 import 'package:masaref/features/notification/cubits/get_all_notifications/get_all_notification_states.dart';
-import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
-import 'package:masaref/features/notification/cubits/add_or_remove_notification/add_or_remove_notification_cubit.dart';
-import 'package:masaref/features/notification/cubits/add_or_remove_notification/add_or_remove_notification_states.dart';
-import 'package:masaref/features/notification/cubits/time/time_cubit.dart';
 import 'package:masaref/features/notification/cubits/update_notification/update_notification_cubit.dart';
 import 'package:masaref/features/notification/presentation/widgets/notification_time.dart';
 import 'package:masaref/features/notification/presentation/widgets/section.dart';
-import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_cubit.dart';
 
 class NotificationScreen extends StatelessWidget with SnackBarViewer {
   const NotificationScreen({super.key});
