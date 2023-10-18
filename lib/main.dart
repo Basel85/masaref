@@ -22,13 +22,11 @@ import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_
 import 'package:timezone/data/latest.dart' as timezone;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-bool isRunFromNotification = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observer();
   NotificationHelper.init();
   timezone.initializeTimeZones();
-  isRunFromNotification = await NotificationHelper.checkAppNotification();
   await CacheHelper.init();
   await DBHelper.createDatabase();
   runApp(const MyApp());
@@ -85,9 +83,10 @@ class MyApp extends StatelessWidget {
                           ),
                           scaffoldBackgroundColor: AppColors.lightMode,
                         ),
-                  home: isRunFromNotification
-                        ? const Mo3amalaPage(toAdd: true, walletList: [])
-                        : const SplashScreen(),
+                  home: const SplashScreen(),
+                  // home: isRunFromNotification
+                  //       ? const Mo3amalaPage(toAdd: true, walletList: [])
+                  //       : const SplashScreen(),
                 );
               },
             ),

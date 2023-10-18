@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/features/add_new_category/cubits/add_category/add_category_cubit.dart';
+import 'package:masaref/features/add_new_category/cubits/get_category_by_name/get_category_by_name_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/main_category/main_category_cubit.dart';
+import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';
 import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
 import 'package:masaref/features/add_new_category/presentation/add_new_category_screen.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
@@ -42,14 +44,28 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           textDirection: TextDirection.rtl,
           child: TabBarView(
             children: [
-              BlocProvider<GetCategoriesOfSectionCubit>(
-                create: (context) => GetCategoriesOfSectionCubit(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<GetCategoriesOfSectionCubit>(
+                    create: (context) => GetCategoriesOfSectionCubit(),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchCubit(),
+                  ),
+                ],
                 child: const CategoriesBody(
                   sectionId: 1,
                 ),
               ),
-              BlocProvider<GetCategoriesOfSectionCubit>(
-                create: (context) => GetCategoriesOfSectionCubit(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<GetCategoriesOfSectionCubit>(
+                    create: (context) => GetCategoriesOfSectionCubit(),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchCubit(),
+                  ),
+                ],
                 child: const CategoriesBody(
                   sectionId: 2,
                 ),
@@ -72,7 +88,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       create: (_) => AddCategoryCubit()),
                   BlocProvider<SwitchButtonCubit>(
                     create: (context) => SwitchButtonCubit(),
-                  )
+                  ),
+                  BlocProvider(create: (context) => GetCategoryByNameCubit())
                 ],
                 child: const AddNewCategoryScreen(),
               );

@@ -14,26 +14,22 @@ class NotificationHelper {
     importance: Importance.max,
     priority: Priority.high,
   ));
-  static Future<bool> checkAppNotification() async {
-    final details = await _notification.getNotificationAppLaunchDetails();
-    return details!.didNotificationLaunchApp;
-  }
-
+  
   static void init() async {
     await _notification.initialize(
       const InitializationSettings(
         android: AndroidInitializationSettings("@mipmap/ic_launcher"),
       ),
-      onDidReceiveNotificationResponse: (details) {
-        navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (_) => const Mo3amalaPage(
-              toAdd: true,
-              walletList: [],
-            ),
-          ),
-        );
-      },
+      // onDidReceiveNotificationResponse: (details) {
+      //   navigatorKey.currentState!.push(
+      //     MaterialPageRoute(
+      //       builder: (_) => const Mo3amalaPage(
+      //         toAdd: true,
+      //         walletList: [],
+      //       ),
+      //     ),
+      //   );
+      // },
     );
   }
 

@@ -13,7 +13,7 @@ class DBHelper {
     await db.execute('''CREATE TABLE Wallet (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             balance REAL,
-            name TEXT,
+            name TEXT UNIQUE,
             image TEXT,
             color INTEGER
             )''');
@@ -24,7 +24,7 @@ class DBHelper {
     await db.execute('''CREATE TABLE Category (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             sectionid INTEGER,
-            name TEXT,
+            name TEXT UNIQUE,
             image TEXT,
             FOREIGN KEY (sectionid) REFERENCES Section (id)
             )''');
@@ -71,7 +71,7 @@ class DBHelper {
 
   static createDatabase() async {
     String dbpath = await getDatabasesPath();
-    String path = join(dbpath, 'masaref0804.db');
+    String path = join(dbpath, 'masaref9804.db');
     database = await openDatabase(
       path,
       version: 2,
@@ -82,6 +82,15 @@ class DBHelper {
 
   static Future<List<Map>> getAll(String tableName) async {
     return await database.rawQuery('SELECT * FROM $tableName');
+  }
+
+  static Future<List<Map<String, dynamic>>> getCategoryByName({
+    required String name,
+  }) async {
+    return await database.rawQuery(
+      'SELECT * FROM Category WHERE name = ?',
+      [name],
+    );
   }
 
   static Future<List<Map<String, dynamic>>> getspecificCategoryName(
