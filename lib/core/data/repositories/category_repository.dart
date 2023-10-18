@@ -30,4 +30,11 @@ class CategoryRepository {
     await DBHelper.insertIntoCategory(
         sectionid: sectionid, name: name, image: imagePath);
   }
+
+  static Future<CategoryModel> getCategoryByName({required String name}) async {
+    print("Hess");
+    _data = await DBHelper.getCategoryByName(name: name);
+    print("Hdd");
+    return CategoryModel.fromJson(_data[0]);
+  }
 }

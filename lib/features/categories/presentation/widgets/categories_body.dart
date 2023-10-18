@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masaref/core/widgets/get_error_message.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_states.dart';
-import 'package:masaref/features/categories/cubits/sub_categories_of_category/sub_categories_of_category_cubit.dart';
 import 'package:masaref/features/categories/presentation/widgets/category_list_tile.dart';
 
 class CategoriesBody extends StatefulWidget {
@@ -36,14 +35,9 @@ class _CategoriesBodyState extends State<CategoriesBody>
         if (state is GetCategoriesOfSectionSuccessState) {
           return ListView.builder(
             itemBuilder: (_, index) {
-              return BlocProvider<SubCategoriesOfCategoryCubit>(
-                create: (context) => SubCategoriesOfCategoryCubit()
-                  ..getSubCategoriesOfSpecificCategory(
-                      categoryId: state.categories[index].id),
-                child: CategoryListTile(
-                  title: state.categories[index].name,
-                  image: state.categories[index].image, model: state.categories[index],
-                ),
+              return CategoryListTile(
+                title: state.categories[index].name,
+                image: state.categories[index].image, model: state.categories[index],
               );
             },
             itemCount: state.categories.length,

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/widgets/custom_app_bar.dart';
 import 'package:masaref/features/add_new_category/cubits/add_category/add_category_cubit.dart';
+import 'package:masaref/features/add_new_category/cubits/get_category_by_name/get_category_by_name_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/get_main_type_of_transaction/get_main_type_of_transaction_cubit.dart';
 import 'package:masaref/features/add_new_category/cubits/main_category/main_category_cubit.dart';
 import 'package:masaref/features/notification/cubits/switch_button/switch_button_cubit.dart';
@@ -72,7 +73,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       create: (_) => AddCategoryCubit()),
                   BlocProvider<SwitchButtonCubit>(
                     create: (context) => SwitchButtonCubit(),
-                  )
+                  ),
+                  BlocProvider(create: (context) => GetCategoryByNameCubit())
                 ],
                 child: const AddNewCategoryScreen(),
               );
