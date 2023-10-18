@@ -14,11 +14,7 @@ class NotificationHelper {
     importance: Importance.max,
     priority: Priority.high,
   ));
-  static Future<bool> checkAppNotification() async {
-    final details = await _notification.getNotificationAppLaunchDetails();
-    return details!.didNotificationLaunchApp;
-  }
-
+  
   static void init() async {
     await _notification.initialize(
       const InitializationSettings(

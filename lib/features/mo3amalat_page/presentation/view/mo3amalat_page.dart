@@ -51,7 +51,10 @@ class _Mo3amalatPageState extends State<Mo3amalatPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        BlocProvider.of<WholeAppCubit>(context).changePriorityIndex(null);
+        BlocProvider.of<WholeAppCubit>(context)
+                        .changePriorityIndex(null);
+                    await BlocProvider.of<WholeAppCubit>(context)
+                        .getPriorityTransactions();
         return true;
       },
       child: BlocBuilder<WholeAppCubit, WholeAppStates>(
@@ -101,7 +104,8 @@ class _Mo3amalatPageState extends State<Mo3amalatPage> {
                         onChanged: (value) async {
                           BlocProvider.of<WholeAppCubit>(context)
                               .changePriorityIndex(value);
-                          
+                          await BlocProvider.of<WholeAppCubit>(context)
+                              .getPriorityTransactions();
                         },
                       ),
                 actions: [
@@ -109,7 +113,8 @@ class _Mo3amalatPageState extends State<Mo3amalatPage> {
                     onPressed: () {
                       BlocProvider.of<WholeAppCubit>(context)
                           .changePriorityIndex(null);
-                      
+                      BlocProvider.of<WholeAppCubit>(context)
+                          .getPriorityTransactions();
                       Navigator.pop(context);
                     },
                     icon: const Icon(
@@ -120,71 +125,69 @@ class _Mo3amalatPageState extends State<Mo3amalatPage> {
                   ),
                 ],
               ),
-              body: widget.transactionList.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    )
-                  : Column(
-                      children: [
-                        if (!widget.isPriorities)
-                          SearchField(
-                            categorynamesList: widget.categorynamesList,
-                          ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.all(10.r),
-                            child: BlocBuilder<SearchCubit, SearchStates>(
-                              builder: (_, state) => ListView.separated(
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: widget.transactionList.isEmpty
-                                    ? 1
-                                    : state is SearchSearchedState
-                                        ? state.searchedList.length
-                                        : widget.categorynamesList.length,
-                                itemBuilder: (context, index) {
-                                  if (widget.transactionList.isEmpty) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(top: 90.h),
-                                      child: Center(
-                                        child: Text(
-                                          'لا معاملات للان',
-                                          style:
-                                              AppStyles.textStyle14PrimaryColor,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return Mo3amalaComponant(
-                                      transactionModel: state
-                                              is SearchSearchedState
-                                          ? widget.transactionList[
-                                              widget.categorynamesList.indexOf(
-                                                  state.searchedList[index])]
-                                          : widget.transactionList[index],
-                                      cateName: state is SearchSearchedState
-                                          ? widget.categorynamesList[
-                                              widget.categorynamesList.indexOf(
-                                                  state.searchedList[index])]
-                                          : widget.categorynamesList[index],
-                                      transactionlist: widget.transactionList,
-                                      isPriorities: widget.isPriorities,
-                                      cateImage: state is SearchSearchedState
-                                          ? catyimages[widget.categorynamesList
-                                              .indexOf(
-                                                  state.searchedList[index])]
-                                          : catyimages[index],
-                                    );
-                                  }
-                                },
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(height: 10.h),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              // widget.transactionList.isEmpty
+              //     ? const Center(
+              //         child: CircularProgressIndicator.adaptive(),
+              //       )
+              //     :
+              body: Column(
+                children: [
+                  if (!widget.isPriorities)
+                    SearchField(
+                      categorynamesList: widget.categorynamesList,
                     ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.r),
+                      child: BlocBuilder<SearchCubit, SearchStates>(
+                        builder: (_, state) => ListView.separated(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: widget.transactionList.isEmpty
+                              ? 1
+                              : state is SearchSearchedState
+                                  ? state.searchedList.length
+                                  : widget.categorynamesList.length,
+                          itemBuilder: (context, index) {
+                            if (widget.transactionList.isEmpty) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 90.h),
+                                child: Center(
+                                  child: Text(
+                                    'لا معاملات للان',
+                                    style: AppStyles.textStyle14PrimaryColor,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Mo3amalaComponant(
+                                transactionModel: state is SearchSearchedState
+                                    ? widget.transactionList[widget
+                                        .categorynamesList
+                                        .indexOf(state.searchedList[index])]
+                                    : widget.transactionList[index],
+                                cateName: state is SearchSearchedState
+                                    ? widget.categorynamesList[widget
+                                        .categorynamesList
+                                        .indexOf(state.searchedList[index])]
+                                    : widget.categorynamesList[index],
+                                transactionlist: widget.transactionList,
+                                isPriorities: widget.isPriorities,
+                                cateImage: state is SearchSearchedState
+                                    ? catyimages[widget.categorynamesList
+                                        .indexOf(state.searchedList[index])]
+                                    : catyimages[index],
+                              );
+                            }
+                          },
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 10.h),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
