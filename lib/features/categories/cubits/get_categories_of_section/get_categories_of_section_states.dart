@@ -1,4 +1,4 @@
-import 'package:masaref/features/categories/data/category_model.dart';
+import 'package:masaref/core/data/models/category_model.dart';
 
 abstract class GetCategoriesOfSectionStates {}
 

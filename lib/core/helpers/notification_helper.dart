@@ -15,7 +15,7 @@ class NotificationHelper {
   static void init() async {
     await _notification.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+        android: AndroidInitializationSettings("@mipmap/launcher_icon"),
       ),
       // onDidReceiveNotificationResponse: (details) {
       //   navigatorKey.currentState!.push(

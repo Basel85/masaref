@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_cubit.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
-import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
+import 'package:masaref/core/data/models/wallet_model.dart';
 import 'package:masaref/features/add_new_wallet/presentation/add_new_wallet.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 

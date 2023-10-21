@@ -7,8 +7,8 @@ import 'package:masaref/core/utils/snack_bar_viewer.dart';
 import 'package:masaref/core/widgets/add_image.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
 import 'package:masaref/core/widgets/custom_form_field.dart';
-import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
-import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_states.dart';
+import 'package:masaref/core/cubits/add_new_wallet/add_new_wallet_cubit.dart';
+import 'package:masaref/core/cubits/add_new_wallet/add_new_wallet_states.dart';
 import 'package:masaref/features/main/presentation/main_screen.dart';
 
 class InitialScreen extends StatefulWidget {

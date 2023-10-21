@@ -1,6 +1,5 @@
 import 'package:masaref/core/helpers/db_helper.dart';
-import 'package:masaref/features/categories/data/category_model.dart';
-import 'package:masaref/features/categories/data/sub_category_model.dart';
+import 'package:masaref/core/data/models/category_model.dart';
 
 class CategoryRepository {
   static List<Map<String, dynamic>> _data = [];
@@ -11,16 +10,6 @@ class CategoryRepository {
         .map((category) => CategoryModel.fromJson(category))
         .toList()
         .cast<CategoryModel>();
-  }
-
-  static Future<List<SubCategoryModel>> getSubCategoriesOfSpecificCategory(
-      {required int categoryId}) async {
-    _data = await DBHelper.getSubCategoriesOfSpecificCategory(
-        categoryId: categoryId);
-    return _data
-        .map((subCategory) => SubCategoryModel.fromJson(subCategory))
-        .toList()
-        .cast<SubCategoryModel>();
   }
 
   static void addCategory(
