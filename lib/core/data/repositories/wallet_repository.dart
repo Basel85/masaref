@@ -1,5 +1,5 @@
 import 'package:masaref/core/helpers/db_helper.dart';
-import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
+import 'package:masaref/core/data/models/wallet_model.dart';
 
 class WalletRepository {
   static List<Map<String, dynamic>> _wallets = [];

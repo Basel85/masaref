@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
-import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_state.dart';
 import 'package:masaref/features/mo3amalat_tap/presentation/view/widgets/mo3amalat_by_day_item.dart';
 
 class Mo3amalatByDayList extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
-import 'package:masaref/core/app_cubit/whole_app_state.dart';
-import 'package:masaref/core/helpers/transaction_model.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/data/models/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/app_styles.dart';
 import 'package:masaref/features/mo3amalat_page/cubits/search/search_cubit.dart';

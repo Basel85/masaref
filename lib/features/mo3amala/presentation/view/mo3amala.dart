@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
-import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
-import 'package:masaref/core/helpers/transaction_model.dart';
+import 'package:masaref/core/data/models/transaction_model.dart';
 import 'package:masaref/core/utils/app_colors.dart';
 import 'package:masaref/core/utils/snack_bar_viewer.dart';
 import 'package:masaref/core/widgets/custom_button.dart';
-import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
-import 'package:masaref/features/categories/data/category_model.dart';
+import 'package:masaref/core/data/models/wallet_model.dart';
+import 'package:masaref/core/data/models/category_model.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_state.dart';
 import 'package:masaref/features/mo3amala/presentation/view/widgets/category_section.dart';
@@ -31,13 +31,12 @@ class Mo3amalaPage extends StatefulWidget {
       this.transactionModel,
       this.transactionList = const [],
       this.categoryList,
-      this.isRunFromNotification = false});
+  });
   final bool toAdd;
   final TransactionModel? transactionModel;
   final List<TransactionModel> transactionList;
   final List<WalletModel> walletList;
   final List<CategoryModel>? categoryList;
-  final bool isRunFromNotification;
 
   @override
   State<Mo3amalaPage> createState() => _Mo3amalaPageState();

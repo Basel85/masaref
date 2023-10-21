@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
-import 'package:masaref/features/categories/data/category_model.dart';
+import 'package:masaref/core/data/models/wallet_model.dart';
+import 'package:masaref/core/data/models/category_model.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_state.dart';
 
 class Mo3amalaCubit extends Cubit<Mo3amalaState> {

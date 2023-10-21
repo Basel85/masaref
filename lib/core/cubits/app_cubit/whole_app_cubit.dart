@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
-import 'package:masaref/core/helpers/transaction_model.dart';
+import 'package:masaref/core/data/models/transaction_model.dart';
 
 class WholeAppCubit extends Cubit<WholeAppStates> {
   WholeAppCubit() : super(WholeAppInitial());
@@ -43,8 +44,9 @@ class WholeAppCubit extends Cubit<WholeAppStates> {
   List<TransactionModel> transactionDate6list = [];
   List<TransactionModel> transactionDate7list = [];
 
-  changeAppTheme() {
+  changeAppTheme() async {
     isdark = !isdark;
+    await CacheHelper.setData(key: 'isdark', value: isdark);
     emit(WholeAppModeChange());
   }
 

@@ -1,4 +1,4 @@
-import 'package:masaref/features/add_new_wallet/data/models/wallet_model.dart';
+import 'package:masaref/core/data/models/wallet_model.dart';
 
 abstract class GetAllWalletsStates {}
 

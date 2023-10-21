@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:masaref/core/app_cubit/whole_app_cubit.dart';
-import 'package:masaref/core/app_cubit/whole_app_state.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_cubit.dart';
+import 'package:masaref/core/cubits/app_cubit/whole_app_state.dart';
 import 'package:masaref/core/cubits/image_picker/image_picker_cubit.dart';
 import 'package:masaref/core/helpers/cache_helper.dart';
 import 'package:masaref/core/helpers/db_helper.dart';
 import 'package:masaref/core/helpers/notification_helper.dart';
 import 'package:masaref/core/helpers/observer.dart';
 import 'package:masaref/core/utils/app_colors.dart';
-import 'package:masaref/features/add_new_wallet/cubits/add_new_wallet/add_new_wallet_cubit.dart';
+import 'package:masaref/core/cubits/add_new_wallet/add_new_wallet_cubit.dart';
 import 'package:masaref/features/categories/cubits/get_categories_of_section/get_categories_of_section_cubit.dart';
 import 'package:masaref/features/main/cubits/bottom_navigation_bar/bottom_navigation_bar_cubit.dart';
 import 'package:masaref/features/mo3amala/presentation/manager/cubit/mo3amala_cubit.dart';
@@ -21,12 +21,14 @@ import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_
 import 'package:timezone/data/latest.dart' as timezone;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+bool isDark = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observer();
   NotificationHelper.init();
   timezone.initializeTimeZones();
   await CacheHelper.init();
+  isDark = await CacheHelper.getData(key: 'isdark');
   await DBHelper.createDatabase();
   runApp(const MyApp());
 }
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   navigatorKey: navigatorKey,
                   debugShowCheckedModeBanner: false,
-                  theme: BlocProvider.of<WholeAppCubit>(context).isdark
+                  theme: isDark
                       ? ThemeData(
                           fontFamily: GoogleFonts.cairo().fontFamily,
                           appBarTheme: const AppBarTheme(
