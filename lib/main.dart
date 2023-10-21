@@ -21,14 +21,12 @@ import 'package:masaref/features/wallets/cubits/get_all_wallets/get_all_wallets_
 import 'package:timezone/data/latest.dart' as timezone;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-bool isDark = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observer();
   NotificationHelper.init();
   timezone.initializeTimeZones();
   await CacheHelper.init();
-  isDark = await CacheHelper.getData(key: 'isdark') == null?false:CacheHelper.getData(key: 'isdark') as bool;
   await DBHelper.createDatabase();
   runApp(const MyApp());
 }
@@ -63,7 +61,6 @@ class MyApp extends StatelessWidget {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
-            BlocProvider.of<WholeAppCubit>(context).isdark = isDark;
             return Directionality(
             textDirection: TextDirection.rtl,
             child: BlocBuilder<WholeAppCubit, WholeAppStates>(
