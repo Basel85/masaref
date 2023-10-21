@@ -28,7 +28,7 @@ void main() async {
   NotificationHelper.init();
   timezone.initializeTimeZones();
   await CacheHelper.init();
-  isDark = await CacheHelper.getData(key: 'isdark');
+  isDark = await CacheHelper.getData(key: 'isdark') == null?false:CacheHelper.getData(key: 'isdark') as bool;
   await DBHelper.createDatabase();
   runApp(const MyApp());
 }
@@ -62,14 +62,16 @@ class MyApp extends StatelessWidget {
           designSize: const Size(360, 690),
           minTextAdapt: true,
           splitScreenMode: true,
-          builder: (context, child) => Directionality(
+          builder: (context, child) {
+            BlocProvider.of<WholeAppCubit>(context).isdark = isDark;
+            return Directionality(
             textDirection: TextDirection.rtl,
             child: BlocBuilder<WholeAppCubit, WholeAppStates>(
               builder: (context, state) {
                 return MaterialApp(
                   navigatorKey: navigatorKey,
                   debugShowCheckedModeBanner: false,
-                  theme: isDark
+                  theme:  BlocProvider.of<WholeAppCubit>(context).isdark
                       ? ThemeData(
                           fontFamily: GoogleFonts.cairo().fontFamily,
                           appBarTheme: const AppBarTheme(
@@ -91,7 +93,8 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
-          ),
+          );
+          },
         ));
   }
 }
